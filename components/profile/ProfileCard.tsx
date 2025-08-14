@@ -3,7 +3,14 @@
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 
-export default function ProfileCard({ user }: { user: any }) {
+interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: 'user' | 'admin';
+}
+
+export default function ProfileCard({ user }: { user: User }) {
   const { update } = useSession();
   const [name, setName] = useState(user.name);
   const [email, setEmail] = useState(user.email);
@@ -22,20 +29,21 @@ export default function ProfileCard({ user }: { user: any }) {
     });
 
     if (res.ok) {
-      const updatedUser = await res.json();
-      // Update the session client-side to reflect the changes
+      const updatedUser: User = await res.json();
       update({ name: updatedUser.name, email: updatedUser.email });
       setMessage('Profile updated successfully!');
       setIsEditing(false);
     } else {
-      const error = await res.json();
-      setMessage(`Error: ${error.message}`);
+      const errorData = await res.json();
+      setMessage(`Error: ${errorData.message}`);
     }
   };
 
   return (
     <div className="bg-gray-900 p-8 rounded-lg shadow-xl text-center">
-      <div className="text-gray-400 text-sm">Role: <span className="font-bold text-red-400 capitalize">{user.role}</span></div>
+      <div className="text-gray-400 text-sm">
+        Role: <span className="font-bold text-red-400 capitalize">{user.role}</span>
+      </div>
       {!isEditing ? (
         <>
           <h2 className="mt-4 text-3xl font-bold">{user.name}</h2>
@@ -49,7 +57,15 @@ export default function ProfileCard({ user }: { user: any }) {
         </>
       ) : (
         <form onSubmit={handleUpdate} className="mt-6 space-y-4 max-w-sm mx-auto">
-          {message && <p className={`text-sm ${message.includes('Error') ? 'text-red-500' : 'text-green-500'}`}>{message}</p>}
+          {message && (
+            <p
+              className={`text-sm ${
+                message.includes('Error') ? 'text-red-500' : 'text-green-500'
+              }`}
+            >
+              {message}
+            </p>
+          )}
           <div>
             <label className="block text-sm font-medium text-left mb-1">Name</label>
             <input
