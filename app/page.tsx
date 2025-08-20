@@ -41,7 +41,7 @@ export default async function HomePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {components.map((component, index) => (
             <div
-              key={component._id.toString()}
+              key={String(component._id)}
               className="animate-slide-up"
               style={{ animationDelay: `${index * 0.1}s` }}
             >

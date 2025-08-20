@@ -32,7 +32,7 @@ export default function HeroSection() {
           {/* Main Heading */}
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold">
-              <span className="block text-foreground mb-2 text-white">Build with</span>
+              <span className="block mb-2 text-white">Build with</span>
               <span className="block bg-gradient-neon bg-clip-text text-transparent animate-glow">
                 Next Components
               </span>

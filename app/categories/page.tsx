@@ -22,9 +22,19 @@ export default async function CategoriesPage() {
   // Ensure the Component model is registered.
   void Component.modelName; // ✅ Using `void` removes "unused expression" warning
 
-  const categories = (await Category.find({})
+  const rawCategories = await Category.find({})
     .populate("components")
-    .lean()) as CategoryType[];
+    .lean();
+
+  const categories: CategoryType[] = rawCategories.map((cat: any) => ({
+    _id: cat._id?.toString() ?? "",
+    name: cat.name ?? "",
+    components: cat.components?.map((comp: any) => ({
+      _id: comp._id?.toString() ?? "",
+      name: comp.name ?? "",
+      description: comp.description ?? "",
+    })) ?? [],
+  }));
 
   return (
     <div className="min-h-screen pt-24 px-4 bg-gray-900 text-white">

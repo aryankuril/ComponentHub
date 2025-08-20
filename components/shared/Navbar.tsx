@@ -8,7 +8,19 @@ import { useState } from 'react';
 // import { button } from '@/components/ui/button';
 
 export default function Navbar() {
-  const { data: session } = useSession();
+  interface SessionUser {
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+    role?: string | null;
+  }
+
+  interface Session {
+    user?: SessionUser;
+    [key: string]: any;
+  }
+
+  const { data: session } = useSession() as { data: Session | null };
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false); // State for the profile dropdown
 
@@ -58,10 +70,10 @@ export default function Navbar() {
             {!session ? (
               // Login/Signup for unauthenticated users
               <>
-                <button >
+                <button className="text-white ">
                   <Link href="/login">Login</Link>
                 </button>
-                <button variant="neon" size="sm">
+                <button className="px-4 py-2 rounded-md bg-neon-cyan text-black text-sm font-medium ">
                   <Link href="/signup">Sign Up</Link>
                 </button>
               </>
@@ -123,8 +135,6 @@ export default function Navbar() {
           {/* Mobile Menu button */}
           <div className="md:hidden">
             <button
-              variant="ghost"
-              size="icon"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-foreground hover:text-neon-cyan"
             >
@@ -151,10 +161,10 @@ export default function Navbar() {
             <div className="pt-4 pb-3 border-t border-border">
               {!session ? (
                 <div className="flex items-center space-x-3">
-                  <button variant="neon-outline" size="sm" className="flex-1" asChild>
+                  <button className="flex-1 border border-neon-cyan text-neon-cyan px-4 py-2 rounded-md text-sm font-medium bg-transparent hover:bg-neon-cyan/10">
                     <Link href="/login">Login</Link>
                   </button>
-                  <button variant="neon" size="sm" className="flex-1" asChild>
+                  <button className="flex-1 bg-neon-cyan text-black px-4 py-2 rounded-md text-sm font-medium hover:bg-neon-cyan/80">
                     <Link href="/signup">Sign Up</Link>
                   </button>
                 </div>
