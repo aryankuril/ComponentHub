@@ -30,13 +30,14 @@ export default async function CategoriesPage() {
 const categories: CategoryType[] = rawCategories.map((cat) => ({
   _id: cat._id ? cat._id.toString() : "",
   name: cat.name ?? "",
-  components: Array.isArray(cat.components)
-    ? cat.components.map((comp: any) => ({
-        _id: comp._id ? comp._id.toString() : "",
-        name: comp.name ?? "",
-        description: comp.description ?? "",
-      }))
-    : [],
+components: Array.isArray(cat.components)
+  ? cat.components.map((comp: Partial<ComponentType>) => ({
+      _id: comp._id ? comp._id.toString() : "",
+      name: comp.name ?? "",
+      description: comp.description ?? "",
+    }))
+  : [],
+
 }));
 
   return (

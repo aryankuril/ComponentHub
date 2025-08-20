@@ -41,7 +41,7 @@ const About = () => {
               </span>
             </h1>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              We're passionate about creating beautiful, modern web components that help developers 
+              We&apos;re passionate about creating beautiful, modern web components that help developers 
               build stunning applications with ease.
             </p>
           </div>
@@ -64,8 +64,8 @@ const About = () => {
                   </p>
                   <p>
                     Every component in our library is crafted with attention to detail, featuring smooth 
-                    3D animations, next aesthetics, and responsive design principles. We're committed to 
-                    pushing the boundaries of what's possible in modern web development.
+                    3D animations, next aesthetics, and responsive design principles. We&apos;re committed to 
+                    pushing the boundaries of what&apos;s possible in modern web development.
                   </p>
                   <p>
                     Join thousands of developers who trust ComponentHub to bring their applications 

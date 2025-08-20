@@ -15,10 +15,11 @@ export default function Navbar() {
     role?: string | null;
   }
 
-  interface Session {
-    user?: SessionUser;
-    [key: string]: any;
-  }
+interface Session {
+  user?: SessionUser;
+  [key: string]: unknown;
+}
+
 
   const { data: session } = useSession() as { data: Session | null };
   const [isMenuOpen, setIsMenuOpen] = useState(false);

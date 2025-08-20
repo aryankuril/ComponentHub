@@ -54,7 +54,7 @@ const Contact = () => {
             </h1>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
               Have questions about our components? Need custom development? 
-              We'd love to hear from you.
+              We&apos;d love to hear from you.
             </p>
           </div>
         </section>
@@ -175,7 +175,7 @@ const Contact = () => {
                     <h3 className="text-lg font-semibold text-white mb-3">Need Custom Development?</h3>
                     <p className="text-gray-400 mb-4">
                       Our team specializes in creating custom components and web applications. 
-                      Let's discuss your project requirements.
+                      Let&apos;s discuss your project requirements.
                     </p>
                    <button className="px-6 py-2 border-2 border-neon-cyan text-neon-cyan rounded-lg font-semibold hover:bg-neon-cyan hover:text-black transition duration-300">
   Schedule a Call
