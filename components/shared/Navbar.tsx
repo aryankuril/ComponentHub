@@ -70,10 +70,10 @@ export default function Navbar() {
             {!session ? (
               // Login/Signup for unauthenticated users
               <>
-                <button className="text-white ">
+                <button className="text-purple ">
                   <Link href="/login">Login</Link>
                 </button>
-                <button className="px-4 py-2 rounded-md bg-neon-cyan text-black text-sm font-medium ">
+                <button className="flex-1 bg-gradient-to-r from-neon-cyan to-neon-purple text-black font-semibold rounded-md px-6 py-3 flex gap-2 transition-all duration-300 hover:shadow-[0_0_20px_hsl(180,100%,50%),0_0_40px_hsl(262,83%,70%)] hover:-translate-y-0.5 text-sm  hover:bg-neon-cyan/80">
                   <Link href="/signup">Sign Up</Link>
                 </button>
               </>
@@ -164,7 +164,8 @@ export default function Navbar() {
                   <button className="flex-1 border border-neon-cyan text-neon-cyan px-4 py-2 rounded-md text-sm font-medium bg-transparent hover:bg-neon-cyan/10">
                     <Link href="/login">Login</Link>
                   </button>
-                  <button className="flex-1 bg-neon-cyan text-black px-4 py-2 rounded-md text-sm font-medium hover:bg-neon-cyan/80">
+                  {/* <button className="w-full items-center justify-center group bg-gradient-to-r from-neon-cyan to-neon-purple text-black font-semibold rounded-full px-6 py-3 flex gap-2 transition-all duration-300 hover:shadow-[0_0_20px_hsl(180,100%,50%),0_0_40px_hsl(262,83%,70%)] hover:-translate-y-0.5"> */}
+                  <button className="flex-1 bg-gradient-to-r from-neon-cyan to-neon-purple text-black font-semibold rounded-full px-6 py-3 flex gap-2 transition-all duration-300 hover:shadow-[0_0_20px_hsl(180,100%,50%),0_0_40px_hsl(262,83%,70%)] hover:-translate-y-0.5 text-sm  hover:bg-neon-cyan/80">
                     <Link href="/signup">Sign Up</Link>
                   </button>
                 </div>

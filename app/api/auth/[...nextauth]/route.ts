@@ -1,19 +1,33 @@
 // app/api/auth/[...nextauth]/route.ts
-import NextAuth from 'next-auth';
-import CredentialsProvider from 'next-auth/providers/credentials';
-import dbConnect from '@/lib/mongodb';
-import User from '@/lib/schemas/User';
-import bcrypt from 'bcryptjs';
+import NextAuth, { NextAuthOptions } from "next-auth";
+import CredentialsProvider from "next-auth/providers/credentials";
+import dbConnect from "@/lib/mongodb";
+import User from "@/lib/schemas/User";
+import bcrypt from "bcryptjs";
 
-export const authOptions = {
+interface Credentials {
+  email: string;
+  password: string;
+}
+
+interface CustomUser {
+  id: string;
+  name: string;
+  email: string;
+  role: "user" | "admin";
+}
+
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
-      name: 'Credentials',
+      name: "Credentials",
       credentials: {
-        email: { label: 'Email', type: 'email' },
-        password: { label: 'Password', type: 'password' },
+        email: { label: "Email", type: "email" },
+        password: { label: "Password", type: "password" },
       },
-      async authorize(credentials: any) {
+      async authorize(credentials: Credentials | undefined): Promise<CustomUser | null> {
+        if (!credentials) return null;
+
         await dbConnect();
         const user = await User.findOne({ email: credentials.email });
 
@@ -22,7 +36,7 @@ export const authOptions = {
             id: user._id.toString(),
             name: user.name,
             email: user.email,
-            role: user.role,
+            role: user.role as "user" | "admin",
           };
         }
         return null;
@@ -30,28 +44,29 @@ export const authOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user }: { token: any; user: any }) {
+    async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
-        token.role = user.role;
+        token.id = (user as CustomUser).id;
+        token.role = (user as CustomUser).role;
       }
       return token;
     },
-    async session({ session, token }: { session: any; token: any }) {
+    async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
-        session.user.role = token.role as 'user' | 'admin';
+        session.user.role = token.role as "user" | "admin";
       }
       return session;
     },
   },
   pages: {
-    signIn: '/login',
+    signIn: "/login",
   },
   session: {
-    strategy: 'jwt' as const,
+    strategy: "jwt",
   },
 };
 
-// ✅ make sure it's exported
-export default NextAuth(authOptions);
+// ✅ must export for Next.js
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };

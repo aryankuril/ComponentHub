@@ -2,6 +2,7 @@ import Link from "next/link";
 import dbConnect from "@/lib/mongodb";
 import Component from "@/lib/schemas/Component";
 import Category from "@/lib/schemas/Category";
+// Removed import of ComponentType and CategoryType to avoid conflict with local declarations
 
 // Define the shape of your data
 interface ComponentType {
@@ -26,15 +27,17 @@ export default async function CategoriesPage() {
     .populate("components")
     .lean();
 
-  const categories: CategoryType[] = rawCategories.map((cat: any) => ({
-    _id: cat._id?.toString() ?? "",
-    name: cat.name ?? "",
-    components: cat.components?.map((comp: any) => ({
-      _id: comp._id?.toString() ?? "",
-      name: comp.name ?? "",
-      description: comp.description ?? "",
-    })) ?? [],
-  }));
+const categories: CategoryType[] = rawCategories.map((cat) => ({
+  _id: cat._id ? cat._id.toString() : "",
+  name: cat.name ?? "",
+  components: Array.isArray(cat.components)
+    ? cat.components.map((comp: any) => ({
+        _id: comp._id ? comp._id.toString() : "",
+        name: comp.name ?? "",
+        description: comp.description ?? "",
+      }))
+    : [],
+}));
 
   return (
     <div className="min-h-screen pt-24 px-4 bg-gray-900 text-white">

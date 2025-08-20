@@ -6,7 +6,7 @@ import { useSession } from 'next-auth/react';
 // Extend the session user type to include 'role'
 declare module 'next-auth' {
   interface User {
-    role?: 'user' | 'admin';
+    role: 'user' | 'admin';
   }
   interface Session {
     user?: User;
