@@ -18,9 +18,9 @@ interface ComponentCardProps {
 
 export default function ComponentCard({ component, onPreview, onCopy }: ComponentCardProps) {
   return (
-    <div className="relative bg-gradient-card border border-border rounded-xl overflow-hidden h-full flex flex-col group hover:border-neon-cyan/30 transition-all duration-300">
+    <div className="relative bg-gradient-card border  border-border rounded-xl overflow-hidden h-full flex flex-col group hover:border-neon-cyan/30 transition-all duration-300">
       {/* Preview Image */}
-<div className="aspect-video bg-gradient-card relative overflow-hidden">
+<div className="aspect-video bg-[#060606] relative overflow-hidden">
 
         {component.previewImage ? (
           <img
@@ -35,7 +35,7 @@ export default function ComponentCard({ component, onPreview, onCopy }: Componen
         )}
 
         {/* Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute  inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
         {/* Preview Button */}
         <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
@@ -50,7 +50,9 @@ export default function ComponentCard({ component, onPreview, onCopy }: Componen
       </div>
 
       {/* Content */}
-      <div className="p-6 flex-1 flex flex-col  ">
+
+      <div className=" bg-[#0b0b0b] ">
+      <div className="p-6 flex-1 flex flex-col bg-[#0b0b0b] ">
         <div className="flex items-start justify-between ">
           <h3 className="text-lg font-semibold text-white group-hover:text-neon-cyan transition-colors duration-300">
             {component.name}
@@ -79,7 +81,7 @@ export default function ComponentCard({ component, onPreview, onCopy }: Componen
       </div>
 
       {/* Glow effect */}
-      <div className="absolute inset-0 rounded-xl bg-gradient-neon opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none" />
+      <div className="absolute bg-[#0b0b0b]  inset-0 rounded-xl  opacity-0 group-hover:opacity-5 transition-opacity duration-300 pointer-events-none" />
 
       {/* View Component Link */}
       <div className="p-6 pt-0">
@@ -89,6 +91,8 @@ export default function ComponentCard({ component, onPreview, onCopy }: Componen
         >
           View Component
         </Link>
+      </div>
+
       </div>
     </div>
   );

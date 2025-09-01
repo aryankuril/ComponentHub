@@ -96,17 +96,17 @@ export default function ComponentForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
+    <form onSubmit={handleSubmit} className="space-y-6 text-black">
       {messageElement}
       <div className="flex space-x-4">
         <div className="flex-1 space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-1">Component Name</label>
+            <label className="block text-sm font-medium mb-1 ">Component Name</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-4 py-2 bg-gray-800 rounded-md border border-gray-700"
+              className="w-full px-4 py-2 bg-white rounded-md border "
               required
             />
           </div>
@@ -116,7 +116,7 @@ export default function ComponentForm({
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={4}
-              className="w-full px-4 py-2 bg-gray-800 rounded-md border border-gray-700"
+              className="w-full px-4 py-2 bg-white rounded-md border "
               required
             ></textarea>
           </div>
@@ -128,7 +128,7 @@ export default function ComponentForm({
               type="text"
               value={npmPackages}
               onChange={(e) => setNpmPackages(e.target.value)}
-              className="w-full px-4 py-2 bg-gray-800 rounded-md border border-gray-700"
+              className="w-full px-4 py-2 bg-white rounded-md border border-gray-700"
             />
           </div>
           <div>
@@ -136,7 +136,7 @@ export default function ComponentForm({
             <select
               value={categoryId}
               onChange={(e) => setCategoryId(e.target.value)}
-              className="w-full px-4 py-2 bg-gray-800 rounded-md border border-gray-700"
+              className="w-full px-4 py-2 bg-white rounded-md border border-gray-700"
             >
               <option value="">-- No Category --</option>
               {categories.map((cat) => (
@@ -156,7 +156,7 @@ export default function ComponentForm({
               value={code}
               onChange={(e) => setCode(e.target.value)}
               rows={15}
-              className="font-mono w-full px-4 py-2 bg-gray-800 rounded-md border border-gray-700"
+              className="font-mono w-full px-4 py-2 bg-white rounded-md border border-gray-700"
               required
             ></textarea>
           </div>
@@ -165,7 +165,12 @@ export default function ComponentForm({
       <div className="flex justify-between items-center mt-6">
         <button
           type="submit"
-          className="px-6 py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-md transition-colors"
+          className={`rounded-[5px] flex justify-center items-center gap-[10px] px-[30px] py-[10px] font-semibold transition-colors w-full sm:w-auto
+    ${
+      initialData !== null
+        ? "bg-[#F9B31B] shadow-[2px_2px_0px_0px_#262626] text-[#262626]"
+        : "bg-[#262626] shadow-[2px_2px_0px_0px_#F9B31B] text-[#F9B31B]"
+    }`}
         >
           {initialData ? "Update Component" : "Publish Component"}
         </button>

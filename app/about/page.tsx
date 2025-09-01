@@ -32,7 +32,7 @@ const About = () => {
       <Navbar />
       <main className="pt-16">
         {/* Hero Section */}
-        <section className="py-20 ">
+        <section className="py-20 bg-[#040404]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
               <span className="text-white">About </span>
@@ -74,7 +74,7 @@ const About = () => {
                 </div>
               </div>
               <ThreeDElement intensity={15}>
-                <div className="bg-gradient-card border border-border rounded-2xl p-8">
+                <div className="bg-[#0a0a0a] border border-border rounded-2xl p-8">
                   <div className="space-y-6">
                     <div className="flex items-center space-x-4">
                       <div className="w-12 h-12 bg-gradient-neon rounded-lg flex items-center justify-center">
@@ -111,7 +111,7 @@ const About = () => {
         </section>
 
         {/* Features Section */}
-        <section className="py-20 bg-secondary/20">
+        <section className="py-20 bg-[#040404]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">
@@ -127,7 +127,7 @@ const About = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {features.map((feature, index) => (
                 <ThreeDElement key={feature.title} intensity={12}>
-                  <div className="bg-card border border-border rounded-xl p-6 h-full text-center group hover:border-neon-cyan/30 transition-all duration-300">
+                  <div className="bg-[#080808] border border-border rounded-xl p-6 h-full text-center group hover:border-neon-cyan/30 transition-all duration-300">
                     <div className="w-16 h-16 mx-auto mb-4 bg-gradient-neon rounded-xl flex items-center justify-center group-hover:animate-pulse">
                       <feature.icon className="h-8 w-8 text-black" />
                     </div>
@@ -154,7 +154,7 @@ const About = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[1, 2, 3].map((member) => (
                 <ThreeDElement key={member} intensity={10}>
-                  <div className="bg-gradient-card border border-border rounded-xl p-6">
+                  <div className="bg-[#0a0a0a] border border-border rounded-xl p-6">
                     <div className="w-24 h-24 mx-auto mb-4 bg-gradient-neon rounded-full"></div>
                     <h3 className="text-lg font-semibold text-white mb-2">Team Member {member}</h3>
                     <p className="text-neon-cyan mb-2">Developer & Designer</p>

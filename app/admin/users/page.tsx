@@ -1,5 +1,6 @@
 // app/admin/users/page.tsx
 'use client';
+import { Trash } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 interface User {
@@ -23,7 +24,13 @@ export default function ManageUsersPage() {
         throw new Error('Failed to fetch users. You might not be an admin.');
       }
       const data = await res.json();
-      setUsers(data);
+      // setUsers(data);
+      setUsers(
+      data.sort(
+        (a: User, b: User) =>
+          new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime()
+      )
+    );
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -63,16 +70,16 @@ export default function ManageUsersPage() {
     }
   };
 
-  if (loading) return <div className="p-8 text-center">Loading users...</div>;
+  if (loading) return <div className="p-8 text-center text-black">Loading users...</div>;
   if (error) return <div className="p-8 text-center text-red-500">{error}</div>;
 
   return (
-    <div className="p-8">
-      <h1 className="text-4xl font-bold mb-8">Manage Users</h1>
-      <div className="bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+    <div className="p-8 " >
+      <h1 className="text-4xl font-bold mb-8 text-black">Manage Users</h1>
+      <div className=" rounded-lg shadow-lg overflow-hidden ">
         <table className="min-w-full table-auto">
           <thead>
-            <tr className="bg-gray-800 text-gray-400 uppercase text-sm leading-normal">
+            <tr className="bg-[#FFFFFF] text-[#1D1D1B] uppercase text-sm leading-normal border-b border-gray-700">
               <th className="py-3 px-6 text-left">Name</th>
               <th className="py-3 px-6 text-left">Email</th>
               <th className="py-3 px-6 text-left">Joined</th>
@@ -80,17 +87,26 @@ export default function ManageUsersPage() {
               <th className="py-3 px-6 text-center">Actions</th>
             </tr>
           </thead>
-          <tbody className="text-white text-sm font-light">
+          <tbody className="text-black text-sm font-light bg-[#FFFFFF79]">
             {users.map((user) => (
-              <tr key={user._id} className="border-b border-gray-700 hover:bg-gray-800">
-                <td className="py-3 px-6 text-left whitespace-nowrap">{user.name}</td>
+              <tr key={user._id} className="border-b border-gray-700">
+                <td className="py-3 px-6 text-left whitespace-nowrap capitalize">{user.name}</td>
                 <td className="py-3 px-6 text-left">{user.email}</td>
-                <td className="py-3 px-6 text-left">{new Date(user.dateCreated).toLocaleDateString()}</td>
+ <td className="py-3 px-6 text-left">
+  {user.dateCreated
+    ? new Date(user.dateCreated).toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+      })
+    : 'N/A'}
+</td>
+
                 <td className="py-3 px-6 text-left">
                   <select
                     value={user.role}
                     onChange={(e) => handleRoleChange(user._id, e.target.value as 'user' | 'admin')}
-                    className="bg-gray-700 border border-gray-600 rounded-md py-1 px-2"
+                    className="bg-black border border-black rounded-md py-1 px-2 text-white"
                   >
                     <option value="user">User</option>
                     <option value="admin">Admin</option>
@@ -99,9 +115,9 @@ export default function ManageUsersPage() {
                 <td className="py-3 px-6 text-center">
                   <button
                     onClick={() => handleDelete(user._id)}
-                    className="bg-red-600 hover:bg-red-500 text-white font-bold py-1 px-3 rounded-md transition-colors"
+                     className="p-2 rounded-lg text-red-400 hover:bg-red-900 transition-colors"
                   >
-                    Delete
+                   <Trash size={18} />
                   </button>
                 </td>
               </tr>

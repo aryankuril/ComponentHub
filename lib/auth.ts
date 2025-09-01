@@ -9,6 +9,7 @@ interface CustomUser {
   name: string;
   email: string;
   role: "user" | "admin";
+  dateCreated: Date;
 }
 
 export const authOptions: NextAuthOptions = {
@@ -31,6 +32,7 @@ export const authOptions: NextAuthOptions = {
             name: user.name,
             email: user.email,
             role: user.role as "user" | "admin",
+            dateCreated: user.dateCreated,
           };
         }
         return null;
@@ -42,6 +44,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.id = (user as CustomUser).id;
         token.role = (user as CustomUser).role;
+        token.dateCreated = (user as CustomUser).dateCreated;
       }
       return token;
     },
@@ -49,6 +52,7 @@ export const authOptions: NextAuthOptions = {
       if (session.user) {
         (session.user as any).id = token.id;
         (session.user as any).role = token.role;
+        (session.user as any).dateCreated = token.dateCreated;
       }
       return session;
     },

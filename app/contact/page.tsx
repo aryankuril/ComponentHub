@@ -44,7 +44,7 @@ const Contact = () => {
       <Navbar />
       <main className="pt-16">
         {/* Hero Section */}
-        <section className="py-20 bg-gradient-hero">
+        <section className="py-20 bg-[#040404]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
               <span className="text-white">Get in </span>
@@ -65,7 +65,7 @@ const Contact = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {/* Contact Form */}
               <ThreeDElement intensity={8}>
-                <div className="bg-gradient-card border border-border rounded-2xl p-8">
+                <div className="bg-[#080808] border border-border rounded-2xl p-8">
                   <h2 className="text-2xl font-bold mb-6 text-white">Send us a message</h2>
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -154,7 +154,7 @@ const Contact = () => {
                 <div className="space-y-6">
                   {contactInfo.map((info, index) => (
                     <ThreeDElement key={info.title} intensity={6}>
-                      <div className="bg-card border border-border rounded-xl p-6 group hover:border-neon-cyan/30 transition-all duration-300">
+                      <div className="bg-[#080808] border border-border rounded-xl p-6 group hover:border-neon-cyan/30 transition-all duration-300">
                         <div className="flex items-start space-x-4">
                           <div className="w-12 h-12 bg-gradient-neon rounded-lg flex items-center justify-center group-hover:animate-pulse">
                             <info.icon className="h-6 w-6 text-black" />
@@ -189,7 +189,7 @@ const Contact = () => {
         </section>
 
         {/* FAQ Section */}
-        <section className="py-20 bg-secondary/20">
+        <section className="py-20 bg-[#040404]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">
@@ -218,7 +218,7 @@ const Contact = () => {
                 }
               ].map((faq, index) => (
                 <ThreeDElement key={index} intensity={6}>
-                  <div className="bg-card border border-border rounded-xl p-6">
+                  <div className="bg-[#080808] border border-border rounded-xl p-6">
                     <h3 className="font-semibold text-white mb-3">{faq.question}</h3>
                     <p className="text-gray-400">{faq.answer}</p>
                   </div>

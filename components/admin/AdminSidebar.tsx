@@ -1,38 +1,77 @@
 // components/admin/AdminSidebar.tsx
 'use client';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import { LayoutDashboard, Users, FolderTree, List, Layers, LogOut } from 'lucide-react';
 
 export default function AdminSidebar() {
   const pathname = usePathname();
-
+  const router = useRouter();
+const [activeTab, setActiveTab] = useState<'admin' | 'categories' | 'users' | 'components' | 'allcomponents'>('admin');
   const navItems = [
-    { name: 'Dashboard', href: '/admin' },
-    { name: 'Manage Users', href: '/admin/users' },
-    { name: 'Manage Categories', href: '/admin/categories' },
-    { name: 'Manage Components', href: '/admin/components' },
-    { name: 'All Components', href: '/admin/allcomponents' },
+    { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+    { name: 'Manage Users', href: '/admin/users', icon: Users },
+    { name: 'Manage Categories', href: '/admin/categories', icon: FolderTree },
+    { name: 'Manage Components', href: '/admin/components', icon: Layers },
+    { name: 'All Components', href: '/admin/allcomponents', icon: List },
   ];
 
+  const handleLogout = () => {
+    // TODO: add your logout logic here (clear cookies, redirect, etc.)
+    router.push('/login');
+  };
+
   return (
-    <aside className="w-64 bg-gray-900 text-white p-6 h-full border-r border-gray-800">
-      <h2 className="text-2xl font-bold mb-8 text-red-400">Admin Panel</h2>
-      <nav>
-        <ul className="space-y-4">
-          {navItems.map((item) => (
-            <li key={item.name}>
-              <Link
-                href={item.href}
-                className={`block py-2 px-4 rounded-lg transition-colors duration-200 ${
-                  pathname === item.href ? 'bg-red-600 text-white' : 'hover:bg-gray-700 text-gray-300'
-                }`}
+
+    <div className="w-full md:w-64 bg-black text-white p-6 flex flex-col justify-between rounded-r-2xl shadow-xl"> 
+      <button
+  onClick={handleLogout}
+  className="absolute top-4 right-6 rounded-[5px] bg-[#262626] shadow-[2px_2px_0px_0px_#F9B31B] 
+             flex justify-center items-center gap-[10px] px-[30px] py-[10px] 
+             text-[#F9B31B] font-semibold transition-colors w-full sm:w-auto"
+>
+  <LogOut size={18} />
+  Logout
+</button>
+   <aside >
+      <div>
+        <h2 className="text-3xl font-extrabold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-[#FFD54F] to-[#EBEBEB]">
+            Admin Panel
+          </h2>
+
+        {/* Navigation */}
+        <nav className="flex flex-col gap-2">
+          {navItems.map((item) => {
+            const Icon = item.icon;
+            return (
+              <button
+                key={item.name}
+                onClick={() => router.push(item.href)}
+                className={`flex items-center gap-3 py-3 px-1 rounded-lg font-semibold transition-colors ${
+              activeTab === "dashboard"
+                ? "bg-gray-800 text-[#F9B31B] "
+                : "hover:bg-gray-800"
+            }`}
               >
+                <Icon size={20} />
                 {item.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
+              </button>
+            );
+          })}
+        </nav>
+      </div>
+
+      {/* Logout Button */}
+      {/* <div className="mt-8">
+        <button
+          onClick={handleLogout}
+          className="flex items-center w-full justify-center gap-3 py-3 px-4 rounded-lg font-semibold transition-colors bg-red-600 hover:bg-red-700"
+        >
+          <LogOut size={20} />
+          Logout
+        </button>
+      </div> */}
     </aside>
+    </div>
   );
 }

@@ -1,4 +1,5 @@
 'use client';
+import { Edit, Trash } from 'lucide-react';
 import { useState, useEffect } from 'react';
 
 interface Category {
@@ -98,53 +99,53 @@ export default function ManageCategoriesPage() {
 
   return (
     <div className="p-8 text-white">
-      <h1 className="text-4xl font-bold mb-8">Manage Categories</h1>
+      <h1 className="text-4xl font-bold mb-8 text-black">Manage Categories</h1>
 
       {message && <p className={`mb-4 text-center text-sm ${message.startsWith('Error') ? 'text-red-500' : 'text-green-500'}`}>{message}</p>}
 
-      <div className="bg-gray-900 p-6 rounded-lg mb-8">
-        <h2 className="text-2xl font-semibold mb-4">Add New Category</h2>
+      <div className="bg-white/50 p-6 rounded-lg mb-8">
+        <h2 className="text-2xl font-semibold mb-4 text-black">Add New Category</h2>
         <form onSubmit={handleAddCategory} className="flex space-x-4">
           <input
             type="text"
             value={newCategoryName}
             onChange={(e) => setNewCategoryName(e.target.value)}
             placeholder="Category Name"
-            className="flex-1 px-4 py-2 bg-gray-800 border border-gray-700 rounded-md focus:outline-none focus:ring-red-500 focus:border-red-500 text-white"
+            className="flex-1 px-4 py-2 bg-white rounded-md focus:outline-none focus:ring-red-500 focus:border-red-500 text-gray-900"
             required
           />
           <button
             type="submit"
-            className="bg-red-600 hover:bg-red-500 text-white px-6 py-2 rounded-md transition-colors"
+             className="rounded-[5px] bg-[#262626] shadow-[2px_2px_0px_0px_#F9B31B] flex justify-center items-center gap-[10px] px-[30px] py-[10px] text-[#F9B31B] font-semibold transition-colors w-full sm:w-auto"
           >
             Add Category
           </button>
         </form>
       </div>
 
-      <div className="bg-gray-900 p-6 rounded-lg">
-        <h2 className="text-2xl font-semibold mb-4">Existing Categories</h2>
+      <div className="bg-white/50 p-6 rounded-lg">
+        <h2 className="text-2xl font-semibold mb-4 text-black">Existing Categories</h2>
         <ul className="space-y-4">
           {categories.map((category) => (
-            <li key={category._id} className="flex justify-between items-center bg-gray-800 p-4 rounded-md">
+            <li key={category._id} className="flex justify-between items-center bg-white text-black p-4 rounded-md">
               {editingCategoryId === category._id ? (
                 <>
                   <input
                     type="text"
                     value={editingCategoryName}
                     onChange={(e) => setEditingCategoryName(e.target.value)}
-                    className="flex-1 px-2 py-1 mr-2 bg-gray-700 border border-gray-600 rounded-md text-white"
+                    className="flex-1 px-2 py-1 mr-2 bg-white/50 border border-gray-600 rounded-md text-black"
                   />
                   <div className="flex space-x-2">
                     <button
                       onClick={() => handleUpdateCategory(category._id)}
-                      className="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-md transition-colors"
+                      className="rounded-[5px] bg-[#262626] shadow-[2px_2px_0px_0px_#F9B31B] flex justify-center items-center gap-[10px] px-[18px] py-[8px] text-[#F9B31B] font-semibold transition-colors w-full sm:w-auto"
                     >
                       Save
                     </button>
                     <button
                       onClick={() => setEditingCategoryId(null)}
-                      className="bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded-md transition-colors"
+                     className="rounded-[5px] bg-[#F9B31B] shadow-[2px_2px_0_0_#262626] flex justify-center items-center gap-[10px] px-[18px] py-[8px] text-[#262626] font-semibold transition-colors w-full sm:w-auto"
                     >
                       Cancel
                     </button>
@@ -156,15 +157,15 @@ export default function ManageCategoriesPage() {
                   <div className="flex space-x-2">
                     <button
                       onClick={() => handleEditClick(category)}
-                      className="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-md transition-colors"
+                        className="p-2 rounded-lg text-[#FFD54F] hover:bg-gray-300 transition-colors"
                     >
-                      Edit
+                      <Edit size={18} />
                     </button>
                     <button
                       onClick={() => handleDeleteCategory(category._id)}
-                      className="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-md transition-colors"
+                      className="p-2 rounded-lg text-red-600 hover:bg-gray-300 transition-colors"
                     >
-                      Delete
+                      <Trash size={18} />
                     </button>
                   </div>
                 </>

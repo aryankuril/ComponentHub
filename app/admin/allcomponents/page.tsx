@@ -2,11 +2,13 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { Edit, ExternalLink, Trash } from 'lucide-react';
 
 interface Component {
   _id: string;
   name: string;
   description: string;
+  dateCreated: string; // 👈 add this
   category?: {
     _id: string;
     name: string;
@@ -26,8 +28,13 @@ export default function ManageComponentsPage() {
       if (!res.ok) {
         throw new Error('Failed to fetch components. You might not be an admin.');
       }
-      const data = await res.json();
-      setComponents(data);
+      const data = await res.json(); 
+      setComponents(
+      data.sort(
+        (a: Component, b: Component) =>
+          new Date(b.dateCreated).getTime() - new Date(a.dateCreated).getTime()
+      )
+    );
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -57,50 +64,55 @@ export default function ManageComponentsPage() {
     }
   };
 
-  if (loading) return <div className="p-8 text-center text-white">Loading components...</div>;
+  if (loading) return <div className="p-8 text-center text-black">Loading components...</div>;
   if (error) return <div className="p-8 text-center text-red-500">{error}</div>;
 
   return (
     <div className="p-8">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-4xl font-bold text-white">All Components</h1>
+        <h1 className="text-4xl font-bold text-black">All Components</h1>
       
       </div>
 
-      <div className="bg-gray-900 rounded-lg shadow-lg overflow-hidden">
+      <div className=" rounded-lg shadow-lg overflow-hidden">
         <table className="min-w-full table-auto">
           <thead>
-            <tr className="bg-gray-800 text-gray-400 uppercase text-sm leading-normal">
+            <tr className="bg-white text-black uppercase text-sm leading-normal border-b border-gray-700">
               <th className="py-3 px-6 text-left">Component Name</th>
+              <th className="py-3 px-6 text-left">Preview Link</th>
               <th className="py-3 px-6 text-left">Category</th>
+              <th className="py-3 px-6 text-left">Created Date</th> {/* 👈 new column */}
               <th className="py-3 px-6 text-center">Actions</th>
             </tr>
           </thead>
-          <tbody className="text-white text-sm font-light">
+          <tbody className="text-black text-sm font-light bg-[#FFFFFF79]">
             {components.map((component) => (
-              <tr key={component._id} className="border-b border-gray-700 hover:bg-gray-800">
-                <td className="py-3 px-6 text-left">
-                  <Link href={`/components/${component._id}`} className="text-blue-400 hover:underline">
-                    {component.name}
-                  </Link>
-                </td>
-                <td className="py-3 px-6 text-left">{component.category?.name || 'N/A'}</td>
-                <td className="py-3 px-6 text-center">
-                  <div className="flex item-center justify-center space-x-4">
-                    <button
-                      onClick={() => router.push(`/admin/components/${component._id}`)}
-                      className="text-white bg-blue-600 hover:bg-blue-500 font-bold py-1 px-3 rounded-md transition-colors"
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDelete(component._id)}
-                      className="text-white bg-red-600 hover:bg-red-500 font-bold py-1 px-3 rounded-md transition-colors"
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </td>
+              <tr key={component._id} className="border-b border-gray-700">
+                <td className="py-3 px-6 text-left capitalize">{component.name}</td>
+<td className="py-3 px-6 text-left">
+  <Link href={`/components/${component._id}`} className="text-[#F9B31B] flex items-center gap-2">
+    {component.name}<ExternalLink size={16} />
+  </Link>
+</td>
+<td className="py-3 px-6 text-left capitalize">{component.category?.name || 'N/A'}</td>
+<td className="py-3 px-6 text-left">{new Date(component.dateCreated).toLocaleDateString('en-GB')}</td>
+<td className="py-3 px-6 text-center">
+  <div className="flex item-center justify-center space-x-4">
+    <button
+      onClick={() => router.push(`/admin/components/${component._id}`)}
+      className="p-2 rounded-lg text-[#FFD54F] hover:bg-gray-300 transition-colors"
+    >
+      <Edit size={18} />
+    </button>
+    <button
+      onClick={() => handleDelete(component._id)}
+      className="p-2 rounded-lg text-red-600 hover:bg-gray-300 transition-colors"
+    >
+      <Trash size={18} />
+    </button>
+  </div>
+</td>
+
               </tr>
             ))}
           </tbody>

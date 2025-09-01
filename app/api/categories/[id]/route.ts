@@ -4,82 +4,61 @@ import dbConnect from '@/lib/mongodb';
 import Category from '@/lib/schemas/Category';
 import Component from '@/lib/schemas/Component';
 
-// GET route to fetch a single category by ID
-export async function GET(req: Request, { params }: { params: { id: string } }) {
-  const { id } = params;
-
+// GET all categories with their components
+export async function GET() {
   try {
     await dbConnect();
-    const category = await Category.findById(id);
 
-    if (!category) {
-      return new NextResponse(JSON.stringify({ message: 'Category not found' }), { status: 404 });
-    }
-    
-    return NextResponse.json(category);
+    const categories = await Category.find({});
+    const components = await Component.find({});
+
+    // Attach components to their respective categories
+    const categoriesWithComponents = categories.map((cat) => ({
+      _id: cat._id,
+      name: cat.name,
+      components: components.filter((comp) => comp.category?.toString() === cat._id.toString()),
+    }));
+
+    return NextResponse.json(categoriesWithComponents);
   } catch (error) {
-    console.error('Failed to fetch category:', error);
+    console.error(error);
     return new NextResponse(JSON.stringify({ message: 'Internal Server Error' }), { status: 500 });
   }
 }
 
-// PATCH route to update a category by ID (Admin only)
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+// POST a new category (Admin only)
+export async function POST(req: Request) {
   const session = await auth();
   if (!session || session.user.role !== 'admin') {
     return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
   }
-
-  const { id } = params;
-  const { name } = await req.json();
-
-  if (!name) {
-    return new NextResponse(JSON.stringify({ message: 'Category name is required' }), { status: 400 });
-  }
-
   try {
     await dbConnect();
-    
-    const updatedCategory = await Category.findByIdAndUpdate(
-      id,
-      { name },
-      { new: true, runValidators: true }
-    );
-
-    if (!updatedCategory) {
-      return new NextResponse(JSON.stringify({ message: 'Category not found' }), { status: 404 });
-    }
-
-    return NextResponse.json(updatedCategory);
+    const { name } = await req.json();
+    const newCategory = new Category({ name });
+    await newCategory.save();
+    return NextResponse.json(newCategory, { status: 201 });
   } catch (error) {
-    console.error('Failed to update category:', error);
+    console.error(error);
     return new NextResponse(JSON.stringify({ message: 'Internal Server Error' }), { status: 500 });
   }
 }
 
-// DELETE route to delete a category by ID (Admin only)
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+// DELETE a category (Admin only)
+export async function DELETE(req: Request) {
   const session = await auth();
   if (!session || session.user.role !== 'admin') {
     return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
   }
-
-  const { id } = params;
-
   try {
     await dbConnect();
-    // Set the category field to null for all components in this category
+    const { id } = await req.json();
+    // Remove category reference from components
     await Component.updateMany({ category: id }, { category: null });
-    
-    const deletedCategory = await Category.findByIdAndDelete(id);
-
-    if (!deletedCategory) {
-      return new NextResponse(JSON.stringify({ message: 'Category not found' }), { status: 404 });
-    }
-
+    await Category.findByIdAndDelete(id);
     return new NextResponse(null, { status: 204 });
   } catch (error) {
-    console.error('Failed to delete category:', error);
+    console.error(error);
     return new NextResponse(JSON.stringify({ message: 'Internal Server Error' }), { status: 500 });
   }
 }

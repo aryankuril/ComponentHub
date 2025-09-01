@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import ComponentForm from '@/components/admin/ComponentForm';
 import ComponentPreview from '@/components/admin/ComponentPreview';
+import { Edit, Trash } from 'lucide-react';
 
 interface Component {
   _id: string;
@@ -42,10 +43,10 @@ export default function ManageComponentsPage() {
 
   return (
     <div className="p-8">
-      <h1 className="text-4xl font-bold mb-8">Manage Components</h1>
+      <h1 className="text-4xl font-bold mb-8 text-black">Manage Components</h1>
 
-      <div className="bg-gray-900 p-6 rounded-lg mb-8">
-        <h2 className="text-2xl font-semibold mb-4">{isEditing ? 'Edit Component' : 'Add New Component'}</h2>
+      <div className="bg-white/50 p-6 rounded-lg mb-8">
+        <h2 className="text-2xl font-semibold mb-4 text-black">{isEditing ? 'Edit Component' : 'Add New Component'}</h2>
         <ComponentForm
           onSuccess={() => {
             fetchComponents();
@@ -56,11 +57,11 @@ export default function ManageComponentsPage() {
         />
       </div>
 
-      <div className="bg-gray-900 p-6 rounded-lg">
-        <h2 className="text-2xl font-semibold mb-4">Existing Components</h2>
+      <div className="bg-white/50 p-6 rounded-lg">
+        <h2 className="text-2xl font-semibold mb-4 text-black">Existing Components</h2>
         <ul className="space-y-4">
           {components.map((component) => (
-            <li key={component._id} className="flex justify-between items-center bg-gray-800 p-4 rounded-md">
+            <li key={component._id} className="flex justify-between items-center bg-white text-black p-4 rounded-md">
               <div className="flex-1">
                 <Link href={`/components/${component._id}`} className="font-medium text-lg hover:text-blue-400 transition-colors">
                   {component.name}
@@ -72,15 +73,15 @@ export default function ManageComponentsPage() {
               <div className="flex space-x-2">
                 <button
                   onClick={() => handleEdit(component)}
-                  className="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-md text-sm transition-colors"
-                >
-                  Edit
+                  className="p-2 rounded-lg text-[#FFD54F] hover:bg-gray-300 transition-colors"
+                    >
+                      <Edit size={18} />
                 </button>
                 <button
                   onClick={() => handleDelete(component._id)}
-                  className="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-md text-sm transition-colors"
-                >
-                  Delete
+                   className="p-2 rounded-lg text-red-600 hover:bg-gray-300 transition-colors"
+                    >
+                      <Trash size={18} />
                 </button>
               </div>
             </li>
