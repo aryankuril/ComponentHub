@@ -1,34 +1,27 @@
+// app/components/[id]/page.tsx
 import dbConnect from '@/lib/mongodb';
 import Component from '@/lib/schemas/Component';
 import Category from '@/lib/schemas/Category';
-import { NextResponse } from 'next/server';
+import ComponentDetails from '@/components/ComponentDetails';
 
-export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+// This is now a Server Component and will handle all the database logic.
+export default async function ComponentPage({ params }: { params: { id: string } }) {
   await dbConnect();
+  // We explicitly touch the Category model to ensure it's registered.
+  Category.modelName;
 
-  try {
-    // Touch Category model to ensure registration (explicitly used to avoid ESLint warning)
-    const _ = Category.modelName;
+  const component = await Component.findById(params.id).populate('category').lean();
 
-    const componentId = params.id;
-    const component = await Component.findById(componentId).populate('category').lean();
-
-    if (!component) {
-      return NextResponse.json({ error: 'Component not found.' }, { status: 404 });
-    }
-
-    return NextResponse.json(component);
-
-  } catch (error: unknown) {
-    console.error('Error fetching component:', error);
-
-    // Narrow the unknown error
-    const message =
-      error instanceof Error ? error.message : 'Internal Server Error';
-
-    return NextResponse.json({ error: message }, { status: 500 });
+  if (!component) {
+    return (
+      <div className="text-center mt-20 text-red-500">
+        <h1 className="text-2xl font-bold">Component not found.</h1>
+      </div>
+    );
   }
+
+  // The component data is serialized and passed as a prop to the Client Component.
+  const serializedComponent = JSON.parse(JSON.stringify(component));
+
+  return <ComponentDetails component={serializedComponent} />;
 }
