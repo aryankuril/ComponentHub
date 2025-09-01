@@ -17,13 +17,13 @@ interface CategoryType {
 
 // Raw Mongoose output (loosely typed)
 interface RawComponent {
-  _id: any;
+  _id: string;
   name?: string;
   description?: string;
 }
 
 interface RawCategory {
-  _id: any;
+  _id: string;
   name?: string;
   components?: RawComponent[];
 }
