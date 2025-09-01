@@ -4,14 +4,6 @@ import dbConnect from "@/lib/mongodb";
 import User from "@/lib/schemas/User";
 import bcrypt from "bcryptjs";
 
-interface CustomUser {
-  id: string;
-  name: string;
-  email: string;
-  role: "user" | "admin";
-  dateCreated: Date;
-}
-
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
@@ -39,24 +31,35 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
-  callbacks: {
+// ... (rest of your code)
+
+callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = (user as CustomUser).id;
-        token.role = (user as CustomUser).role;
-        token.dateCreated = (user as CustomUser).dateCreated;
+        token.id = user.id;
+        token.role = user.role;
+        token.dateCreated = user.dateCreated;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
-        (session.user as any).id = token.id;
-        (session.user as any).role = token.role;
-        (session.user as any).dateCreated = token.dateCreated;
+        // Add checks to ensure the token properties are not undefined
+        if (token.id) {
+          session.user.id = token.id;
+        }
+        if (token.role) {
+          session.user.role = token.role;
+        }
+        if (token.dateCreated) {
+          session.user.dateCreated = token.dateCreated;
+        }
       }
       return session;
     },
-  },
+},
+
+// ... (rest of your code)
   pages: {
     signIn: "/login",
   },

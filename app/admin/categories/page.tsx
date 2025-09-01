@@ -7,6 +7,7 @@ interface Category {
   name: string;
 }
 
+
 export default function ManageCategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [newCategoryName, setNewCategoryName] = useState('');
@@ -20,7 +21,7 @@ export default function ManageCategoriesPage() {
       if (!res.ok) {
         throw new Error('Failed to fetch categories.');
       }
-      const data = await res.json();
+       const data: Category[] = await res.json(); 
       setCategories(data);
     } catch (error) {
       setMessage(`Error: ${(error as Error).message}`);

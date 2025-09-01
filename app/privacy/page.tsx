@@ -126,9 +126,10 @@ const Privacy = () => {
               </div>
               <div className="space-y-4">
                 <p className="text-muted-foreground">
-                  If you have any questions about this Privacy Policy or how we handle your data, 
-                  please don't hesitate to contact us.
-                </p>
+  If you have any questions about this Privacy Policy or how we handle your data, 
+  please don&apos;t hesitate to contact us.
+</p>
+
                 <div className="space-y-2 text-sm">
                   <p>Email: <span className="text-neon-cyan">privacy@componentshowcase.com</span></p>
                   <p>Address: <span className="text-neon-cyan">123 Tech Street, Digital City, 12345</span></p>

@@ -7,12 +7,34 @@ import {
   PieChart, Pie, Cell,
   AreaChart, Area
 } from 'recharts';
+
+interface User {
+  _id: string;
+  name: string;
+  email: string;
+  role: 'user' | 'admin';
+  dateCreated: string;
+}
+
+interface Category {
+  _id: string;
+  name: string;
+}
+
+interface Component {
+  _id: string;
+  name: string;
+  dateCreated: string;
+  category?: Category;
+}
+
 import { format } from 'date-fns';
 
 export default function AdminDashboardPage() {
-  const [users, setUsers] = useState<any[]>([]);
-  const [categories, setCategories] = useState<any[]>([]);
-  const [components, setComponents] = useState<any[]>([]);
+const [users, setUsers] = useState<User[]>([]);
+const [categories, setCategories] = useState<Category[]>([]);
+const [components, setComponents] = useState<Component[]>([]);
+
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
