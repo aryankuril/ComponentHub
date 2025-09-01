@@ -9,7 +9,7 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
   if (!session || session.user?.role !== 'admin') {
     return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
   }
-
+// 
   const { id } = params;
 
   try {
