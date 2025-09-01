@@ -1,14 +1,22 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/server-auth';
 import dbConnect from '@/lib/mongodb';
 import Component from '@/lib/schemas/Component';
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+// Define params type for this route
+interface Params {
+  params: {
+    id: string;
+  };
+}
+
+// GET
+export async function GET(req: Request, { params }: Params) {
   const { id } = params;
 
   const session = await auth();
   if (!session?.user || session.user.role !== 'admin') {
-    return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
   try {
@@ -16,22 +24,26 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
     const component = await Component.findById(id).populate('category', 'name');
 
     if (!component) {
-      return new NextResponse(JSON.stringify({ message: 'Component not found' }), { status: 404 });
+      return NextResponse.json({ message: 'Component not found' }, { status: 404 });
     }
 
-    return NextResponse.json(component);
+       return NextResponse.json({ message: `Component with id: ${id}` });
   } catch (error) {
     console.error('Failed to fetch component:', error);
-    return new NextResponse(JSON.stringify({ message: 'Internal Server Error' }), { status: 500 });
+    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
+
+ 
 }
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+// PATCH
+export async function PATCH(req: Request, { params }: Params) {
   const { id } = params;
+  const body = await req.json();
 
   const session = await auth();
   if (!session?.user || session.user.role !== 'admin') {
-    return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
   const { name, description, code, npmPackages, category } = await req.json();
@@ -46,22 +58,26 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
     ).populate('category', 'name');
 
     if (!updatedComponent) {
-      return new NextResponse(JSON.stringify({ message: 'Component not found' }), { status: 404 });
+      return NextResponse.json({ message: 'Component not found' }, { status: 404 });
     }
 
-    return NextResponse.json(updatedComponent);
+     return NextResponse.json({
+    message: `Updated component ${id}`,
+    data: body,
+  });
   } catch (error) {
     console.error('Failed to update component:', error);
-    return new NextResponse(JSON.stringify({ message: 'Internal Server Error' }), { status: 500 });
+    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }
 
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+// DELETE
+export async function DELETE(req: NextRequest, { params }: Params) {
   const { id } = params;
 
   const session = await auth();
   if (!session?.user || session.user.role !== 'admin') {
-    return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
   try {
@@ -69,12 +85,12 @@ export async function DELETE(req: Request, { params }: { params: { id: string } 
     const deletedComponent = await Component.findByIdAndDelete(id);
 
     if (!deletedComponent) {
-      return new NextResponse(JSON.stringify({ message: 'Component not found' }), { status: 404 });
+      return NextResponse.json({ message: 'Component not found' }, { status: 404 });
     }
 
     return new NextResponse(null, { status: 204 });
   } catch (error) {
     console.error('Failed to delete component:', error);
-    return new NextResponse(JSON.stringify({ message: 'Internal Server Error' }), { status: 500 });
+    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }
