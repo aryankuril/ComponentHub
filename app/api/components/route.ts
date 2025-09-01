@@ -18,9 +18,10 @@ export async function GET() {
 // POST a new component (Admin only)
 export async function POST(req: Request) {
   const session = await auth();
-  if (!session || session.user.role !== 'admin') {
-    return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
-  }
+  if (!session || session.user?.role !== 'admin') {
+  return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+}
+
   try {
     await dbConnect();
     const body = await req.json();
