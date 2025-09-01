@@ -32,7 +32,7 @@ export default function ComponentsPage() {
       .then((data: CategoryData[]) => setCategories(data))
       .catch((err) => console.error(err));
   }, []);
-
+// 
   return (
     <div className="min-h-screen flex flex-col bg-gray-900 text-gray-200">
       <Navbar />
