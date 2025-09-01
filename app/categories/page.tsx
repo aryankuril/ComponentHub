@@ -15,19 +15,33 @@ interface CategoryType {
   components?: ComponentType[];
 }
 
+// Raw Mongoose output (loosely typed)
+interface RawComponent {
+  _id: any;
+  name?: string;
+  description?: string;
+}
+
+interface RawCategory {
+  _id: any;
+  name?: string;
+  components?: RawComponent[];
+}
+
 export default async function CategoriesPage() {
   await dbConnect();
 
-  // Fetch the data and assert its type
+  // Fetch the data from MongoDB
   const rawCategories = await CategoryModel.find({}).populate('components').lean();
 
-  const categories: CategoryType[] = rawCategories.map((cat: any) => ({
+  // Map to our typed structure safely
+  const categories: CategoryType[] = (rawCategories as unknown as RawCategory[]).map((cat) => ({
     _id: cat._id.toString(),
-    name: cat.name,
-    components: (cat.components as any[])?.map((comp: any) => ({
+    name: cat.name ?? 'Unnamed Category',
+    components: cat.components?.map((comp) => ({
       _id: comp._id.toString(),
-      name: comp.name,
-      description: comp.description,
+      name: comp.name ?? 'Unnamed Component',
+      description: comp.description ?? '',
     })) ?? [],
   }));
 
