@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import ComponentDetails from '@/components/ComponentDetails';
 
 interface ComponentType {
@@ -15,24 +15,14 @@ interface CategoryType {
   components?: ComponentType[];
 }
 
-export default function CategoriesSidebar() {
-  const [categories, setCategories] = useState<CategoryType[]>([]);
+interface CategoriesSidebarProps {
+  initialCategories: CategoryType[];
+}
+
+export default function CategoriesSidebar({ initialCategories }: CategoriesSidebarProps) {
+  const [categories] = useState<CategoryType[]>(initialCategories);
   const [selectedComponent, setSelectedComponent] = useState<ComponentType | null>(null);
   const [expandedCategories, setExpandedCategories] = useState<string[]>([]);
-
-  // Fetch categories with components from API
-  useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const res = await fetch('/api/categories');
-        const data: CategoryType[] = await res.json();
-        setCategories(data);
-      } catch (err) {
-        console.error('Failed to fetch categories:', err);
-      }
-    }
-    fetchCategories();
-  }, []);
 
   const toggleCategory = (id: string) => {
     setExpandedCategories((prev) =>

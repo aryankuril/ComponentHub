@@ -1,16 +1,30 @@
 import dbConnect from '@/lib/mongodb';
-import Category from '@/lib/schemas/Category';
+import CategoryModel from '@/lib/schemas/Category';
 import ComponentSidebar from './CategoriesSidebar';
+
+// Define the interfaces for your data structures
+interface ComponentType {
+  _id: string;
+  name: string;
+  description: string;
+}
+
+interface CategoryType {
+  _id: string;
+  name: string;
+  components?: ComponentType[];
+}
 
 export default async function CategoriesPage() {
   await dbConnect();
 
-  const rawCategories = await Category.find({}).populate('components').lean();
+  // Fetch the data and assert its type
+  const rawCategories = await CategoryModel.find({}).populate('components').lean();
 
-  const categories = rawCategories.map((cat: any) => ({
+  const categories: CategoryType[] = rawCategories.map((cat: any) => ({
     _id: cat._id.toString(),
     name: cat.name,
-    components: cat.components?.map((comp: any) => ({
+    components: (cat.components as any[])?.map((comp: any) => ({
       _id: comp._id.toString(),
       name: comp.name,
       description: comp.description,
