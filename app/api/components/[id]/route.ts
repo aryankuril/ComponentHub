@@ -4,14 +4,15 @@ import dbConnect from '@/lib/mongodb';
 import Component from '@/lib/schemas/Component';
 
 // GET route to fetch a single component by ID (Admin only)
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(req: Request, context: { params: { id: string } }) {
   const session = await auth();
-  if (!session || session.user.role !== 'admin') {
-    return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
-  }
-  
-  
-  const { id } = params;
+  if (!session?.user || session.user.role !== 'admin') {
+  return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
+}
+
+
+  // Access the id from the context object
+  const { id } = context.params;
 
   try {
     await dbConnect();
@@ -29,13 +30,15 @@ export async function GET(req: Request, { params }: { params: { id: string } }) 
 }
 
 // PATCH route to update a component by ID (Admin only)
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(req: Request, context: { params: { id: string } }) {
   const session = await auth();
-  if (!session || session.user.role !== 'admin') {
-    return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
-  }
+  if (!session?.user || session.user.role !== 'admin') {
+  return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
+}
 
-  const { id } = params;
+
+  // Access the id from the context object
+  const { id } = context.params;
   const { name, description, code, npmPackages, category } = await req.json();
 
   try {
@@ -65,13 +68,15 @@ export async function PATCH(req: Request, { params }: { params: { id: string } }
 }
 
 // DELETE route to delete a component by ID (Admin only)
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+export async function DELETE(req: Request, context: { params: { id: string } }) {
   const session = await auth();
-  if (!session || session.user.role !== 'admin') {
-    return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
-  }
+  if (!session?.user || session.user.role !== 'admin') {
+  return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
+}
 
-  const { id } = params;
+
+  // Access the id from the context object
+  const { id } = context.params;
 
   try {
     await dbConnect();
