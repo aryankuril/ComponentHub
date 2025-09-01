@@ -3,14 +3,21 @@ import { auth } from '@/lib/server-auth';
 import dbConnect from '@/lib/mongodb';
 import Component from '@/lib/schemas/Component';
 
+// Define the type for route params
+interface ComponentParams {
+  params: {
+    id: string;
+  };
+}
+
 // GET route to fetch a single component by ID (Admin only)
-export async function GET(req: Request, { params }: any) {
+export async function GET(req: Request, context: ComponentParams) {
   const session = await auth();
   if (!session?.user || session.user.role !== 'admin') {
     return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
   }
 
-  const { id } = params;
+  const { id } = context.params;
 
   try {
     await dbConnect();
@@ -28,13 +35,13 @@ export async function GET(req: Request, { params }: any) {
 }
 
 // PATCH route
-export async function PATCH(req: Request, { params }: any) {
+export async function PATCH(req: Request, context: ComponentParams) {
   const session = await auth();
   if (!session?.user || session.user.role !== 'admin') {
     return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
   }
 
-  const { id } = params;
+  const { id } = context.params;
   const { name, description, code, npmPackages, category } = await req.json();
 
   try {
@@ -58,13 +65,13 @@ export async function PATCH(req: Request, { params }: any) {
 }
 
 // DELETE route
-export async function DELETE(req: Request, { params }: any) {
+export async function DELETE(req: Request, context: ComponentParams) {
   const session = await auth();
   if (!session?.user || session.user.role !== 'admin') {
     return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
   }
 
-  const { id } = params;
+  const { id } = context.params;
 
   try {
     await dbConnect();
