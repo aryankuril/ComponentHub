@@ -3,8 +3,9 @@ import { auth } from '@/lib/server-auth';
 import dbConnect from '@/lib/mongodb';
 import Component from '@/lib/schemas/Component';
 
+
 export async function GET(req: Request, { params }: { params: { id: string } }) {
-  const { id } = params;
+  const { id } = params;
 
   const session = await auth();
   if (!session?.user || session.user.role !== 'admin') {
