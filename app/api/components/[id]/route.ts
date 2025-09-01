@@ -1,16 +1,16 @@
-import { NextResponse } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 import { auth } from '@/lib/server-auth';
 import dbConnect from '@/lib/mongodb';
 import Component from '@/lib/schemas/Component';
 
-// GET route
 export async function GET(
-  req: Request,
-  context: { params: { id?: string } } // <-- note id is optional
+  req: NextRequest,
+  context: { params: Record<string, string> }
 ) {
   const { params } = context;
+
   const session = await auth();
-  
+
   if (!session?.user?.role || session.user.role !== 'admin') {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
@@ -22,7 +22,7 @@ export async function GET(
 
   try {
     await dbConnect();
-    const component = await Component.findById(id).populate('category', 'name');
+    const component = await Component.findById(id).populate('category', 'name').lean();
 
     if (!component) {
       return NextResponse.json({ message: 'Component not found' }, { status: 404 });
