@@ -4,15 +4,13 @@ import dbConnect from '@/lib/mongodb';
 import Component from '@/lib/schemas/Component';
 
 // GET route to fetch a single component by ID (Admin only)
-export async function GET(req: Request, context: { params: { id: string } }) {
+export async function GET(req: Request, { params }: any) {
   const session = await auth();
   if (!session?.user || session.user.role !== 'admin') {
-  return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
-}
+    return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
+  }
 
-
-  // Access the id from the context object
-  const { id } = context.params;
+  const { id } = params;
 
   try {
     await dbConnect();
@@ -21,7 +19,7 @@ export async function GET(req: Request, context: { params: { id: string } }) {
     if (!component) {
       return new NextResponse(JSON.stringify({ message: 'Component not found' }), { status: 404 });
     }
-    
+
     return NextResponse.json(component);
   } catch (error) {
     console.error('Failed to fetch component:', error);
@@ -29,31 +27,23 @@ export async function GET(req: Request, context: { params: { id: string } }) {
   }
 }
 
-// PATCH route to update a component by ID (Admin only)
-export async function PATCH(req: Request, context: { params: { id: string } }) {
+// PATCH route
+export async function PATCH(req: Request, { params }: any) {
   const session = await auth();
   if (!session?.user || session.user.role !== 'admin') {
-  return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
-}
+    return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
+  }
 
-
-  // Access the id from the context object
-  const { id } = context.params;
+  const { id } = params;
   const { name, description, code, npmPackages, category } = await req.json();
 
   try {
     await dbConnect();
-    
+
     const updatedComponent = await Component.findByIdAndUpdate(
       id,
-      {
-        name,
-        description,
-        code,
-        npmPackages,
-        category: category || null, // Ensure category is set to null if not provided
-      },
-      { new: true, runValidators: true } // Return the updated document and run Mongoose validation
+      { name, description, code, npmPackages, category: category || null },
+      { new: true, runValidators: true }
     ).populate('category', 'name');
 
     if (!updatedComponent) {
@@ -67,16 +57,14 @@ export async function PATCH(req: Request, context: { params: { id: string } }) {
   }
 }
 
-// DELETE route to delete a component by ID (Admin only)
-export async function DELETE(req: Request, context: { params: { id: string } }) {
+// DELETE route
+export async function DELETE(req: Request, { params }: any) {
   const session = await auth();
   if (!session?.user || session.user.role !== 'admin') {
-  return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
-}
+    return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
+  }
 
-
-  // Access the id from the context object
-  const { id } = context.params;
+  const { id } = params;
 
   try {
     await dbConnect();
@@ -86,7 +74,7 @@ export async function DELETE(req: Request, context: { params: { id: string } }) 
       return new NextResponse(JSON.stringify({ message: 'Component not found' }), { status: 404 });
     }
 
-    return new NextResponse(null, { status: 204 }); // 204 No Content response
+    return new NextResponse(null, { status: 204 });
   } catch (error) {
     console.error('Failed to delete component:', error);
     return new NextResponse(JSON.stringify({ message: 'Internal Server Error' }), { status: 500 });
