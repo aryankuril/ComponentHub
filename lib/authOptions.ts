@@ -19,13 +19,15 @@ export const authOptions: NextAuthOptions = {
         const user = await User.findOne({ email: credentials.email });
 
         if (user && bcrypt.compareSync(credentials.password, user.password)) {
-          return {
-            id: user._id.toString(),
-            name: user.name,
-            email: user.email,
-            role: user.role as "user" | "admin",
-          };
-        }
+  return {
+    id: user._id.toString(),
+    name: user.name,
+    email: user.email,
+    role: user.role as "user" | "admin",
+    dateCreated: user.dateCreated, // ✅ add this
+  };
+}
+
         return null;
       },
     }),

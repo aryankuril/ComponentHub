@@ -1,29 +1,18 @@
 import dbConnect from '@/lib/mongodb';
 import CategoryModel from '@/lib/schemas/Category';
-import ComponentSidebar from './CategoriesSidebar';
+import CategoriesSidebar, { CategoryType, ComponentType } from './CategoriesSidebar';
 
-// Define the interfaces for your data structures
-interface ComponentType {
-  _id: string;
-  name: string;
-  description: string;
-}
-
-interface CategoryType {
-  _id: string;
-  name: string;
-  components?: ComponentType[];
-}
-
-// Raw Mongoose output (loosely typed)
+// Raw MongoDB data types
 interface RawComponent {
-  _id: string;
+  _id: any;
   name?: string;
   description?: string;
+  code?: string;
+  npmPackages?: string[];
 }
 
 interface RawCategory {
-  _id: string;
+  _id: any;
   name?: string;
   components?: RawComponent[];
 }
@@ -31,19 +20,22 @@ interface RawCategory {
 export default async function CategoriesPage() {
   await dbConnect();
 
-  // Fetch the data from MongoDB
+  // Fetch all categories with populated components
   const rawCategories = await CategoryModel.find({}).populate('components').lean();
 
-  // Map to our typed structure safely
+  // Map raw data to strongly typed structure
   const categories: CategoryType[] = (rawCategories as unknown as RawCategory[]).map((cat) => ({
     _id: cat._id.toString(),
     name: cat.name ?? 'Unnamed Category',
     components: cat.components?.map((comp) => ({
-      _id: comp._id.toString(),
-      name: comp.name ?? 'Unnamed Component',
-      description: comp.description ?? '',
-    })) ?? [],
+  _id: comp._id.toString(),
+  name: comp.name ?? 'Unnamed Component',
+  description: comp.description ?? '',
+  code: comp.code ?? '',
+  npmPackages: comp.npmPackages ?? [],
+})) ?? [],
+
   }));
 
-  return <ComponentSidebar initialCategories={categories} />;
+  return <CategoriesSidebar initialCategories={categories} />;
 }

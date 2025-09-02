@@ -3,13 +3,17 @@
 import { useState } from 'react';
 import ComponentDetails from '@/components/ComponentDetails';
 
-interface ComponentType {
+// ✅ Unified ComponentType with all fields
+export interface ComponentType {
   _id: string;
   name: string;
   description: string;
+  code: string;             // required
+  npmPackages: string[];    // required
 }
 
-interface CategoryType {
+
+export interface CategoryType {
   _id: string;
   name: string;
   components?: ComponentType[];

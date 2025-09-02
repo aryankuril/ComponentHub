@@ -7,7 +7,7 @@ import { LayoutDashboard, Users, FolderTree, List, Layers, LogOut } from 'lucide
 export default function AdminSidebar() {
   const pathname = usePathname();
   const router = useRouter();
-const [activeTab, setActiveTab] = useState<'admin' | 'categories' | 'users' | 'components' | 'allcomponents'>('admin');
+const [activeTab, setActiveTab] = useState<"dashboard" | "admin" | "categories" | "users" | "components" | "allcomponents">('dashboard');
   const navItems = [
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
     { name: 'Manage Users', href: '/admin/users', icon: Users },

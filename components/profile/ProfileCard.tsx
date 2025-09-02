@@ -10,8 +10,8 @@ interface User {
   id: string;
   name: string;
   email: string;
-  phone: string;
-  joinDate: string;
+  // phone: string;
+  // joinDate: string;
   role: "user" | "admin";
 }
 
@@ -21,8 +21,8 @@ export default function Profile({ user }: { user: User }) {
   const [profileData, setProfileData] = useState({
     name: user.name,
     email: user.email,
-    phone: user.phone,
-    joinDate: user.joinDate,
+    // phone: user.phone,
+    // joinDate: user.joinDate,
   });
 
   const [passwordData, setPasswordData] = useState({
@@ -91,7 +91,7 @@ const handleProfileSave = (e: React.FormEvent<HTMLButtonElement>) => {
             <h1 className="text-4xl font-bold bg-gradient-to-r from-neon-cyan via-neon-purple to-neon-pink bg-clip-text text-transparent">
               {profileData.name}
             </h1>
-            <p className="text-gray-400 mt-2">Member since {profileData.joinDate}</p>
+            {/* <p className="text-gray-400 mt-2">Member since {profileData.joinDate}</p> */}
           </div>
         </div>
 
