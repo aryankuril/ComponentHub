@@ -4,29 +4,29 @@ import dbConnect from '@/lib/mongodb';
 import Category from '@/lib/schemas/Category';
 import Component from '@/lib/schemas/Component';
 
-// GET single category by ID
-export async function GET(req: NextRequest) {
-  const id = req.url.split('/').pop(); // ✅ extract ID from URL
+// // GET single category by ID
+// export async function GET(req: NextRequest) {
+//   const id = req.url.split('/').pop(); // ✅ extract ID from URL
 
-  try {
-    await dbConnect();
-    const category = await Category.findById(id);
-    if (!category) {
-      return NextResponse.json({ message: 'Category not found' }, { status: 404 });
-    }
+//   try {
+//     await dbConnect();
+//     const category = await Category.findById(id);
+//     if (!category) {
+//       return NextResponse.json({ message: 'Category not found' }, { status: 404 });
+//     }
 
-    const components = await Component.find({ category: id });
+//     const components = await Component.find({ category: id });
 
-    return NextResponse.json({
-      _id: category._id,
-      name: category.name,
-      components,
-    });
-  } catch (error) {
-    console.error('GET /categories/[id] error:', error);
-    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
-  }
-}
+//     return NextResponse.json({
+//       _id: category._id,
+//       name: category.name,
+//       components,
+//     });
+//   } catch (error) {
+//     console.error('GET /categories/[id] error:', error);
+//     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
+//   }
+// }
 
 // PATCH update category (Admin only)
 export async function PATCH(req: NextRequest) {
