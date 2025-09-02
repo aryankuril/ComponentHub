@@ -3,12 +3,16 @@ import { auth } from '@/lib/server-auth';
 import dbConnect from '@/lib/mongodb';
 import Component from '@/lib/schemas/Component';
 
+// Helper to extract `id` from the URL
+function getIdFromUrl(req: Request) {
+  const url = new URL(req.url);
+  const parts = url.pathname.split('/');
+  return parts[parts.length - 1]; // last part is the [id]
+}
+
 // GET
-export async function GET(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  const { id } = params;
+export async function GET(req: Request) {
+  const id = getIdFromUrl(req);
 
   const session = await auth();
   if (!session?.user || session.user.role !== 'admin') {
@@ -31,11 +35,8 @@ export async function GET(
 }
 
 // PATCH
-export async function PATCH(
-  req: Request,
-  { params }: { params: { id: string } }
-) {
-  const { id } = params;
+export async function PATCH(req: Request) {
+  const id = getIdFromUrl(req);
 
   const session = await auth();
   if (!session?.user?.role || session.user.role !== 'admin') {
@@ -68,11 +69,8 @@ export async function PATCH(
 }
 
 // DELETE
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  const { id } = params;
+export async function DELETE(req: NextRequest) {
+  const id = getIdFromUrl(req);
 
   const session = await auth();
   if (!session?.user || session.user.role !== 'admin') {
