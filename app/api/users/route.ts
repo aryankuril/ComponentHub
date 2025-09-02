@@ -7,7 +7,7 @@ import User from '@/lib/schemas/User';
 // GET all users (Admin only)
 export async function GET() {
   const session = await auth();
-  if (!session || session.user.role !== 'admin') {
+  if (!session || !session.user || session.user.role !== 'admin') {
     return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
   }
 
@@ -23,7 +23,7 @@ export async function GET() {
 // PATCH a user's role (Admin only)
 export async function PATCH(req: Request) {
   const session = await auth();
-  if (!session || session.user.role !== 'admin') {
+  if (!session || !session.user || session.user.role !== 'admin') {
     return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
   }
 
@@ -43,9 +43,9 @@ export async function PATCH(req: Request) {
 // DELETE a user (Admin only)
 export async function DELETE(req: Request) {
   const session = await auth();
-  if (!session || session.user.role !== 'admin') {
-    return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
-  }
+  if (!session || !session.user || session.user.role !== 'admin') {
+      return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
+    }
 
   try {
     await dbConnect();
