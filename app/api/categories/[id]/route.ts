@@ -1,34 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { auth } from '@/lib/server-auth';
 import dbConnect from '@/lib/mongodb';
-import Category from '@/lib/schemas/Category';
-import Component from '@/lib/schemas/Component';
+import ComponentModel from '@/lib/schemas/Component';
 
-// GET single category by ID
+// GET single component by ID
 export async function GET(req: NextRequest, context) {
   const { id } = context.params;
 
   try {
     await dbConnect();
-    const category = await Category.findById(id);
-    if (!category) {
-      return NextResponse.json({ message: 'Category not found' }, { status: 404 });
+    const component = await ComponentModel.findById(id);
+
+    if (!component) {
+      return NextResponse.json({ message: 'Component not found' }, { status: 404 });
     }
 
-    const components = await Component.find({ category: id });
-
-    return NextResponse.json({
-      _id: category._id,
-      name: category.name,
-      components,
-    });
+    return NextResponse.json(component);
   } catch (error) {
-    console.error('GET /categories/[id] error:', error);
+    console.error('GET /components/[id] error:', error);
     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }
 
-// PATCH update category (Admin only)
+// PATCH update component (Admin only)
 export async function PATCH(req: NextRequest, context) {
   const { id } = context.params;
 
@@ -39,22 +33,22 @@ export async function PATCH(req: NextRequest, context) {
 
   try {
     await dbConnect();
-    const { name } = await req.json();
+    const data = await req.json();
 
-    const updatedCategory = await Category.findByIdAndUpdate(id, { name }, { new: true });
+    const updated = await ComponentModel.findByIdAndUpdate(id, data, { new: true });
 
-    if (!updatedCategory) {
-      return NextResponse.json({ message: 'Category not found' }, { status: 404 });
+    if (!updated) {
+      return NextResponse.json({ message: 'Component not found' }, { status: 404 });
     }
 
-    return NextResponse.json(updatedCategory);
+    return NextResponse.json(updated);
   } catch (error) {
-    console.error('PATCH /categories/[id] error:', error);
+    console.error('PATCH /components/[id] error:', error);
     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }
 
-// DELETE category (Admin only)
+// DELETE component (Admin only)
 export async function DELETE(req: NextRequest, context) {
   const { id } = context.params;
 
@@ -65,17 +59,15 @@ export async function DELETE(req: NextRequest, context) {
 
   try {
     await dbConnect();
-
-    await Component.updateMany({ category: id }, { category: null });
-    const deleted = await Category.findByIdAndDelete(id);
+    const deleted = await ComponentModel.findByIdAndDelete(id);
 
     if (!deleted) {
-      return NextResponse.json({ message: 'Category not found' }, { status: 404 });
+      return NextResponse.json({ message: 'Component not found' }, { status: 404 });
     }
 
-    return NextResponse.json({ message: 'Category deleted successfully' });
+    return NextResponse.json({ message: 'Component deleted successfully' });
   } catch (error) {
-    console.error('DELETE /categories/[id] error:', error);
+    console.error('DELETE /components/[id] error:', error);
     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }
