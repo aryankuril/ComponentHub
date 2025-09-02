@@ -5,11 +5,15 @@ import dbConnect from '@/lib/mongodb';
 import User from '@/lib/schemas/User';
 import bcrypt from 'bcryptjs';
 
-export async function PATCH(req: Request, context: { params: { id: string } }) {
-  const { params } = context;
-  const { id } = await params;
+export async function PATCH(req: Request) {
+  const url = new URL(req.url);
+  const id = url.pathname.split('/').pop(); // Extracts :id from /api/user/[id]
 
-  const { name, email,  newPassword, role } = await req.json();
+  if (!id) {
+    return new NextResponse(JSON.stringify({ message: 'User ID is required' }), { status: 400 });
+  }
+
+  const { name, email, newPassword, role } = await req.json();
 
   await dbConnect();
   const user = await User.findById(id);
@@ -18,12 +22,10 @@ export async function PATCH(req: Request, context: { params: { id: string } }) {
     return new NextResponse(JSON.stringify({ message: 'User not found' }), { status: 404 });
   }
 
-  // (Auth checks same as before)
-
   // Update fields
   if (name) user.name = name;
   if (email) user.email = email;
-  // if (phone) user.phone = phone;        // ← ADD THIS LINE
+  // if (phone) user.phone = phone;
   if (newPassword) user.password = await bcrypt.hash(newPassword, 10);
   if (role) user.role = role;
 
