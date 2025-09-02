@@ -5,7 +5,7 @@ import Category from '@/lib/schemas/Category';
 import Component from '@/lib/schemas/Component';
 
 // GET single category by ID
-export async function GET(req: NextRequest, context: { params: { id: any; }; }) {
+export async function GET(req: NextRequest, context: { params: { id: string | number; }; }) {
   const { id } = context.params;
 
   try {
@@ -29,7 +29,7 @@ export async function GET(req: NextRequest, context: { params: { id: any; }; }) 
 }
 
 // PATCH
-export async function PATCH(req: NextRequest, context: { params: { id: any; }; }) {
+export async function PATCH(req: NextRequest, context: { params: { id: string | number; }; }) {
   const { id } = context.params;
 
   const session = await auth();
@@ -55,7 +55,7 @@ export async function PATCH(req: NextRequest, context: { params: { id: any; }; }
 }
 
 // DELETE
-export async function DELETE(req: NextRequest, context: { params: { id: any; }; }) {
+export async function DELETE(req: NextRequest, context: { params: { id: string | number; }; }) {
   const { id } = context.params;
 
   const session = await auth();
