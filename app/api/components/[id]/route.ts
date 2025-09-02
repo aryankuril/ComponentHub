@@ -3,15 +3,15 @@ import { auth } from '@/lib/server-auth';
 import dbConnect from '@/lib/mongodb';
 import Component from '@/lib/schemas/Component';
 
-// Define params type for this route
-interface Params {
+// ✅ Correct typing for context
+type Context = {
   params: {
     id: string;
   };
-}
+};
 
 // GET
-export async function GET(req: Request, { params }: Params) {
+export async function GET(req: Request, { params }: Context) {
   const { id } = params;
 
   const session = await auth();
@@ -27,18 +27,15 @@ export async function GET(req: Request, { params }: Params) {
       return NextResponse.json({ message: 'Component not found' }, { status: 404 });
     }
 
-    // ✅ Return the actual component data
-    return NextResponse.json(component);
+    return NextResponse.json(component); // ✅ return actual data
   } catch (error) {
     console.error('Failed to fetch component:', error);
     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }
 
-
 // PATCH
-// PATCH
-export async function PATCH(req: Request, { params }: Params) {
+export async function PATCH(req: Request, { params }: Context) {
   const { id } = params;
 
   const session = await auth();
@@ -72,9 +69,8 @@ export async function PATCH(req: Request, { params }: Params) {
   }
 }
 
-
 // DELETE
-export async function DELETE(req: NextRequest, { params }: Params) {
+export async function DELETE(req: NextRequest, { params }: Context) {
   const { id } = params;
 
   const session = await auth();
