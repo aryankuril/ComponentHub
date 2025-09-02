@@ -27,29 +27,30 @@ export async function GET(req: Request, { params }: Params) {
       return NextResponse.json({ message: 'Component not found' }, { status: 404 });
     }
 
-       return NextResponse.json({ message: `Component with id: ${id}` });
+    // ✅ Return the actual component data
+    return NextResponse.json(component);
   } catch (error) {
     console.error('Failed to fetch component:', error);
     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
-
- 
 }
 
+
+// PATCH
 // PATCH
 export async function PATCH(req: Request, { params }: Params) {
   const { id } = params;
-  const body = await req.json();
 
   const session = await auth();
-  if (!session?.user || session.user.role !== 'admin') {
+  if (!session?.user?.role || session.user.role !== 'admin') {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
-  const { name, description, code, npmPackages, category } = await req.json();
-
   try {
     await dbConnect();
+
+    const body = await req.json();
+    const { name, description, code, npmPackages, category } = body;
 
     const updatedComponent = await Component.findByIdAndUpdate(
       id,
@@ -61,15 +62,16 @@ export async function PATCH(req: Request, { params }: Params) {
       return NextResponse.json({ message: 'Component not found' }, { status: 404 });
     }
 
-     return NextResponse.json({
-    message: `Updated component ${id}`,
-    data: body,
-  });
+    return NextResponse.json({
+      message: `Updated component ${id}`,
+      data: updatedComponent,
+    });
   } catch (error) {
     console.error('Failed to update component:', error);
     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }
+
 
 // DELETE
 export async function DELETE(req: NextRequest, { params }: Params) {

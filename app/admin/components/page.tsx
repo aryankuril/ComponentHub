@@ -1,13 +1,12 @@
-// app/admin/components/page.tsx
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import ComponentForm from '@/components/admin/ComponentForm';
-import ComponentPreview from '@/components/admin/ComponentPreview';
 import { Edit, Trash } from 'lucide-react';
 
 interface Component {
-  _id: string;
+  _id: string; 
   name: string;
   description: string;
   code: string;
@@ -20,20 +19,51 @@ export default function ManageComponentsPage() {
   const [components, setComponents] = useState<Component[]>([]);
   const [isEditing, setIsEditing] = useState(false);
   const [currentComponent, setCurrentComponent] = useState<Component | null>(null);
+  const searchParams = useSearchParams();
 
-  const fetchComponents = async () => {
-    const res = await fetch('/api/components');
-    const data = await res.json();
-    setComponents(data);
-  };
-
+  // Combined fetch logic in a single useEffect
   useEffect(() => {
-    fetchComponents();
-  }, []);
+    const componentId = searchParams.get('id');
+
+    const fetchAllComponents = async () => {
+      try {
+        const res = await fetch('/api/components');
+        const data = await res.json();
+        setComponents(data);
+        setIsEditing(false);
+        setCurrentComponent(null);
+      } catch (error) {
+        console.error("Failed to fetch all components:", error);
+      }
+    };
+
+    const fetchComponentById = async (id: string) => {
+      try {
+        const res = await fetch(`/api/components/${id}`);
+        if (!res.ok) {
+          throw new Error('Failed to fetch component for editing.');
+        }
+        const data = await res.json();
+        setCurrentComponent(data);
+        setIsEditing(true);
+      } catch (err) {
+        console.error('Error fetching component for edit:', err);
+      }
+    };
+
+    if (componentId) {
+      fetchComponentById(componentId);
+    } else {
+      fetchAllComponents();
+    }
+  }, [searchParams]); // This hook runs whenever the URL search params change
 
   const handleDelete = async (id: string) => {
     await fetch(`/api/components/${id}`, { method: 'DELETE' });
-    fetchComponents();
+    // Re-fetch all components to update the list
+    const res = await fetch('/api/components');
+    const data = await res.json();
+    setComponents(data);
   };
 
   const handleEdit = (component: Component) => {
@@ -49,9 +79,13 @@ export default function ManageComponentsPage() {
         <h2 className="text-2xl font-semibold mb-4 text-black">{isEditing ? 'Edit Component' : 'Add New Component'}</h2>
         <ComponentForm
           onSuccess={() => {
-            fetchComponents();
-            setIsEditing(false);
-            setCurrentComponent(null);
+            // After success, re-fetch components and reset the form
+            const fetchAndReset = async () => {
+              await fetch('/api/components').then(res => res.json()).then(setComponents);
+              setIsEditing(false);
+              setCurrentComponent(null);
+            };
+            fetchAndReset();
           }}
           initialData={currentComponent}
         />
@@ -74,14 +108,14 @@ export default function ManageComponentsPage() {
                 <button
                   onClick={() => handleEdit(component)}
                   className="p-2 rounded-lg text-[#FFD54F] hover:bg-gray-300 transition-colors"
-                    >
-                      <Edit size={18} />
+                >
+                  <Edit size={18} />
                 </button>
                 <button
                   onClick={() => handleDelete(component._id)}
-                   className="p-2 rounded-lg text-red-600 hover:bg-gray-300 transition-colors"
-                    >
-                      <Trash size={18} />
+                  className="p-2 rounded-lg text-red-600 hover:bg-gray-300 transition-colors"
+                >
+                  <Trash size={18} />
                 </button>
               </div>
             </li>

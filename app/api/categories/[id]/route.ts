@@ -4,61 +4,79 @@ import dbConnect from '@/lib/mongodb';
 import Category from '@/lib/schemas/Category';
 import Component from '@/lib/schemas/Component';
 
-// GET all categories with their components
-export async function GET() {
+// GET single category by ID
+export async function GET(req: Request, { params }: { params: { id: string } }) {
   try {
     await dbConnect();
+    const category = await Category.findById(params.id);
+    if (!category) {
+      return NextResponse.json({ message: 'Category not found' }, { status: 404 });
+    }
 
-    const categories = await Category.find({});
-    const components = await Component.find({});
+    const components = await Component.find({ category: params.id });
 
-    // Attach components to their respective categories
-    const categoriesWithComponents = categories.map((cat) => ({
-      _id: cat._id,
-      name: cat.name,
-      components: components.filter((comp) => comp.category?.toString() === cat._id.toString()),
-    }));
-
-    return NextResponse.json(categoriesWithComponents);
+    return NextResponse.json({
+      _id: category._id,
+      name: category.name,
+      components,
+    });
   } catch (error) {
-    console.error(error);
-    return new NextResponse(JSON.stringify({ message: 'Internal Server Error' }), { status: 500 });
+    console.error('GET /categories/[id] error:', error);
+    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }
 
-// POST a new category (Admin only)
-export async function POST(req: Request) {
+// PATCH update category (Admin only)
+export async function PATCH(req: Request, { params }: { params: { id: string } }) {
   const session = await auth();
-  if (!session || session.user.role !== 'admin') {
-    return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
+  if (!session?.user || session.user.role !== 'admin') {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
+
+
   try {
     await dbConnect();
     const { name } = await req.json();
-    const newCategory = new Category({ name });
-    await newCategory.save();
-    return NextResponse.json(newCategory, { status: 201 });
+
+    const updatedCategory = await Category.findByIdAndUpdate(
+      params.id,
+      { name },
+      { new: true }
+    );
+
+    if (!updatedCategory) {
+      return NextResponse.json({ message: 'Category not found' }, { status: 404 });
+    }
+
+    return NextResponse.json(updatedCategory);
   } catch (error) {
-    console.error(error);
-    return new NextResponse(JSON.stringify({ message: 'Internal Server Error' }), { status: 500 });
+    console.error('PATCH /categories/[id] error:', error);
+    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }
 
-// DELETE a category (Admin only)
-export async function DELETE(req: Request) {
+// DELETE category (Admin only)
+export async function DELETE(req: Request, { params }: { params: { id: string } }) {
   const session = await auth();
-  if (!session || session.user.role !== 'admin') {
-    return new NextResponse(JSON.stringify({ message: 'Unauthorized' }), { status: 401 });
+  if (!session?.user || session.user.role !== 'admin') {
+    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
+
+
   try {
     await dbConnect();
-    const { id } = await req.json();
-    // Remove category reference from components
+    const { id } = params;
+
     await Component.updateMany({ category: id }, { category: null });
-    await Category.findByIdAndDelete(id);
-    return new NextResponse(null, { status: 204 });
+    const deleted = await Category.findByIdAndDelete(id);
+
+    if (!deleted) {
+      return NextResponse.json({ message: 'Category not found' }, { status: 404 });
+    }
+
+    return NextResponse.json({ message: 'Category deleted successfully' });
   } catch (error) {
-    console.error(error);
-    return new NextResponse(JSON.stringify({ message: 'Internal Server Error' }), { status: 500 });
+    console.error('DELETE /categories/[id] error:', error);
+    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
   }
 }

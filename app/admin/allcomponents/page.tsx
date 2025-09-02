@@ -86,36 +86,42 @@ export default function ManageComponentsPage() {
             </tr>
           </thead>
           <tbody className="text-black text-sm font-light bg-[#FFFFFF79]">
-            {components.map((component) => (
-              <tr key={component._id} className="border-b border-gray-700">
-                <td className="py-3 px-6 text-left capitalize">{component.name}</td>
-<td className="py-3 px-6 text-left">
-  <Link href={`/components/${component._id}`} className="text-[#F9B31B] flex items-center gap-2">
-    {component.name}<ExternalLink size={16} />
-  </Link>
-</td>
-<td className="py-3 px-6 text-left capitalize">{component.category?.name || 'N/A'}</td>
-<td className="py-3 px-6 text-left">{new Date(component.dateCreated).toLocaleDateString('en-GB')}</td>
-<td className="py-3 px-6 text-center">
-  <div className="flex item-center justify-center space-x-4">
-    <button
-      onClick={() => router.push(`/admin/components/${component._id}`)}
-      className="p-2 rounded-lg text-[#FFD54F] hover:bg-gray-300 transition-colors"
-    >
-      <Edit size={18} />
-    </button>
-    <button
-      onClick={() => handleDelete(component._id)}
-      className="p-2 rounded-lg text-red-600 hover:bg-gray-300 transition-colors"
-    >
-      <Trash size={18} />
-    </button>
-  </div>
-</td>
+  {components.map((component) => (
+    <tr key={component._id} className="border-b border-gray-700">
+      <td className="py-3 px-6 text-left capitalize">{component.name}</td>
+      <td className="py-3 px-6 text-left">
+        <Link
+          href={`/components/${component._id}`}
+          className="text-[#F9B31B] flex items-center gap-2"
+        >
+          {component.name}
+          <ExternalLink size={16} />
+        </Link>
+      </td>
+      <td className="py-3 px-6 text-left capitalize">{component.category?.name || 'N/A'}</td>
+      <td className="py-3 px-6 text-left">
+        {new Date(component.dateCreated).toLocaleDateString('en-GB')}
+      </td>
+      <td className="py-3 px-6 text-center">
+        <div className="flex item-center justify-center space-x-4">
+          <button
+  onClick={() => router.push(`/admin/components?id=${component._id}`)}
+  className="p-2 rounded-lg text-[#FFD54F] hover:bg-gray-300 transition-colors"
+>
+  <Edit size={18} />
+</button>
+          <button
+            onClick={() => handleDelete(component._id)}
+            className="p-2 rounded-lg text-red-600 hover:bg-gray-300 transition-colors"
+          >
+            <Trash size={18} />
+          </button>
+        </div>
+      </td>
+    </tr>
+  ))}
+</tbody>
 
-              </tr>
-            ))}
-          </tbody>
         </table>
       </div>
     </div>
