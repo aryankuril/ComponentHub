@@ -4,16 +4,9 @@ import dbConnect from '@/lib/mongodb';
 import Category from '@/lib/schemas/Category';
 import Component from '@/lib/schemas/Component';
 
-// Properly type the context
-type RouteContext = {
-  params: {
-    id: string;
-  };
-};
-
 // GET single category by ID
-export async function GET(req: NextRequest, { params }: RouteContext) {
-  const { id } = params;
+export async function GET(req: NextRequest, context: { params: { id: string } }) {
+  const { id } = context.params;
 
   try {
     await dbConnect();
@@ -36,8 +29,8 @@ export async function GET(req: NextRequest, { params }: RouteContext) {
 }
 
 // PATCH update category (Admin only)
-export async function PATCH(req: NextRequest, { params }: RouteContext) {
-  const { id } = params;
+export async function PATCH(req: NextRequest, context: { params: { id: string } }) {
+  const { id } = context.params;
 
   const session = await auth();
   if (!session?.user || session.user.role !== 'admin') {
@@ -62,8 +55,8 @@ export async function PATCH(req: NextRequest, { params }: RouteContext) {
 }
 
 // DELETE category (Admin only)
-export async function DELETE(req: NextRequest, { params }: RouteContext) {
-  const { id } = params;
+export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
+  const { id } = context.params;
 
   const session = await auth();
   if (!session?.user || session.user.role !== 'admin') {
