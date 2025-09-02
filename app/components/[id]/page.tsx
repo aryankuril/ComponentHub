@@ -5,15 +5,14 @@ import Category from '@/lib/schemas/Category';
 import ComponentDetails from '@/components/ComponentDetails';
 
 // Server Component
-export default async function ComponentPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default async function ComponentPage(props: any) {
   await dbConnect();
   Category.modelName; // ensure model is registered
 
-  const component = await Component.findById(params.id).populate('category').lean();
+  // Get id directly
+  const id = props.params?.id;
+
+  const component = await Component.findById(id).populate('category').lean();
 
   if (!component) {
     return (
