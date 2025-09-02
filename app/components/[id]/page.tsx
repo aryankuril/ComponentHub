@@ -4,15 +4,14 @@ import Component from '@/lib/schemas/Component';
 import Category from '@/lib/schemas/Category';
 import ComponentDetails from '@/components/ComponentDetails';
 
-interface PageProps {
-  params: {
-    id: string;
-  };
-}
-
-export default async function ComponentPage({ params }: PageProps) {
+// Server Component
+export default async function ComponentPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   await dbConnect();
-  Category.modelName;
+  Category.modelName; // ensure model is registered
 
   const component = await Component.findById(params.id).populate('category').lean();
 
@@ -25,6 +24,6 @@ export default async function ComponentPage({ params }: PageProps) {
   }
 
   const serializedComponent = JSON.parse(JSON.stringify(component));
+
   return <ComponentDetails component={serializedComponent} />;
 }
-
