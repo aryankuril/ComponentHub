@@ -39,16 +39,21 @@ export default async function HomePage() {
 
         {/* Components Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-          {components.map((component, index) => (
-            <div
-              key={String(component._id)}
-              className="animate-slide-up"
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <ComponentCard component={JSON.parse(JSON.stringify(component))} />
-            </div>
-          ))}
-        </div>
+  {components.map((component, index) => (
+    <div
+      key={String(component._id)}
+      className="animate-slide-up"
+      style={{ animationDelay: `${index * 0.1}s` }}
+    >
+      <ComponentCard
+        component={JSON.parse(JSON.stringify(component))}
+        onPreview={() => console.log("Preview", component._id)}
+        onCopy={() => console.log("Copy", component._id)}
+      />
+    </div>
+  ))}
+</div>
+
 
         {/* View All Button */}
 
