@@ -5,7 +5,7 @@ import Category from '@/lib/schemas/Category';
 import Component from '@/lib/schemas/Component';
 
 // GET single category by ID
-export async function GET(req: NextRequest, context: { params: { id: string } }) {
+export async function GET(req: NextRequest, context) {
   const { id } = context.params;
 
   try {
@@ -29,7 +29,7 @@ export async function GET(req: NextRequest, context: { params: { id: string } })
 }
 
 // PATCH update category (Admin only)
-export async function PATCH(req: NextRequest, context: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, context) {
   const { id } = context.params;
 
   const session = await auth();
@@ -55,7 +55,7 @@ export async function PATCH(req: NextRequest, context: { params: { id: string } 
 }
 
 // DELETE category (Admin only)
-export async function DELETE(req: NextRequest, context: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, context) {
   const { id } = context.params;
 
   const session = await auth();
