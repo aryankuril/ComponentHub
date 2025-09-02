@@ -4,8 +4,14 @@ import dbConnect from '@/lib/mongodb';
 import ComponentModel from '@/lib/schemas/Component';
 
 // GET single component by ID
-export async function GET(req: NextRequest, context) {
-  const { id } = context.params;
+type Context = {
+  params: {
+    id: string;
+  };
+};
+
+export async function GET(req: Request, { params }: Context) {
+  const { id } = params;
 
   try {
     await dbConnect();
@@ -23,8 +29,9 @@ export async function GET(req: NextRequest, context) {
 }
 
 // PATCH update component (Admin only)
-export async function PATCH(req: NextRequest, context) {
-  const { id } = context.params;
+export async function PATCH(req: Request, { params }: Context) {
+  const { id } = params;
+
 
   const session = await auth();
   if (!session?.user || session.user.role !== 'admin') {
@@ -49,8 +56,8 @@ export async function PATCH(req: NextRequest, context) {
 }
 
 // DELETE component (Admin only)
-export async function DELETE(req: NextRequest, context) {
-  const { id } = context.params;
+export async function DELETE(req: NextRequest, { params }: Context) {
+  const { id } = params;
 
   const session = await auth();
   if (!session?.user || session.user.role !== 'admin') {
