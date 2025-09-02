@@ -3,15 +3,11 @@ import { auth } from '@/lib/server-auth';
 import dbConnect from '@/lib/mongodb';
 import Component from '@/lib/schemas/Component';
 
-// ✅ Correct typing for context
-type Context = {
-  params: {
-    id: string;
-  };
-};
-
 // GET
-export async function GET(req: Request, { params }: Context) {
+export async function GET(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
   const { id } = params;
 
   const session = await auth();
@@ -27,7 +23,7 @@ export async function GET(req: Request, { params }: Context) {
       return NextResponse.json({ message: 'Component not found' }, { status: 404 });
     }
 
-    return NextResponse.json(component); // ✅ return actual data
+    return NextResponse.json(component);
   } catch (error) {
     console.error('Failed to fetch component:', error);
     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
@@ -35,7 +31,10 @@ export async function GET(req: Request, { params }: Context) {
 }
 
 // PATCH
-export async function PATCH(req: Request, { params }: Context) {
+export async function PATCH(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
   const { id } = params;
 
   const session = await auth();
@@ -45,7 +44,6 @@ export async function PATCH(req: Request, { params }: Context) {
 
   try {
     await dbConnect();
-
     const body = await req.json();
     const { name, description, code, npmPackages, category } = body;
 
@@ -70,7 +68,10 @@ export async function PATCH(req: Request, { params }: Context) {
 }
 
 // DELETE
-export async function DELETE(req: NextRequest, { params }: Context) {
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   const { id } = params;
 
   const session = await auth();

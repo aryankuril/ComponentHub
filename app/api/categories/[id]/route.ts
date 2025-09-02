@@ -1,47 +1,48 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { auth } from '@/lib/server-auth';
 import dbConnect from '@/lib/mongodb';
 import Category from '@/lib/schemas/Category';
 import Component from '@/lib/schemas/Component';
 
-// // GET single category by ID
-// export async function GET(req: NextRequest) {
-//   const id = req.url.split('/').pop(); // ✅ extract ID from URL
+// GET single category by ID
+export async function GET(req: Request, { params }: { params: { id: string } }) {
+  try {
+    await dbConnect();
+    const category = await Category.findById(params.id);
+    if (!category) {
+      return NextResponse.json({ message: 'Category not found' }, { status: 404 });
+    }
 
-//   try {
-//     await dbConnect();
-//     const category = await Category.findById(id);
-//     if (!category) {
-//       return NextResponse.json({ message: 'Category not found' }, { status: 404 });
-//     }
+    const components = await Component.find({ category: params.id });
 
-//     const components = await Component.find({ category: id });
-
-//     return NextResponse.json({
-//       _id: category._id,
-//       name: category.name,
-//       components,
-//     });
-//   } catch (error) {
-//     console.error('GET /categories/[id] error:', error);
-//     return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
-//   }
-// }
+    return NextResponse.json({
+      _id: category._id,
+      name: category.name,
+      components,
+    });
+  } catch (error) {
+    console.error('GET /categories/[id] error:', error);
+    return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
+  }
+}
 
 // PATCH update category (Admin only)
-export async function PATCH(req: NextRequest) {
-  const id = req.url.split('/').pop(); // ✅ extract ID from URL
-
+export async function PATCH(req: Request, { params }: { params: { id: string } }) {
   const session = await auth();
   if (!session?.user || session.user.role !== 'admin') {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
+
   try {
     await dbConnect();
     const { name } = await req.json();
 
-    const updatedCategory = await Category.findByIdAndUpdate(id, { name }, { new: true });
+    const updatedCategory = await Category.findByIdAndUpdate(
+      params.id,
+      { name },
+      { new: true }
+    );
 
     if (!updatedCategory) {
       return NextResponse.json({ message: 'Category not found' }, { status: 404 });
@@ -55,16 +56,16 @@ export async function PATCH(req: NextRequest) {
 }
 
 // DELETE category (Admin only)
-export async function DELETE(req: NextRequest) {
-  const id = req.url.split('/').pop(); // ✅ extract ID from URL
-
+export async function DELETE(req: Request, { params }: { params: { id: string } }) {
   const session = await auth();
   if (!session?.user || session.user.role !== 'admin') {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
+
   try {
     await dbConnect();
+    const { id } = params;
 
     await Component.updateMany({ category: id }, { category: null });
     const deleted = await Category.findByIdAndDelete(id);
