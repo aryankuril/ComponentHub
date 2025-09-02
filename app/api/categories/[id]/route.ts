@@ -5,8 +5,8 @@ import Category from '@/lib/schemas/Category';
 import Component from '@/lib/schemas/Component';
 
 // GET single category by ID
-export async function GET(req: NextRequest, context: { params: { id: string | number; }; }) {
-  const { id } = context.params;
+export async function GET(req: NextRequest) {
+  const id = req.url.split('/').pop(); // ✅ extract ID from URL
 
   try {
     await dbConnect();
@@ -28,9 +28,9 @@ export async function GET(req: NextRequest, context: { params: { id: string | nu
   }
 }
 
-// PATCH
-export async function PATCH(req: NextRequest, context: { params: { id: string | number; }; }) {
-  const { id } = context.params;
+// PATCH update category (Admin only)
+export async function PATCH(req: NextRequest) {
+  const id = req.url.split('/').pop(); // ✅ extract ID from URL
 
   const session = await auth();
   if (!session?.user || session.user.role !== 'admin') {
@@ -54,9 +54,9 @@ export async function PATCH(req: NextRequest, context: { params: { id: string | 
   }
 }
 
-// DELETE
-export async function DELETE(req: NextRequest, context: { params: { id: string | number; }; }) {
-  const { id } = context.params;
+// DELETE category (Admin only)
+export async function DELETE(req: NextRequest) {
+  const id = req.url.split('/').pop(); // ✅ extract ID from URL
 
   const session = await auth();
   if (!session?.user || session.user.role !== 'admin') {
