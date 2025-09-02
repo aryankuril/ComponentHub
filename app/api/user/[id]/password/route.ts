@@ -4,13 +4,16 @@ import dbConnect from '@/lib/mongodb';
 import User from '@/lib/schemas/User';
 import bcrypt from 'bcryptjs';
 
-export async function PATCH(req: Request, { params }: { params: { id: string } }) {
+export async function PATCH(req: Request) {
   const session = await auth();
   if (!session) {
     return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
   }
 
-  const { id } = params;
+  // ✅ Extract `id` manually from the URL instead of params
+  const { pathname } = new URL(req.url);
+  const id = pathname.split('/').pop();
+
   const { currentPassword, newPassword } = await req.json();
 
   await dbConnect();
