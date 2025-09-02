@@ -26,6 +26,7 @@ export default async function ProfilePage() {
     // joinDate: user.joinDate ?? new Date(),
     image: user.image ?? null,
   };
+  // 
 
   return (
     <div className="min-h-screen pt-24 px-4 bg-black text-white">
