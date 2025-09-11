@@ -44,11 +44,11 @@ interface Session {
           
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
-            <div className="relative">
-              <Code className="h-8 w-8 text-neon-cyan group-hover:animate-pulse" />
-              <Zap className="h-4 w-4 text-neon-purple absolute -top-1 -right-1 animate-float" />
-            </div>
-            <span className="text-xl font-bold bg-gradient-neon bg-clip-text text-transparent">
+             <div className="relative">
+               <Code className="h-8 w-8 text-white group-hover:animate-pulse" />
+               <Zap className="h-4 w-4 text-white absolute -top-1 -right-1 animate-float" />
+             </div>
+            <span className="text-xl font-bold text-[#F9B31B]">
               ComponentHub
             </span>
           </Link>
@@ -59,7 +59,7 @@ interface Session {
               <Link
                 key={item.name}
                 href={item.path}
-                className="block px-3 py-2 text-white rounded-md text-base font-medium transition-all duration-300  hover:text-neon-cyan hover:bg-neon-cyan/5" 
+                className="block px-3 py-2 text-white rounded-md text-base font-medium transition-all duration-300  hover:text-[#F9B31B] hover:bg-[#F9B31B]/5" 
               >
                 {item.name}
               </Link>
@@ -74,7 +74,7 @@ interface Session {
                 <button className="text-purple ">
                   <Link href="/login">Login</Link>
                 </button>
-                <button className="flex-1 bg-gradient-to-r from-neon-cyan to-neon-purple text-black font-semibold rounded-md px-6 py-3 flex gap-2 transition-all duration-300 hover:shadow-[0_0_20px_hsl(180,100%,50%),0_0_40px_hsl(262,83%,70%)] hover:-translate-y-0.5 text-sm  hover:bg-neon-cyan/80">
+                <button className="flex-1 bg-[#F9B31B] text-black font-semibold rounded-md px-6 py-3 flex gap-2 transition-all duration-300 hover:shadow-[0_0_20px_hsl(180,100%,50%),0_0_40px_hsl(262,83%,70%)] hover:-translate-y-0.5 text-sm  hover:bg-neon-cyan/80">
                   <Link href="/signup">Sign Up</Link>
                 </button>
               </>
@@ -87,7 +87,7 @@ interface Session {
               >
                 {/* Profile Icon */}
                 <button className="flex items-center space-x-2 p-2 rounded-full hover:bg-gray-700 transition-colors duration-200">
-                  <User className="h-6 w-6 text-neon-cyan" />
+                  <User className="h-6 w-6 text-[#F9B31B]" />
                 </button>
 
                 {/* Dropdown Menu */}
@@ -110,7 +110,7 @@ interface Session {
                         {session?.user?.role === 'admin' && (
                           <Link
                             href="/admin"
-                            className="block px-4 py-2 text-sm text-neon-purple hover:bg-gray-700 transition-colors duration-200"
+                            className="block px-4 py-2 text-sm text-white hover:bg-gray-700 transition-colors duration-200"
                             onClick={() => setIsDropdownOpen(false)}
                           >
                             Admin Panel

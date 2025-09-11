@@ -97,3 +97,12 @@ body {
 .animate-glow {
   animation: glow 2s ease-in-out infinite;
 }
+
+@keyframes glow-yellow {
+  0%, 100% {
+    text-shadow: 0 0 10px #F9B31B, 0 0 20px #F9B31B;
+  }
+  50% {
+    text-shadow: 0 0 20px #F9B31B, 0 0 40px #F9B31B;
+  }
+}
