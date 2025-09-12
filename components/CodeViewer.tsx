@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { ClipboardIcon, CheckCircleIcon } from '@heroicons/react/24/solid';
-// 
+
 export default function CodeViewer({ code }: { code: string }) {
   const [copied, setCopied] = useState(false);
 
