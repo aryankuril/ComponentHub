@@ -57,7 +57,7 @@ export default function UserManagement({ currentUserEmail }: { currentUserEmail:
           <li key={user._id} className="flex justify-between items-center bg-gray-700 p-4 rounded-md">
             <div>
               <p className="font-medium">{user.name}</p>
-              <p className="text-sm text-gray-400">{user.email}</p>
+              <p className="text-sm  grey-text ">{user.email}</p>
             </div>
             <div className="flex items-center space-x-2">
               <span className="capitalize px-2 py-1 text-xs font-bold rounded-full" style={{ backgroundColor: user.role === 'admin' ? 'rgba(255, 99, 132, 0.2)' : 'rgba(75, 192, 192, 0.2)', color: user.role === 'admin' ? '#ef4444' : '#60a5fa' }}>
@@ -67,7 +67,7 @@ export default function UserManagement({ currentUserEmail }: { currentUserEmail:
                 <select
                   value={user.role}
                   onChange={(e) => handleRoleChange(user._id, e.target.value as 'user' | 'admin')}
-                  className="bg-gray-900 text-white border-gray-600 rounded-md text-sm p-1"
+                  className="bg-gray-900  white-text  border-gray-600 rounded-md text-sm p-1"
                 >
                   <option value="user">User</option>
                   <option value="admin">Admin</option>

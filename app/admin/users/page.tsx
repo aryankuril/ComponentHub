@@ -106,7 +106,7 @@ export default function ManageUsersPage() {
                   <select
                     value={user.role}
                     onChange={(e) => handleRoleChange(user._id, e.target.value as 'user' | 'admin')}
-                    className="bg-black border border-black rounded-md py-1 px-2 text-white"
+                    className="bg-black border border-black rounded-md py-1 px-2  white-text "
                   >
                     <option value="user">User</option>
                     <option value="admin">Admin</option>

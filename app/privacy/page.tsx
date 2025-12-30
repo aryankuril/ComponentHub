@@ -73,14 +73,14 @@ const Privacy = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black  white-text ">
       <Navbar />
       
       <main className="container mx-auto px-4 pt-24 pb-16">
         <div className="max-w-4xl mx-auto space-y-8 animate-fade-in">
           {/* Header */}
           <div className="text-center space-y-4">
-            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-neon-cyan via-neon-purple to-neon-pink bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-6xl font-bold text-primary">
               Privacy Policy
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -96,12 +96,12 @@ const Privacy = () => {
           <div className="grid gap-6">
             {sections.map((section, index) => (
               <ThreeDElement key={index} className="w-full">
-                <div className="bg-div-dark border border-neon-cyan/40 rounded-lg px-8 py-8 shadow-lg shadow-neon-cyan/10 hover:border-neon-purple/40 transition-all duration-300">
+                <div className="bg-[#0a0a0a] border border-transparent hover:border-[#F9B31B]/30 rounded-xl px-8 py-8  transition-all duration-300">
                   <div>
-                    <div className="flex items-center gap-3 text-neon-cyan lg:mb-10 mb-5">
+                    <div className="flex items-center gap-3 text-primary lg:mb-10 mb-5">
                       <section.icon className="w-6 h-6" />
                       {section.title}
-                    </div>
+                    </div>   
                   </div>
                   <div>
                     <ul className="space-y-3">
@@ -120,9 +120,9 @@ const Privacy = () => {
 
           {/* Contact Information */}
           <ThreeDElement className="w-full">
-            <div className="bg-div-dark border border-neon-cyan/40 rounded-lg px-8 py-8 shadow-lg shadow-neon-pink/10 text-center">
+            <div className="bg-[#0a0a0a] border border-transparent hover:border-[#F9B31B]/30 rounded-xl px-8 py-8 text-center">
               <div>
-                <div className="text-neon-purple">Questions About Privacy?</div>
+                <div className="text-primary">Questions About Privacy?</div>
               </div>
               <div className="space-y-4">
                 <p className="text-muted-foreground">
@@ -131,8 +131,8 @@ const Privacy = () => {
 </p>
 
                 <div className="space-y-2 text-sm">
-                  <p>Email: <span className="text-neon-cyan">privacy@componentshowcase.com</span></p>
-                  <p>Address: <span className="text-neon-cyan">123 Tech Street, Digital City, 12345</span></p>
+                  <p>Email: <span className="text-primary">hello@bombayblokes.com</span></p>
+                  <p>Address: <span className="text-primary">Lower Parel, Mumbai</span></p>
                 </div>
               </div>
             </div>

@@ -38,7 +38,7 @@ export default function CategoriesSidebar({ initialCategories }: CategoriesSideb
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
       {/* Sidebar */}
       <aside className="w-72 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 p-4 overflow-y-auto h-screen sticky top-0">
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
+        <h2 className="text-2xl font-bold text-gray-800 dark: white-text  mb-4">
           Components
         </h2>
 
@@ -80,7 +80,7 @@ export default function CategoriesSidebar({ initialCategories }: CategoriesSideb
         {selectedComponent ? (
           <ComponentDetails component={selectedComponent} />
         ) : (
-          <div className="text-gray-500 dark:text-gray-400">
+          <div className="text-gray-500 dark: grey-text ">
             Select a component from the left to view details
           </div>
         )}

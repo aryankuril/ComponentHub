@@ -2,7 +2,9 @@
 
 import { Eye, Copy, Calendar, Tag } from "lucide-react";
 import Link from "next/link";
-import { format } from 'date-fns';  // Import date-fns
+import { format } from 'date-fns';  
+import ComponentCardPreview from '@/components/ComponentCardPreview'
+
 
 interface ComponentCardProps {
   component: {
@@ -19,7 +21,7 @@ interface ComponentCardProps {
 
 export default function ComponentCard({ component, onPreview, onCopy }: ComponentCardProps) {
   return (
-    <div className="relative bg-gradient-card border border-border rounded-xl overflow-hidden h-full flex flex-col group transition-all duration-300">
+    <div className="relative bg-gradient-card rounded-xl overflow-hidden h-full flex flex-col group transition-all duration-300">
       
       {/* Preview Image */}
       <div className="aspect-video bg-[#060606] relative overflow-hidden">
@@ -54,26 +56,26 @@ export default function ComponentCard({ component, onPreview, onCopy }: Componen
       <div className="bg-[#0b0b0b]">
         <div className="p-6 flex-1 flex flex-col bg-[#0b0b0b]">
           <div className="flex items-start justify-between">
-            <h3 className="text-lg font-semibold text-white group-hover:text-[#F9B31B] transition-colors duration-300">
+            <h3 className="text-lg font-semibold  white-text  capitalize  mb-4 group-hover: text-primary  transition-colors duration-300">
               {component.name}
             </h3>
           </div>
 
-          <p className="text-muted-foreground text-gray-400 text-sm mb-4 flex-1 line-clamp-2">
+          {/* <p className="text-muted-foreground  grey-text  text-sm mb-4 flex-1 line-clamp-2">
             {component.description}
-          </p>
+          </p> */}
 
           {/* Meta Info */}
           <div className="flex items-center justify-between text-xs text-muted-foreground">
             <div className="flex items-center space-x-1">
-              <Tag className="h-4 w-5 text-gray-400" />
-              <span className="text-neon-purple">
+              <Tag className="h-4 w-5  grey-text " />
+              <span className="text-neon-purple capitalize">
                 {component.category?.name || "Uncategorized"}
               </span>
             </div>
             {component.dateCreated && (
-              <div className="flex items-center space-x-1 text-gray-400">
-                <Calendar className="h-4 w-5 text-gray-400" />
+              <div className="flex items-center space-x-1  grey-text ">
+                <Calendar className="h-4 w-5  grey-text " />
                 <span>{format(new Date(component.dateCreated), 'dd/MM/yyyy')}</span> {/* Fixed date format */}
               </div>
             )}
@@ -86,11 +88,13 @@ export default function ComponentCard({ component, onPreview, onCopy }: Componen
         {/* View Component Link */}
         <div className="p-6 pt-0">
           <Link
-            href={`/components/${component._id}`}
-            className="block text-center mt-4 border-2 border-[#F9B31B] text-[#F9B31B] rounded-full px-4 py-2 font-semibold hover:bg-[#F9B31B] hover:text-black transition-all duration-300"
-          >
-            View Component
-          </Link>
+  href={`/components/${component._id}`}
+  className="block text-center mt-4 border-2 border-[#F9B31B] text-primary rounded-full px-4 py-2 font-semibold 
+             hover:bg-[#F9B31B] hover:!text-black transition-all duration-300"
+>
+  View Component
+</Link>
+
         </div>
       </div>
     </div>

@@ -100,7 +100,7 @@ export default function ManageComponentsPage() {
                 <Link href={`/components/${component._id}`} className="font-medium text-lg hover:text-blue-400 transition-colors">
                   {component.name}
                 </Link>
-                <p className="text-sm text-gray-400">
+                <p className="text-sm  grey-text ">
                   Category: {component.category?.name || 'N/A'}
                 </p>
               </div>

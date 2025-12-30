@@ -41,7 +41,7 @@ export default function EditComponentPage() {
 
   return (
     <div className="p-8">
-      <h1 className="text-4xl font-bold text-white mb-8">Edit Component</h1>
+      <h1 className="text-4xl font-bold  white-text  mb-8">Edit Component</h1>
       <div className="bg-white p-6 rounded-lg shadow-lg">
         <ComponentForm onSuccess={handleSuccess} initialData={initialData} />
       </div>

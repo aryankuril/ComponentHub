@@ -12,7 +12,7 @@ export default function AddComponentPage() {
 
   return (
     <div className="p-8">
-      <h1 className="text-4xl font-bold text-white mb-8">Add New Component</h1>
+      <h1 className="text-4xl font-bold  white-text  mb-8">Add New Component</h1>
       <div className="bg-gray-900 p-6 rounded-lg shadow-lg">
         <ComponentForm onSuccess={handleSuccess} />
       </div>

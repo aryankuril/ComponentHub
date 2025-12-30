@@ -75,14 +75,14 @@ const Terms = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black  white-text ">
       <Navbar />
       
       <main className="container mx-auto px-4 pt-24 pb-16">
         <div className="max-w-4xl mx-auto space-y-8 animate-fade-in">
           {/* Header */}
           <div className="text-center space-y-4">
-            <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-neon-purple via-neon-pink to-neon-cyan bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-6xl font-bold text-primary text-transparent">
               Terms & Conditions
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -98,9 +98,9 @@ const Terms = () => {
           <div className="grid gap-6">
             {sections.map((section, index) => (
               <ThreeDElement key={index} className="w-full">
-                <div className="bg-div-dark rounded-lg px-8 py-8 border border-neon-purple/40 shadow-lg shadow-neon-purple/10 hover:border-neon-cyan/40 transition-all duration-300">
+                <div className=" px-8 py-8 bg-[#0a0a0a] border border-transparent hover:border-[#F9B31B]/30 rounded-xl transition-all duration-300">
                   <div>
-                    <div className="flex items-center gap-3 text-neon-purple lg:mb-10 mb-5">
+                    <div className="flex items-center gap-3 text-primary lg:mb-10 mb-5">
                       <section.icon className="w-6 h-6" />
                       {section.title}
                     </div>
@@ -122,9 +122,9 @@ const Terms = () => {
 
           {/* Important Notice */}
           <ThreeDElement className="w-full">
-            <div className="bg-div-dark border border-neon-pink/20 shadow-lg shadow-neon-pink/10 rounded-lg px-8 py-8 ">
+            <div className="bg-div-dark border border-[#F9B31B]/30 shadow-lg shadow-neon-pink/10 rounded-xl px-8 py-8 ">
               <div>
-                <div className="flex items-center gap-3 text-neon-pink">
+                <div className="flex items-center gap-3 text-primary">
                   <AlertTriangle className="w-6 h-6" />
                   Important Notice
                 </div>
@@ -134,11 +134,11 @@ const Terms = () => {
                   These terms constitute a legally binding agreement between you and Component Showcase. 
                   If you have questions about any of these terms, please contact us before using our service.
                 </p>
-                <div className="bg-background/10 border border-neon-pink/20 rounded-lg p-4">
+                <div className="bg-background/10 border border-[#F9B31B]/30 rounded-xl p-4">
                   <p className="text-sm">
-                    <strong className="text-neon-pink">Contact us:</strong><br />
-                    Email: <span className="text-neon-cyan">legal@componentshowcase.com</span><br />
-                    Address: <span className="text-neon-cyan">123 Tech Street, Digital City, 12345</span>
+                    <strong className="text-primary">Contact us:</strong><br />
+                    Email: <span className="text-primary">hello@bombayblokes.com</span><br />
+                    Address: <span className="text-primary">Lower Parel, Mumbai</span>
                   </p>
                 </div>
               </div>

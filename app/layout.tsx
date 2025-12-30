@@ -19,7 +19,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.className} bg-black text-white`}>
+      <body className={`${inter.className} bg-black  white-text `}>
         <NextAuthSessionProvider>
           {children}
         </NextAuthSessionProvider>

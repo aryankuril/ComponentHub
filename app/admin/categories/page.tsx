@@ -99,7 +99,7 @@ export default function ManageCategoriesPage() {
   };
 
   return (
-    <div className="p-8 text-white">
+    <div className="p-8  white-text ">
       <h1 className="text-4xl font-bold mb-8 text-black">Manage Categories</h1>
 
       {message && <p className={`mb-4 text-center text-sm ${message.startsWith('Error') ? 'text-red-500' : 'text-green-500'}`}>{message}</p>}

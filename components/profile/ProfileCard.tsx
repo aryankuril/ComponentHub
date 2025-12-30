@@ -1,242 +1,247 @@
+'use client'
 
-// app/profile/page.tsx
-"use client";
+import { useState } from 'react'
+import { User, Mail, Lock, Edit } from 'lucide-react'
+import { useRouter } from 'next/navigation'
 
-import { useState } from "react";
-import { User, Mail, Lock, Edit } from "lucide-react";
-import { useSession } from "next-auth/react";
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  // phone: string;
-  // joinDate: string;
-  role: "user" | "admin";
+interface UserType {
+  id: string
+  name: string
+  email: string
+  role: 'user' | 'admin'
 }
 
-export default function Profile({ user }: { user: User }) {
-  const { update } = useSession();
-  const [activeTab, setActiveTab] = useState<"profile" | "favorites" | "activity">("profile");
+export default function ProfileCard({ user }: { user: UserType }) {
+  const router = useRouter()
+
   const [profileData, setProfileData] = useState({
     name: user.name,
     email: user.email,
-    // phone: user.phone,
-    // joinDate: user.joinDate,
-  });
+  })
 
   const [passwordData, setPasswordData] = useState({
-    currentPassword: "",
-    newPassword: "",
-    confirmPassword: "",
-  });
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  })
 
-  const [isEditingProfile, setIsEditingProfile] = useState(false);
-  const [isEditingPassword, setIsEditingPassword] = useState(false);
-  const [message, setMessage] = useState("");
+  const [isEditingProfile, setIsEditingProfile] = useState(false)
+  const [isEditingPassword, setIsEditingPassword] = useState(false)
+  const [message, setMessage] = useState<string | null>(null)
 
-// Profile update handler - now simulates an API call
-const handleProfileSave = (e: React.FormEvent<HTMLButtonElement>) => {
-  e.preventDefault();
-  setMessage("Updating profile...");
+  // ===============================
+  // UPDATE NAME + EMAIL
+  // ===============================
+  const handleProfileSave = async () => {
+    try {
+      setMessage('Updating profile...')
 
-  // Simulate a successful API call
-  setTimeout(() => {
-    setMessage("✅ Profile updated successfully!");
-    setIsEditingProfile(false);
-    // Here you would typically handle a state update from the API response
-    // For this example, we just clear the message after a short delay
-    setTimeout(() => setMessage(""), 3000);
-  }, 1500);
-};
+      const res = await fetch(`/api/user/${user.id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: profileData.name,
+          email: profileData.email,
+        }),
+      })
 
-//   // Password update handler - now simulates an API call
-  const handlePasswordSave = (e: React.FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setMessage("");
+      if (!res.ok) {
+        const err = await res.json()
+        throw new Error(err.message || 'Profile update failed')
+      }
 
+      setIsEditingProfile(false)
+      setMessage('✅ Profile updated successfully')
+
+      // 🔥 IMPORTANT: refresh server auth() session
+      router.refresh()
+
+      setTimeout(() => setMessage(null), 3000)
+    } catch (err: any) {
+      setMessage(`❌ ${err.message}`)
+    }
+  }
+
+  // ===============================
+  // UPDATE PASSWORD
+  // ===============================
+  const handlePasswordSave = async () => {
     if (passwordData.newPassword !== passwordData.confirmPassword) {
-      setMessage("❌ Error: Passwords do not match.");
-      return;
+      setMessage('❌ Passwords do not match')
+      return
     }
 
     if (passwordData.newPassword.length < 6) {
-      setMessage("❌ Error: New password must be at least 6 characters long.");
-      return;
+      setMessage('❌ Password must be at least 6 characters')
+      return
     }
 
-    setMessage("Updating password...");
+    try {
+      setMessage('Updating password...')
 
-    // Simulate a successful API call
-    setTimeout(() => {
-      setMessage("✅ Password updated successfully!");
-      setPasswordData({ currentPassword: "", newPassword: "", confirmPassword: "" });
-      setIsEditingPassword(false);
-      setTimeout(() => setMessage(""), 3000);
-    }, 1500);
-  };
+      const res = await fetch(`/api/user/${user.id}/password`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          currentPassword: passwordData.currentPassword,
+          newPassword: passwordData.newPassword,
+        }),
+      })
 
+      if (!res.ok) {
+        const err = await res.json()
+        throw new Error(err.message || 'Password update failed')
+      }
+
+      setPasswordData({
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: '',
+      })
+
+      setIsEditingPassword(false)
+      setMessage('✅ Password updated successfully')
+
+      router.refresh()
+
+      setTimeout(() => setMessage(null), 3000)
+    } catch (err: any) {
+      setMessage(`❌ ${err.message}`)
+    }
+  }
 
   return (
-    <div className="min-h-screen bg-black text-white px-4">
-      <div className="container mx-auto max-w-4xl space-y-12">
-        {/* Profile Header */}
-        <div className="text-center space-y-6">
+    <div className="space-y-10">
+      {message && (
+        <div className="p-4 rounded-lg text-center bg-gray-800 text-white">
+          {message}
+        </div>
+      )}
+      <div className="text-center space-y-6">
           <div className="inline-block relative">
-            <div className="w-24 h-24 rounded-full bg-gradient-to-br from-neon-cyan to-neon-purple flex items-center justify-center text-black text-2xl font-bold shadow-lg shadow-neon-cyan/30 border-2 border-neon-cyan">
+            <div className="w-24 h-24 rounded-full uppercase bg-gradient-to-br from-neon-cyan to-neon-purple flex items-center justify-center text-black text-2xl font-bold shadow-lg shadow-neon-cyan/30 border-2 border-neon-cyan">
               {profileData.name.split(" ").map((n) => n[0]).join("")}
             </div>
           </div>
           <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-neon-cyan via-neon-purple to-neon-pink bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold capitalize text-primary">
               {profileData.name}
             </h1>
-            {/* <p className="text-gray-400 mt-2">Member since {profileData.joinDate}</p> */}
+            {/* <p className=" grey-text  mt-2">Member since {profileData.joinDate}</p> */}
           </div>
         </div>
 
-          {/* Message Container */}
-       {message && (
-          <div className={`p-4 rounded-lg text-center font-medium ${message.startsWith('✅') ? 'bg-green-600/30 text-green-300' : 'bg-red-600/30 text-red-300'}`}>
-            {message}
+      {/* PROFILE */}
+      <div className="bg-gray-900 p-6 border border-transparent hover:border-[#F9B31B]/30 rounded-xl">
+        <div className="flex justify-between mb-6">
+          <h2 className="text-xl font-semibold">Personal Information</h2>
+          <button
+            onClick={() => setIsEditingProfile(!isEditingProfile)}
+            className="px-3 py-1 rounded-md cursor-pointer border  hover:border-[#F9B31B] text-white hover:text-[#f2c053]"
+          >
+            <Edit className="w-4 h-4 inline mr-2" />
+            {isEditingProfile ? 'Cancel' : 'Edit'}
+          </button>
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <label className="text-sm">Name</label>
+            <div className="relative mt-1">
+              <User className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+              <input
+                disabled={!isEditingProfile}
+                value={profileData.name}
+                onChange={(e) =>
+                  setProfileData({ ...profileData, name: e.target.value })
+                }
+                className="w-full pl-10 py-2 bg-black border border-[#fab31e]/30 rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="text-sm">Email</label>
+            <div className="relative mt-1">
+              <Mail className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+              <input
+                disabled={!isEditingProfile}
+                value={profileData.email}
+                onChange={(e) =>
+                  setProfileData({ ...profileData, email: e.target.value })
+                }
+                className="w-full pl-10 py-2 bg-black border border-[#fab31e]/30 rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
+              />
+            </div>
+          </div>
+        </div>
+
+        {isEditingProfile && (
+          <div className="flex justify-end mt-4">
+            <button
+              onClick={handleProfileSave}
+              className="px-4 py-2 bg-yellow-400 text-black rounded-md"
+            >
+              Save Changes
+            </button>
           </div>
         )}
+      </div>
 
-        {/* Tabs */}
-        <div>
-          <div className="grid grid-cols-3 gap-2 bg-gray-900/40 rounded-lg p-1">
-            <button
-              className={`flex items-center justify-center gap-2 py-2 rounded-md transition ${
-                activeTab === "profile"
-                  ? "bg-neon-cyan/20 text-neon-cyan"
-                  : "hover:bg-gray-800 text-gray-400"
-              }`}
-              onClick={() => setActiveTab("profile")}
-            >
-              <User className="w-4 h-4" /> Profile
-            </button>    
-          </div>
+      {/* PASSWORD */}
+      <div className="bg-gray-900 p-6 border border-transparent hover:border-[#F9B31B]/30 rounded-xl">
+        <div className="flex justify-between mb-6">
+          <h2 className="text-xl font-semibold">Security</h2>
+          <button
+            onClick={() => setIsEditingPassword(!isEditingPassword)}
+            className="px-3 py-1 rounded-md cursor-pointer border  hover:border-[#F9B31B] text-white hover:text-[#f2c053]"
+          >
+            <Lock className="w-4 h-4 inline mr-2" />
+            {isEditingPassword ? 'Cancel' : 'Change Password'}
+          </button>
         </div>
 
-        {/* Profile Tab */}
-        {/* {activeTab === "profile" && ( */}
-          <div className="space-y-8">
-            {/* Personal Info */}
-            <div className="bg-gray-900 border border-neon-cyan/40 rounded-xl p-6 shadow-lg shadow-neon-cyan/10">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h2 className="text-xl font-semibold text-neon-cyan">Personal Information</h2>
-                  <p className="text-gray-400 text-sm">Manage your account details</p>
-                </div>
-                <button
-                  className="px-4 py-1 text-sm border border-neon-cyan text-neon-cyan rounded-lg hover:bg-neon-cyan hover:text-black transition"
-                  onClick={() => setIsEditingProfile(!isEditingProfile)}
-                >
-                  <Edit className="w-4 h-4 inline mr-2" />
-                  {isEditingProfile ? "Cancel" : "Edit"}
-                </button>
-              </div>
-              <div className="grid md:grid-cols-2 gap-6">
-                {/* Name */}
-                <div>
-                  <label className="text-neon-cyan text-sm">Full Name</label>
-                  <div className="relative mt-1">
-                    <User className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                    <input
-                      type="text"
-                      value={profileData.name}
-                      disabled={!isEditingProfile}
-                      onChange={(e) => setProfileData({ ...profileData, name: e.target.value })}
-                      className="w-full pl-10 py-2 bg-black/40 border border-neon-cyan/40 rounded-lg focus:outline-none focus:ring-2 focus:ring-neon-cyan/50"
-                    />
-                  </div>
-                </div>
-                {/* Email */}
-                <div>
-                  <label className="text-neon-cyan text-sm">Email</label>
-                  <div className="relative mt-1">
-                    <Mail className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
-                    <input
-                      type="email"
-                      value={profileData.email}
-                      disabled={!isEditingProfile}
-                      onChange={(e) => setProfileData({ ...profileData, email: e.target.value })}
-                      className="w-full pl-10 py-2 bg-black/40 border border-neon-cyan/40 rounded-lg"
-                    />
-                  </div>
-                </div>
-              </div>
-               {isEditingProfile && (
-                <div className="flex justify-end mt-4">
-                  <button onClick={handleProfileSave} className="px-4 py-2 bg-cyan-400 text-black rounded-lg hover:bg-purple-600 transition">
-                    Save Changes
-                  </button>
-                </div>
-              )}
-            </div>
+        {isEditingPassword && (
+          <div className="space-y-4">
+            <input
+              type="password"
+              placeholder="Current Password"
+              value={passwordData.currentPassword}
+              onChange={(e) =>
+                setPasswordData({ ...passwordData, currentPassword: e.target.value })
+              }
+              className="w-full px-3 py-2 bg-black border border-[#fab31e]/30 rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
+            />
+            <input
+              type="password"
+              placeholder="New Password"
+              value={passwordData.newPassword}
+              onChange={(e) =>
+                setPasswordData({ ...passwordData, newPassword: e.target.value })
+              }
+              className="w-full px-3 py-2 bg-black border border-[#fab31e]/30 rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
+            />
+            <input
+              type="password"
+              placeholder="Confirm New Password"
+              value={passwordData.confirmPassword}
+              onChange={(e) =>
+                setPasswordData({ ...passwordData, confirmPassword: e.target.value })
+              }
+              className="w-full px-3 py-2 bg-black border border-[#fab31e]/30 rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
+            />
 
-            {/* Security */}
-            <div className="bg-gray-900 border border-neon-purple/40 rounded-xl p-6 shadow-lg shadow-neon-purple/10">
-              <div className="flex items-center justify-between mb-6">
-                <div>
-                  <h2 className="text-xl font-semibold text-neon-purple">Security Settings</h2>
-                  <p className="text-gray-400 text-sm">Update your password</p>
-                </div>
-                <button
-                  className="px-4 py-1 text-sm border border-neon-purple text-neon-purple rounded-lg hover:bg-neon-purple hover:text-black transition"
-                  onClick={() => setIsEditingPassword(!isEditingPassword)}
-                >
-                  <Lock className="w-4 h-4 inline mr-2" />
-                  {isEditingPassword ? "Cancel" : "Change Password"}
-                </button>
-              </div>
-              {isEditingPassword && (
-                <div className="space-y-4">
-                  <div>
-                    <label className="text-neon-purple text-sm">Current Password</label>
-                    <input
-                      type="password"
-                      value={passwordData.currentPassword}
-                      onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
-                      className="w-full py-2 px-3 bg-black/40 border border-neon-purple/40 rounded-lg"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-neon-purple text-sm">New Password</label>
-                    <input
-                      type="password"
-                      value={passwordData.newPassword}
-                      onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
-                      className="w-full py-2 px-3 bg-black/40 border border-neon-purple/40 rounded-lg"
-                    />
-                  </div>
-                  <div>
-                    <label className="text-neon-purple text-sm">Confirm New Password</label>
-                    <input
-                      type="password"
-                      value={passwordData.confirmPassword}
-                      onChange={(e) =>
-                        setPasswordData({ ...passwordData, confirmPassword: e.target.value })
-                      }
-                      className="w-full py-2 px-3 bg-black/40 border border-neon-purple/40 rounded-lg"
-                    />
-                  </div>
-                  <div className="flex justify-end">
-                    <button onClick={handlePasswordSave} className="px-4 py-2 bg-neon-purple text-black rounded-lg hover:bg-neon-cyan transition">
-                      Update Password
-                    </button>
-                  </div>
-                </div>
-              )}
+            <div className="flex justify-end">
+              <button
+                onClick={handlePasswordSave}
+                className="px-4 py-2 bg-yellow-400 text-black rounded-md"
+              >
+                Update Password
+              </button>
             </div>
           </div>
-        {/* // )} */}
-
-      
+        )}
       </div>
     </div>
-  );
+  )
 }
-
-
-
