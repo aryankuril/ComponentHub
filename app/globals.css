@@ -134,3 +134,68 @@ body {
     text-shadow: 0 0 20px #F9B31B, 0 0 40px #F9B31B;
   }
 }
+
+
+
+/* ============================
+   Links & Buttons
+============================ */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* ============================
+   Images & Media
+============================ */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ============================
+   Scrollbar (optional, clean)
+============================ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ============================
+   Sandpack Preview Safety
+   (No Sandpack CSS import!)
+============================ */
+.sp-wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.sp-preview {
+  background: #ffffff;
+}
+
+/* ============================
+   Utility Helpers (optional)
+============================ */
+.container {
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}

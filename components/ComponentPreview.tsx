@@ -1,7 +1,5 @@
 'use client';
 
-import "@codesandbox/sandpack-react/dist/index.css";
-
 import {
   SandpackProvider,
   SandpackLayout,
