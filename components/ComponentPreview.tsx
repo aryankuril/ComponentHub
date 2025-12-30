@@ -1,5 +1,7 @@
 'use client';
 
+import "@codesandbox/sandpack-react/dist/index.css";
+
 import {
   SandpackProvider,
   SandpackLayout,
@@ -20,7 +22,7 @@ const ComponentPreview = ({ code }: ComponentPreviewProps) => {
       <SandpackProvider
         template="react"
         files={{
-          '/App.js': {
+          "/App.js": {
             code,
             active: true,
           },
@@ -33,15 +35,13 @@ const ComponentPreview = ({ code }: ComponentPreviewProps) => {
           },
         }}
         options={{
-          externalResources: [
-            "https://cdn.tailwindcss.com",
-          ],
+          externalResources: ["https://cdn.tailwindcss.com"],
         }}
       >
         <SandpackLayout>
           <SandpackPreview
-            style={{ height: 500 }}
             className="rounded-md bg-white"
+            style={{ height: 500 }}
           />
         </SandpackLayout>
       </SandpackProvider>
