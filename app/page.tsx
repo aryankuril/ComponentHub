@@ -20,7 +20,10 @@ export default async function HomePage() {
       <Navbar />
 
       <main className="flex-grow pt-16">
-        <HeroSection />
+       <HeroSection
+  components={components.map((c) => JSON.parse(JSON.stringify(c)))}
+/>
+
 
         {/* ✅ CLIENT COMPONENT */}
         <LandingPage
