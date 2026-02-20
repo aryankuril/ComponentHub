@@ -1,4 +1,3 @@
-
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
@@ -16,7 +15,6 @@ export async function GET(
 
     const { id } = params;
 
-    // 🔥 Validate ObjectId FIRST
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json(
         { message: "Invalid component ID" },
@@ -24,9 +22,7 @@ export async function GET(
       );
     }
 
-    const component = await Component.findById(id)
-      .populate("category", "name")
-      .lean();
+    const component = await Component.findById(id).lean();
 
     if (!component) {
       return NextResponse.json(
@@ -40,7 +36,7 @@ export async function GET(
   } catch (error) {
     console.error("REAL GET ERROR:", error);
     return NextResponse.json(
-      { message: "Internal Server Error" },
+      { message: "Internal Server Error", error: String(error) },
       { status: 500 }
     );
   }
