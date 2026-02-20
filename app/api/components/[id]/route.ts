@@ -19,14 +19,14 @@ export async function GET(
 
     if (!params?.id) {
       return NextResponse.json(
-        { message: "Invalid component ID" },
+        { message: "Invalid ID" },
         { status: 400 }
       );
     }
 
     const component = await Component.findById(params.id)
       .populate("category", "name")
-      .lean(); // 🔥 prevents serialization issues
+      .lean();
 
     if (!component) {
       return NextResponse.json(
