@@ -12,58 +12,65 @@ export const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
+
       async authorize(credentials) {
-        if (!credentials) return null;
+        if (!credentials?.email || !credentials?.password) {
+          return null;
+        }
 
         await dbConnect();
-        const user = await User.findOne({ email: credentials.email });
 
-        if (user && bcrypt.compareSync(credentials.password, user.password)) {
-          return {
-            id: user._id.toString(),
-            name: user.name,
-            email: user.email,
-            role: user.role as "user" | "admin",
-            dateCreated: user.dateCreated,
-          };
-        }
-        return null;
+        const user = await User.findOne({
+          email: credentials.email,
+        });
+
+        if (!user) return null;
+
+        const isValid = bcrypt.compareSync(
+          credentials.password,
+          user.password
+        );
+
+        if (!isValid) return null;
+
+        return {
+          id: user._id.toString(),
+          name: user.name,
+          email: user.email,
+          role: user.role as "user" | "admin",
+          dateCreated: user.dateCreated,
+        };
       },
     }),
   ],
-// ... (rest of your code)
 
-callbacks: {
+  callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
-        token.role = user.role;
-        token.dateCreated = user.dateCreated;
+        token.id = (user as any).id;
+        token.role = (user as any).role;
+        token.dateCreated = (user as any).dateCreated;
       }
       return token;
     },
+
     async session({ session, token }) {
       if (session.user) {
-        // Add checks to ensure the token properties are not undefined
-        if (token.id) {
-          session.user.id = token.id;
-        }
-        if (token.role) {
-          session.user.role = token.role;
-        }
-        if (token.dateCreated) {
-          session.user.dateCreated = token.dateCreated;
-        }
+        session.user.id = token.id as string;
+        session.user.role = token.role as "user" | "admin";
+        session.user.dateCreated = token.dateCreated as Date | string;
       }
       return session;
     },
-},
+  },
 
-// ... (rest of your code)
   pages: {
     signIn: "/login",
   },
+
   session: {
     strategy: "jwt",
   },
+
+  secret: process.env.NEXTAUTH_SECRET,
 };
