@@ -11,20 +11,6 @@ interface ComponentPreviewProps {
 }
 
 const ComponentPreview = ({ code }: ComponentPreviewProps) => {
-  const wrappedCode = `
-import React from "react";
-
-${code}
-
-export default function App() {
-  return (
-    <div style={{ padding: 20 }}>
-      {typeof Component !== "undefined" ? <Component /> : null}
-    </div>
-  );
-}
-`;
-
   return (
     <div className="w-full rounded-lg border border-gray-700 bg-gray-900 p-4">
       <h2 className="mb-4 text-xl font-bold text-gray-200">
@@ -35,7 +21,7 @@ export default function App() {
         template="react"
         files={{
           "/App.js": {
-            code: wrappedCode,
+            code,
             active: true,
           },
         }}
@@ -45,6 +31,9 @@ export default function App() {
             "slick-carousel": "^1.8.1",
             "framer-motion": "^10.16.4",
           },
+        }}
+        options={{
+          externalResources: ["https://cdn.tailwindcss.com"],
         }}
       >
         <SandpackLayout>

@@ -5,6 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 import dbConnect from "@/lib/mongodb";
 import Component from "@/lib/schemas/Component";
+import Category from "@/lib/schemas/Category";
 
 export async function GET(
   _req: NextRequest,
@@ -31,12 +32,26 @@ export async function GET(
       );
     }
 
-    return NextResponse.json(component);
+    // 🔥 Properly type cast
+    const typedComponent = component as any;
+
+    let categoryData = null;
+
+    if (typedComponent.category) {
+      categoryData = await Category.findById(typedComponent.category)
+        .select("name")
+        .lean();
+    }
+
+    return NextResponse.json({
+      ...typedComponent,
+      category: categoryData,
+    });
 
   } catch (error) {
     console.error("REAL GET ERROR:", error);
     return NextResponse.json(
-      { message: "Internal Server Error", error: String(error) },
+      { message: "Internal Server Error" },
       { status: 500 }
     );
   }
