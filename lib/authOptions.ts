@@ -20,17 +20,22 @@ export const authOptions: NextAuthOptions = {
         await dbConnect();
         const user = await User.findOne({ email: credentials.email });
 
-        if (user && bcrypt.compareSync(credentials.password, user.password)) {
-          return {
-            id: user._id.toString(),
-            name: user.name,
-            email: user.email,
-            role: user.role ?? "user",
-            dateCreated: user.dateCreated,
-          };
-        }
+        if (!user) return null;
 
-        return null;
+        const isValid = bcrypt.compareSync(
+          credentials.password,
+          user.password
+        );
+
+        if (!isValid) return null;
+
+        return {
+          id: user._id.toString(),
+          name: user.name,
+          email: user.email,
+          role: user.role ?? "user",
+          dateCreated: user.dateCreated, // REQUIRED
+        };
       },
     }),
 
@@ -50,6 +55,7 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.id = user.id;
         token.role = (user as any).role ?? "user";
+        token.dateCreated = (user as any).dateCreated;
       }
       return token;
     },
@@ -57,7 +63,8 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
-        session.user.role = (token.role as "user" | "admin") ?? "user";
+        session.user.role = token.role as "user" | "admin";
+        session.user.dateCreated = token.dateCreated as Date;
       }
       return session;
     },
