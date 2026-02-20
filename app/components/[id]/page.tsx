@@ -45,43 +45,23 @@ export default function ComponentsPage() {
     }
   }, [pathname])
 
-const openComponent = async (id: string) => {
-  setLoading(true);
+  const openComponent = async (id: string) => {
+    setLoading(true)
 
-  router.push(`/components/${id}`, { scroll: false });
+    router.push(`/components/${id}`, { scroll: false })
 
-  try {
-    const res = await fetch(`/api/components/${id}`);
-
-    if (!res.ok) {
-      console.error("API error:", res.status);
-      setSelectedComponent(null);
-      setLoading(false);
-      return;
-    }
-
-    const data = await res.json();
-
-    if (!data || !data._id) {
-      console.error("Invalid data:", data);
-      setSelectedComponent(null);
-      setLoading(false);
-      return;
-    }
+    const res = await fetch(`/api/components/${id}`)
+    const data = await res.json()
 
     setSelectedComponent({
       ...data,
       npmPackages: data.npmPackages ?? [],
-    });
+    })
 
-    setSidebarOpen(false);
-  } catch (error) {
-    console.error("Fetch failed:", error);
-    setSelectedComponent(null);
+    setSidebarOpen(false) // 🔹 close sidebar on mobile
+
+    setLoading(false)
   }
-
-  setLoading(false);
-};
 
   return (
     <div className="min-h-screen flex flex-col bg-black text-gray-200">
