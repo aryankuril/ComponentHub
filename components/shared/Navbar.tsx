@@ -54,7 +54,7 @@ const handleCategoriesClick = async () => {
 
   } catch (error) {
     console.error('Navigation error:', error);
-    router.push(`/components/${components[0]._id}`);
+    router.push('/categories');
   }
 };
 
