@@ -16,11 +16,6 @@ function getIdFromUrl(req: Request) {
 export async function GET(req: Request) {
   const id = getIdFromUrl(req);
 
-  const session = await auth();
-  if (!session?.user || session.user.role !== 'admin') {
-    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
-  }
-
   try {
     await dbConnect();
     const component = await Component.findById(id).populate('category', 'name');

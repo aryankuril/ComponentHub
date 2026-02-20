@@ -48,22 +48,28 @@ export const authOptions: NextAuthOptions = {
     clientSecret: process.env.GITHUB_SECRET!,
   }),
 ],
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.role = user.role;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id!;
-        session.user.role = token.role as "user" | "admin";
-      }
-      return session;
-    },
+ callbacks: {
+  async jwt({ token, user }) {
+    if (user) {
+      token.id = user.id;
+
+      // default role safely
+      token.role = (user as any).role ?? "user";
+    }
+    return token;
   },
+
+  async session({ session, token }) {
+    if (session.user) {
+      session.user.id = token.id as string;
+
+      // always ensure role exists
+      session.user.role =
+        (token.role as "user" | "admin") ?? "user";
+    }
+    return session;
+  },
+},
   pages: { signIn: "/login" },
   session: { strategy: "jwt" },
 };

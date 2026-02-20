@@ -79,18 +79,20 @@ const Footer = () => {
               Discover, preview, and copy beautiful components for your next project.
             </p>
 
-            <div className="flex space-x-4">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  className="p-2 rounded-lg grey-text bg-secondary hover:bg-[#F9B31B]/10 hover:text-[#F9B31B] transition-all duration-300 group"
-                  aria-label={social.label}
-                >
-                  <social.icon className="h-5 w-5 group-hover:animate-pulse" />
-                </a>
-              ))}
-            </div>
+           <div className="flex space-x-4">
+  {socialLinks.map((social) => (
+    <a
+      key={social.label}
+      href={social.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="p-2 rounded-lg grey-text bg-secondary hover:bg-[#F9B31B]/10 hover:text-[#F9B31B] transition-all duration-300 group"
+      aria-label={social.label}
+    >
+      <social.icon className="h-5 w-5 group-hover:animate-pulse" />
+    </a>
+  ))}
+</div>
           </div>
 
           {/* Quick Links */}

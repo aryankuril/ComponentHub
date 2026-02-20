@@ -153,31 +153,31 @@ export default function LoginForm() {
             </button>
 
 
-            <div className="mt-6 space-y-3">
+            {/* <div className="mt-6 space-y-3"> */}
 
-  <div className="flex items-center gap-2">
+  {/* <div className="flex items-center gap-2">
     <div className="flex-1 h-px bg-[#F9B31B]/20" />
     <span className="text-xs grey-text">OR</span>
     <div className="flex-1 h-px bg-[#F9B31B]/20" />
-  </div>
+  </div> */}
 
   {/* Google */}
-  <button
+  {/* <button
     onClick={() => signIn("google", { callbackUrl: "/profile" })}
     className="w-full border border-[#F9B31B]/30 py-2 rounded-md font-semibold hover:bg-[#111] transition"
   >
     Continue with Google
-  </button>
+  </button> */}
 
   {/* GitHub */}
-  <button
+  {/* <button
     onClick={() => signIn("github", { callbackUrl: "/profile" })}
     className="w-full border border-[#F9B31B]/30 py-2 rounded-md font-semibold hover:bg-[#111] transition"
   >
     Continue with GitHub
-  </button>
+  </button> */}
 
-</div>
+{/* </div> */}
           </form>
 
           {/* Sign Up */}
