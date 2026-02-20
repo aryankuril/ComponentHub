@@ -15,7 +15,7 @@ export async function GET() {
     const components = await Component.find().populate("category");
     return NextResponse.json(components);
   } catch (error) {
-    console.error(error);
+    console.error("GET COMPONENTS ERROR:", error);
     return NextResponse.json(
       { message: "Failed to fetch components" },
       { status: 500 }

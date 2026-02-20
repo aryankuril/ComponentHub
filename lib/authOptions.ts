@@ -13,30 +13,31 @@ export const authOptions: NextAuthOptions = {
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
+        
       },
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials.password) return null;
+    async authorize(credentials) {
+  if (!credentials?.email || !credentials.password) return null;
 
-        await dbConnect();
-        const user = await User.findOne({ email: credentials.email });
+  await dbConnect();
+  const user = await User.findOne({ email: credentials.email });
 
-        if (!user) return null;
+  if (!user) return null;
 
-        const isValid = bcrypt.compareSync(
-          credentials.password,
-          user.password
-        );
+  const isValid = bcrypt.compareSync(
+    credentials.password,
+    user.password
+  );
 
-        if (!isValid) return null;
+  if (!isValid) return null;
 
-        return {
-          id: user._id.toString(),
-          name: user.name,
-          email: user.email,
-          role: user.role ?? "user",
-          dateCreated: user.dateCreated, // REQUIRED
-        };
-      },
+  return {
+    id: user._id.toString(),
+    name: user.name,
+    email: user.email,
+    role: user.role ?? "user",
+    dateCreated: user.dateCreated, // ✅ REQUIRED
+  };
+}
     }),
 
     GoogleProvider({
@@ -50,29 +51,25 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
 
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.role = (user as any).role ?? "user";
-        token.dateCreated = (user as any).dateCreated;
-      }
-      return token;
-    },
-
-    async session({ session, token }) {
-      if (session.user) {
-        session.user.id = token.id as string;
-        session.user.role = token.role as "user" | "admin";
-        session.user.dateCreated = token.dateCreated as Date;
-      }
-      return session;
-    },
+ callbacks: {
+  async jwt({ token, user }) {
+    if (user) {
+      token.id = user.id;
+      token.role = (user as any).role;
+      token.dateCreated = (user as any).dateCreated;
+    }
+    return token;
   },
 
-  pages: {
-    signIn: "/login",
+  async session({ session, token }) {
+    if (session.user) {
+      session.user.id = token.id as string;
+      session.user.role = token.role as "user" | "admin";
+      session.user.dateCreated = token.dateCreated as Date | string;
+    }
+    return session;
   },
+},
 
   session: {
     strategy: "jwt",

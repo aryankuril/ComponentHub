@@ -5,6 +5,7 @@ declare module "next-auth" {
   interface User extends DefaultUser {
     id: string;
     role: "user" | "admin";
+    dateCreated: Date | string;
   }
 
   interface Session extends DefaultSession {
