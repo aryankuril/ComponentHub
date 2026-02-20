@@ -49,12 +49,12 @@ const handleCategoriesClick = async () => {
     if (components && components.length > 0) {
       router.push(`/components/${components[0]._id}`);
     } else {
-      router.push('/categories');
+      router.push(`/components/${components[0]._id}`);
     }
 
   } catch (error) {
     console.error('Navigation error:', error);
-    router.push('/categories');
+    router.push(`/components/${components[0]._id}`);
   }
 };
 
