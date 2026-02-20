@@ -1,3 +1,5 @@
+export const runtime = "nodejs";
+
 import { NextResponse } from 'next/server'
 import dbConnect from '@/lib/mongodb'
 import Category from '@/lib/schemas/Category'

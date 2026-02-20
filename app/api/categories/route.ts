@@ -1,4 +1,6 @@
 // app/api/categories/route.ts
+
+export const runtime = "nodejs";
 import { NextResponse } from 'next/server';
 import { auth } from '@/lib/server-auth';
 import dbConnect from '@/lib/mongodb';
