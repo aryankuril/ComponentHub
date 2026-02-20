@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Buffer } from "buffer";
 import dbConnect from "@/lib/mongodb";
 import Component from "@/lib/schemas/Component";
+import Category from "@/lib/schemas/Category"; // 🔥 REQUIRED
 import { auth } from "@/lib/server-auth";
 
 /* ===============================
@@ -16,10 +17,16 @@ export async function GET(
   try {
     await dbConnect();
 
-    const component = await Component.findById(params.id).populate(
-      "category",
-      "name"
-    );
+    if (!params?.id) {
+      return NextResponse.json(
+        { message: "Invalid component ID" },
+        { status: 400 }
+      );
+    }
+
+    const component = await Component.findById(params.id)
+      .populate("category", "name")
+      .lean(); // 🔥 prevents serialization issues
 
     if (!component) {
       return NextResponse.json(
@@ -98,6 +105,7 @@ export async function PATCH(
 
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
+
       previewImage = `data:${file.type};base64,${buffer.toString("base64")}`;
     }
 
@@ -112,7 +120,9 @@ export async function PATCH(
         previewImage,
       },
       { new: true }
-    ).populate("category", "name");
+    )
+      .populate("category", "name")
+      .lean();
 
     return NextResponse.json(updatedComponent);
   } catch (error) {
