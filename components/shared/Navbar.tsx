@@ -36,21 +36,27 @@ export default function Navbar() {
   /* ===============================
      Categories click handler
   =============================== */
-  const handleCategoriesClick = async () => {
-    try {
-      const res = await fetch('/api/components');
-      const components = await res.json();
+const handleCategoriesClick = async () => {
+  try {
+    const res = await fetch('/api/components');
 
-      if (components?.length > 0) {
-        router.push(`/components/${components[0]._id}`);
-      } else {
-        router.push('/categories');
-      }
-    } catch (error) {
-      console.error(error);
+    if (!res.ok) {
+      throw new Error('Failed to fetch components');
+    }
+
+    const components = await res.json();
+
+    if (components && components.length > 0) {
+      router.push(`/components/${components[0]._id}`);
+    } else {
       router.push('/categories');
     }
-  };
+
+  } catch (error) {
+    console.error('Navigation error:', error);
+    router.push('/categories');
+  }
+};
 
   return (
     <motion.nav
