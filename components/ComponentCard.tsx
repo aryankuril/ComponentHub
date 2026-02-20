@@ -17,6 +17,10 @@ interface ComponentCardProps {
   onCopy: () => void;
 }
 
+
+
+
+
 export default function ComponentCard({ component, onPreview, onCopy }: ComponentCardProps) {
   return (
     <div className="relative bg-gradient-card rounded-xl overflow-hidden flex flex-col transition-all duration-300 h-full">
