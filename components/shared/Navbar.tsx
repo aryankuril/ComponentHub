@@ -3,119 +3,100 @@
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Code, Zap, User } from 'lucide-react';
+import { Menu, X, User } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from "next/image";
+import Image from 'next/image';
 
 export default function Navbar() {
-  interface SessionUser {
-    name?: string | null;
-    email?: string | null;
-    image?: string | null;
-    role?: string | null;
-  }
-
-  interface Session {
-    user?: SessionUser;
-    [key: string]: unknown;
-  }
-
-  const { data: session } = useSession() as { data: Session | null };
+  const { data: session } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const router = useRouter();
 
+  /* ===============================
+     FETCH FIRST COMPONENT + NAVIGATE
+  =============================== */
+  const handleComponentsClick = async () => {
+    try {
+      const res = await fetch('/api/components');
+
+      if (!res.ok) {
+        throw new Error('Failed to fetch components');
+      }
+
+      const components = await res.json();
+
+      if (Array.isArray(components) && components.length > 0) {
+        router.push(`/components/${components[0]._id}`);
+      } else {
+        console.warn('No components found');
+      }
+    } catch (error) {
+      console.error('Navigation error:', error);
+    }
+  };
+
   const navItems = [
     { name: 'Home', path: '/' },
-    { name: 'Components', path: '/categories' },
     { name: 'About', path: '/about' },
     { name: 'Contact', path: '/contact' },
   ];
-
-  /* ===============================
-     Categories click handler
-  =============================== */
-const handleCategoriesClick = async () => {
-  try {
-    const res = await fetch('/api/components');
-
-    if (!res.ok) {
-      throw new Error('Failed to fetch components');
-    }
-
-    const components = await res.json();
-
-    if (components && components.length > 0) {
-      router.push(`/components/${components[0]._id}`);
-    } else {
-      router.push(`/components/${components[0]._id}`);
-    }
-
-  } catch (error) {
-    console.error('Navigation error:', error);
-    router.push('/categories');
-  }
-};
 
   return (
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, type: 'spring' }}
-      className="fixed top-0 w-full z-50 bg-black backdrop-blur-xl border-b border-border"
+      className="fixed top-0 w-full z-50 bg-black border-b border-border"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
           <Link href="/" className="flex items-center">
-  <Image
-    src="/logo.png"   // put your logo inside public folder
-    alt="ComponentHub Logo"
-    width={230}
-    height={40}
-    className="object-contain cursor-pointer -ml-4"
-    priority
-  />
-</Link>
+            <Image
+              src="/logo.png"
+              alt="ComponentHub Logo"
+              width={230}
+              height={40}
+              className="object-contain -ml-4"
+              priority
+            />
+          </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-4">
-            {navItems.map((item) =>
-              item.name === 'Components' ? (
-                <button
-                  key={item.name}
-                  onClick={handleCategoriesClick}
-                  className="px-3 py-2 white-text rounded-md text-base font-medium  
-                             transition-all duration-300 hover:text-[#F9B31B] hover:bg-[#F9B31B]/5 cursor-pointer"
-                >
-                  {item.name}
-                </button>
-              ) : (
-                <Link
-                  key={item.name}
-                  href={item.path}
-                  className="px-3 py-2 white-text rounded-md text-base font-medium 
-                             transition-all duration-300 hover:text-[#F9B31B] hover:bg-[#F9B31B]/5"
-                >
-                  {item.name}
-                </Link>
-              )
-            )}
+          <div className="hidden md:flex space-x-6 items-center">
+
+            {/* Normal Links */}
+            {navItems.map((item) => (
+              <Link
+                key={item.name}
+                href={item.path}
+                className="white-text hover:text-[#F9B31B] transition duration-300"
+              >
+                {item.name}
+              </Link>
+            ))}
+
+            {/* Components Button */}
+           <Link
+  href="/components"
+  className="white-text hover:text-[#F9B31B] transition duration-300"
+>
+  Components
+</Link>
+
           </div>
 
           {/* Desktop Auth */}
           <div className="hidden md:flex items-center space-x-4 white-text">
             {!session ? (
               <>
-                <Link href="/login" className="text-purple">
-                  Login
-                </Link>
+                <Link href="/login">Login</Link>
                 <Link
                   href="/signup"
-                  className="bg-[#F9B31B] text-black font-semibold rounded-md px-6 py-2 
-                             transition-all duration-300 hover:shadow-lg"
+                  className="bg-[#F9B31B] text-black font-semibold rounded-md px-6 py-2"
                 >
                   Sign Up
                 </Link>
@@ -126,7 +107,7 @@ const handleCategoriesClick = async () => {
                 onMouseEnter={() => setIsDropdownOpen(true)}
                 onMouseLeave={() => setIsDropdownOpen(false)}
               >
-                <button className="p-2 rounded-full hover:bg-gray-700 cursor-pointer">
+                <button className="p-2 rounded-full hover:bg-gray-700">
                   <User className="h-6 w-6 text-[#F9B31B]" />
                 </button>
 
@@ -140,7 +121,7 @@ const handleCategoriesClick = async () => {
                     >
                       <Link
                         href="/profile"
-                        className="block px-4 py-2 text-sm white-text hover:bg-gray-700"
+                        className="block px-4 py-2 text-sm hover:bg-gray-700"
                       >
                         My Profile
                       </Link>
@@ -148,7 +129,7 @@ const handleCategoriesClick = async () => {
                       {session.user?.role === 'admin' && (
                         <Link
                           href="/admin"
-                          className="block px-4 py-2 text-sm white-text hover:bg-gray-700"
+                          className="block px-4 py-2 text-sm hover:bg-gray-700"
                         >
                           Admin Panel
                         </Link>
@@ -156,7 +137,7 @@ const handleCategoriesClick = async () => {
 
                       <button
                         onClick={() => signOut()}
-                        className="block w-full text-left px-4 py-2 text-sm white-text hover:bg-gray-700"
+                        className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-700"
                       >
                         Logout
                       </button>
@@ -167,7 +148,7 @@ const handleCategoriesClick = async () => {
             )}
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Mobile Toggle */}
           <div className="md:hidden">
             <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
               {isMenuOpen ? <X /> : <Menu />}
@@ -176,96 +157,78 @@ const handleCategoriesClick = async () => {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
-      {/* Mobile Navigation */}
-{isMenuOpen && (
-  <div className="md:hidden bg-black border-t border-border h-screen">
-    <div className="px-2 py-5 space-y-2">
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-black border-t border-border">
+          <div className="px-4 py-5 space-y-3">
 
-      {/* Main Nav Items */}
-      {navItems.map((item) =>
-        item.name === 'Components' ? (
-          <button
-            key={item.name}
-            onClick={() => {
-              handleCategoriesClick();
-              setIsMenuOpen(false);
-            }}
-            className="block w-full text-left px-3 py-2 text-base font-medium text-white"
-          >
-            {item.name}
-          </button>
-        ) : (
-          <Link
-            key={item.name}
-            href={item.path}
-            onClick={() => setIsMenuOpen(false)}
-            className="block px-3 py-2 text-base font-medium text-white"
-          >
-            {item.name}
-          </Link>
-        )
-      )}
-
-      <hr className="my-2 border-border" />
-
-      {/* 🔓 LOGGED OUT (FIX) */}
-      {!session && (
-        <>
-          <Link
-            href="/login"
-            onClick={() => setIsMenuOpen(false)}
-            className="block px-3 py-2 text-base font-medium text-white"
-          >
-            Login
-          </Link>
-
-          <Link
-            href="/signup"
-            onClick={() => setIsMenuOpen(false)}
-            className="block px-3 py-2 text-base font-medium text-white"
-          >
-            Sign Up
-          </Link>
-        </>
-      )}
-
-      {/* 🔐 LOGGED IN */}
-      {session && (
-        <>
-          <Link
-            href="/profile"
-            onClick={() => setIsMenuOpen(false)}
-            className="block px-3 py-2 text-base font-medium text-white"
-          >
-            My Profile
-          </Link>
-
-          {session.user?.role === 'admin' && (
             <Link
-              href="/admin"
+              href="/"
               onClick={() => setIsMenuOpen(false)}
-              className="block px-3 py-2 text-base font-medium text-white"
+              className="block text-white"
             >
-              Admin Panel
+              Home
             </Link>
-          )}
 
-          <button
-            onClick={() => {
-              signOut();
-              setIsMenuOpen(false);
-            }}
-            className="block w-full text-left px-3 py-2 text-base font-medium text-white"
-          >
-            Logout
-          </button>
-        </>
+           <Link
+  href="/components"
+  onClick={() => setIsMenuOpen(false)}
+  className="block text-white"
+>
+  Components
+</Link>
+
+            <Link
+              href="/about"
+              onClick={() => setIsMenuOpen(false)}
+              className="block text-white"
+            >
+              About
+            </Link>
+
+            <Link
+              href="/contact"
+              onClick={() => setIsMenuOpen(false)}
+              className="block text-white"
+            >
+              Contact
+            </Link>
+
+            <hr className="border-gray-700" />
+
+            {!session ? (
+              <>
+                <Link
+                  href="/login"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block text-white"
+                >
+                  Login
+                </Link>
+
+                <Link
+                  href="/signup"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block text-white"
+                >
+                  Sign Up
+                </Link>
+              </>
+            ) : (
+              <button
+                onClick={() => {
+                  signOut();
+                  setIsMenuOpen(false);
+                }}
+                className="block text-white"
+              >
+                Logout
+              </button>
+            )}
+
+          </div>
+        </div>
       )}
-    </div>
-  </div>
-)}
-
     </motion.nav>
   );
 }
