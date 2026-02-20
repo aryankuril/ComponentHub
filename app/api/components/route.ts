@@ -1,31 +1,68 @@
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic"; // 🔥 VERY IMPORTANT
 
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import dbConnect from "@/lib/mongodb";
 import Component from "@/lib/schemas/Component";
+import { auth } from "@/lib/server-auth";
 
-export async function GET(
-  _req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET() {
   try {
     await dbConnect();
 
-    const component = await Component.findById(params.id).lean();
+    const components = await Component.find()
+      .populate("category", "name")
+      .lean();
 
-    if (!component) {
+    return NextResponse.json(components);
+
+  } catch (error) {
+    console.error("GET COMPONENTS ERROR:", error);
+    return NextResponse.json(
+      { message: "Failed to fetch components" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function POST(req: Request) {
+  try {
+    const session = await auth();
+
+    if (!session || !session.user || session.user.role !== "admin") {
       return NextResponse.json(
-        { message: "Component not found" },
-        { status: 404 }
+        { message: "Unauthorized" },
+        { status: 401 }
       );
     }
 
-    return NextResponse.json(component);
+    await dbConnect();
+
+    const formData = await req.formData();
+
+    const name = formData.get("name") as string;
+    const description = formData.get("description") as string;
+    const code = formData.get("code") as string;
+    const category = formData.get("category") as string;
+
+    const npmPackages = JSON.parse(
+      (formData.get("npmPackages") as string) || "[]"
+    );
+
+    const component = await Component.create({
+      name,
+      description,
+      code,
+      npmPackages,
+      category: category || null,
+    });
+
+    return NextResponse.json(component, { status: 201 });
 
   } catch (error) {
-    console.error("REAL ERROR:", error);
+    console.error("POST ERROR:", error);
     return NextResponse.json(
-      { message: "Internal Server Error" },
+      { message: "Failed to create component" },
       { status: 500 }
     );
   }
