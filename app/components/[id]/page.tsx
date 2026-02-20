@@ -54,13 +54,20 @@ const openComponent = async (id: string) => {
     const res = await fetch(`/api/components/${id}`);
 
     if (!res.ok) {
-      console.error("Fetch failed:", res.status);
+      console.error("API error:", res.status);
       setSelectedComponent(null);
       setLoading(false);
       return;
     }
 
     const data = await res.json();
+
+    if (!data || !data._id) {
+      console.error("Invalid data:", data);
+      setSelectedComponent(null);
+      setLoading(false);
+      return;
+    }
 
     setSelectedComponent({
       ...data,
@@ -69,7 +76,8 @@ const openComponent = async (id: string) => {
 
     setSidebarOpen(false);
   } catch (error) {
-    console.error("Error fetching component:", error);
+    console.error("Fetch failed:", error);
+    setSelectedComponent(null);
   }
 
   setLoading(false);

@@ -2,13 +2,15 @@ export const runtime = "nodejs";
 
 import { NextRequest, NextResponse } from "next/server";
 import { Buffer } from "buffer";
-import { auth } from "@/lib/server-auth";
 import dbConnect from "@/lib/mongodb";
 import Component from "@/lib/schemas/Component";
+import { auth } from "@/lib/server-auth";
 
-// GET single component (PUBLIC)
+/* ===============================
+   GET SINGLE COMPONENT (PUBLIC)
+================================= */
 export async function GET(
-  req: NextRequest,
+  _req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -28,7 +30,7 @@ export async function GET(
 
     return NextResponse.json(component);
   } catch (error) {
-    console.error("Failed to fetch component:", error);
+    console.error("GET ERROR:", error);
     return NextResponse.json(
       { message: "Internal Server Error" },
       { status: 500 }
@@ -36,15 +38,27 @@ export async function GET(
   }
 }
 
-// PATCH (ADMIN ONLY)
+/* ===============================
+   PATCH (ADMIN ONLY)
+================================= */
 export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   const session = await auth();
 
-  if (!session?.user || session.user.role !== "admin") {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  if (!session) {
+    return NextResponse.json(
+      { message: "Not authenticated" },
+      { status: 401 }
+    );
+  }
+
+  if (session.user?.role !== "admin") {
+    return NextResponse.json(
+      { message: "Not authorized" },
+      { status: 403 }
+    );
   }
 
   try {
@@ -77,14 +91,13 @@ export async function PATCH(
     if (file && file.size > 0) {
       if (file.size > 2 * 1024 * 1024) {
         return NextResponse.json(
-          { message: "Image too large. Max 2MB allowed." },
+          { message: "Image too large (max 2MB)" },
           { status: 400 }
         );
       }
 
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
-
       previewImage = `data:${file.type};base64,${buffer.toString("base64")}`;
     }
 
@@ -98,15 +111,12 @@ export async function PATCH(
         category: category || null,
         previewImage,
       },
-      { new: true, runValidators: true }
+      { new: true }
     ).populate("category", "name");
 
-    return NextResponse.json({
-      message: `Updated component ${params.id}`,
-      data: updatedComponent,
-    });
+    return NextResponse.json(updatedComponent);
   } catch (error) {
-    console.error("Failed to update component:", error);
+    console.error("PATCH ERROR:", error);
     return NextResponse.json(
       { message: "Internal Server Error" },
       { status: 500 }
@@ -114,32 +124,44 @@ export async function PATCH(
   }
 }
 
-// DELETE (ADMIN ONLY)
+/* ===============================
+   DELETE (ADMIN ONLY)
+================================= */
 export async function DELETE(
-  req: NextRequest,
+  _req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   const session = await auth();
 
-  if (!session?.user || session.user.role !== "admin") {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  if (!session) {
+    return NextResponse.json(
+      { message: "Not authenticated" },
+      { status: 401 }
+    );
+  }
+
+  if (session.user?.role !== "admin") {
+    return NextResponse.json(
+      { message: "Not authorized" },
+      { status: 403 }
+    );
   }
 
   try {
     await dbConnect();
 
-    const deletedComponent = await Component.findByIdAndDelete(params.id);
+    const deleted = await Component.findByIdAndDelete(params.id);
 
-    if (!deletedComponent) {
+    if (!deleted) {
       return NextResponse.json(
         { message: "Component not found" },
         { status: 404 }
       );
     }
 
-    return new NextResponse(null, { status: 204 });
+    return NextResponse.json({ message: "Deleted successfully" });
   } catch (error) {
-    console.error("Failed to delete component:", error);
+    console.error("DELETE ERROR:", error);
     return NextResponse.json(
       { message: "Internal Server Error" },
       { status: 500 }
