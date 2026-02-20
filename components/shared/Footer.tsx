@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Github, Twitter, Linkedin, Mail, Code, Zap, Instagram } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -62,17 +63,16 @@ const Footer = () => {
 
           {/* Brand */}
           <div className="md:col-span-2">
-             <Link href="/" className="flex items-center space-x-2 group"> 
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="relative">
-                <Code className="h-8 w-8 white-text group-hover:animate-pulse" />
-                <Zap className="h-4 w-4 white-text absolute -top-3 -right-1 animate-float" />
-              </div>
-              <span className="text-xl font-bold text-[#F9B31B]">
-                ComponentHub
-              </span>
-            </div>
-             </Link>
+             <Link href="/" className="flex items-center">
+  <Image
+    src="/logo.png"
+    alt="Bombay Blokes Logo"
+    width={230}
+    height={40}
+    className="object-contain cursor-pointer -ml-4"
+    priority
+  />
+</Link>
 
             <p className="text-muted-foreground mb-6 max-w-md grey-text">
               Modern 3D component showcase platform with neon-themed designs.

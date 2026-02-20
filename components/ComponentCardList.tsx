@@ -18,20 +18,21 @@ interface ComponentCardListProps {
 
 export default function ComponentCardList({ components }: ComponentCardListProps) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12 items-stretch">
       {components.map((component, index) => (
         <div
           key={String(component._id)}
-          className="animate-slide-up"
+          className="animate-slide-up h-full"
           style={{ animationDelay: `${index * 0.1}s` }}
         >
           <ComponentCard
             component={component}
-            onPreview={() => console.log('Preview', component._id)}
-            onCopy={() => console.log('Copy', component._id)}
+            onPreview={() => console.log("Preview", component._id)}
+            onCopy={() => console.log("Copy", component._id)}
           />
         </div>
       ))}
     </div>
   );
 }
+

@@ -50,8 +50,8 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     const result = await res.json();
 
     if (res.ok) {
-      alert("Message sent successfully!");
       form.reset();
+      window.location.href = "https://bombayblokes.com/";
     } else {
       alert(result.message || "Something went wrong");
     }
@@ -189,7 +189,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                     <ThreeDElement key={info.title} intensity={6}>
                       <div className="bg-[#080808] border border-transparent hover:border-[#F9B31B]/30 rounded-xl p-6 group  transition-all duration-300">
                         <div className="flex items-start space-x-4">
-                          <div className="w-12 h-12 bg-gradient-neon rounded-lg flex items-center justify-center group-hover:animate-pulse">
+                          <div className="w-12 h-12 bg-[#F9B31B] rounded-lg flex items-center justify-center group-hover:animate-pulse">
                             <info.icon className="h-6 w-6 text-black" />
                           </div>
                           <div>
@@ -204,18 +204,22 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                 </div>
 
                 <ThreeDElement intensity={8}>
-                  <div className="bg-gradient-to-br from-[#F9B31B]/50 to-neon-purple/10 border border-neon-cyan/20 rounded-xl p-6">
+                  <div className="bg-gradient-to-br from-[#F9B31B]/50 to-neon-purple/10  rounded-xl p-6">
                     <h3 className="text-lg font-semibold  white-text  mb-3">Need Custom Development?</h3>
                     <p className=" grey-text  mb-4">
                       Our team specializes in creating custom components and web applications. 
                       Let&apos;s discuss your project requirements.
                     </p>
-                   <Link href="https://bombayblokes.com/contactus">
-  <span className="inline-block px-6 py-2 border border-[#F9B31B] text-primary rounded-lg font-semibold 
+                  <a
+  href="https://wa.me/919920207985"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <span className="inline-block px-6 py-2 border border-[#F9B31B] text-primary rounded-full font-semibold 
                    hover:bg-[#F9B31B] hover:!text-black cursor-pointer transition duration-300">
     Schedule a Call
   </span>
-</Link>
+</a>
                   </div>
                 </ThreeDElement>
               </div>

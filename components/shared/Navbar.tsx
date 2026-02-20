@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Code, Zap, User } from 'lucide-react';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import Image from "next/image";
 
 export default function Navbar() {
   interface SessionUser {
@@ -62,15 +63,16 @@ export default function Navbar() {
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2 group">
-            <div className="relative">
-              <Code className="h-8 w-8 white-text group-hover:animate-pulse" />
-              <Zap className="h-4 w-4 white-text absolute -top-1 -right-1 animate-float" />
-            </div>
-            <span className="text-xl font-bold text-[#F9B31B]">
-              ComponentHub
-            </span>
-          </Link>
+          <Link href="/" className="flex items-center">
+  <Image
+    src="/logo.png"   // put your logo inside public folder
+    alt="ComponentHub Logo"
+    width={230}
+    height={40}
+    className="object-contain cursor-pointer -ml-4"
+    priority
+  />
+</Link>
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-4">

@@ -59,7 +59,7 @@ export default function LoginForm() {
             Welcome Back
           </h1>
           <p className=" grey-text  mt-2">
-            Sign in to access your component library
+            Login to access your component library
           </p>
         </div>
 
@@ -69,7 +69,7 @@ export default function LoginForm() {
           <div className="text-center mb-6">
             <h2 className="flex items-center justify-center gap-2 text-primary text-xl font-semibold">
               <LogIn className="w-5 h-5" />
-              Sign In
+              Login
             </h2>
             <p className=" grey-text  text-sm mt-1">
               Enter your credentials to access your account
@@ -148,9 +148,36 @@ export default function LoginForm() {
                   Signing in...
                 </div>
               ) : (
-                "Sign In"
+                "Login"
               )}
             </button>
+
+
+            <div className="mt-6 space-y-3">
+
+  <div className="flex items-center gap-2">
+    <div className="flex-1 h-px bg-[#F9B31B]/20" />
+    <span className="text-xs grey-text">OR</span>
+    <div className="flex-1 h-px bg-[#F9B31B]/20" />
+  </div>
+
+  {/* Google */}
+  <button
+    onClick={() => signIn("google", { callbackUrl: "/profile" })}
+    className="w-full border border-[#F9B31B]/30 py-2 rounded-md font-semibold hover:bg-[#111] transition"
+  >
+    Continue with Google
+  </button>
+
+  {/* GitHub */}
+  <button
+    onClick={() => signIn("github", { callbackUrl: "/profile" })}
+    className="w-full border border-[#F9B31B]/30 py-2 rounded-md font-semibold hover:bg-[#111] transition"
+  >
+    Continue with GitHub
+  </button>
+
+</div>
           </form>
 
           {/* Sign Up */}

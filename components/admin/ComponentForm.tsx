@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, ReactNode } from 'react';
+import { useState, useEffect, ReactNode, useRef } from 'react';
 import ComponentPreview from '@/components/admin/ComponentPreview';
 
 interface Category {
@@ -15,6 +15,7 @@ interface ComponentFormData {
   code: string;
   npmPackages?: string[];
   category?: { _id: string };
+  previewImage?: string;
 }
 
 export default function ComponentForm({
@@ -27,6 +28,9 @@ export default function ComponentForm({
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [code, setCode] = useState('');
+  const [previewImage, setPreviewImage] = useState<File | null>(null);
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   // 🔹 npm packages (MULTI)
   const [npmPackages, setNpmPackages] = useState<string[]>([]);
@@ -49,6 +53,11 @@ export default function ComponentForm({
     setNpmPackages([]);
     setNpmInput('');
     setCategoryId('');
+    setPreviewImage(null);
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   // 🔹 ADD / REMOVE npm PACKAGES
@@ -80,6 +89,7 @@ export default function ComponentForm({
     } else {
       resetForm();
     }
+
     setMessageElement('');
   }, [initialData]);
 
@@ -93,16 +103,21 @@ export default function ComponentForm({
       : '/api/components';
 
     try {
+      const formData = new FormData();
+
+      formData.append('name', name);
+      formData.append('description', description);
+      formData.append('code', code);
+      formData.append('category', categoryId);
+      formData.append('npmPackages', JSON.stringify(npmPackages));
+
+      if (previewImage) {
+        formData.append('previewImage', previewImage);
+      }
+
       const res = await fetch(url, {
         method,
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name,
-          description,
-          code,
-          npmPackages,
-          category: categoryId,
-        }),
+        body: formData,
       });
 
       if (res.ok) {
@@ -114,6 +129,7 @@ export default function ComponentForm({
         setMessage(`Failed to save component: ${errorData.message || 'Unknown error'}`);
       }
     } catch (error) {
+      console.error(error);
       setMessage('An unexpected error occurred.');
     }
   };
@@ -196,6 +212,33 @@ export default function ComponentForm({
               </div>
             )}
           </div>
+
+          {/* PREVIEW IMAGE */}
+         <div>
+  <label className="block text-sm font-medium mb-1">
+    Preview Image <span className="text-gray-500">(optional)</span>
+  </label>
+
+  <input
+    ref={fileInputRef}
+    type="file"
+    accept="image/*"
+    onChange={(e) => setPreviewImage(e.target.files?.[0] || null)}
+    className="w-full px-4 py-2 bg-white rounded-md border"
+  />
+
+  {initialData?.previewImage && (
+    <div className="mt-2">
+      <p className="text-sm text-gray-600 mb-1">Current Image:</p>
+      <img
+        src={initialData.previewImage}
+        alt="Current Preview"
+        className="w-full max-w-[250px] h-[140px] object-cover rounded-md border"
+      />
+    </div>
+  )}
+</div>
+
 
           {/* CATEGORY */}
           <div>

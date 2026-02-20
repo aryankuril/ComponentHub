@@ -77,7 +77,7 @@ const About = () => {
                 <div className="bg-[#0a0a0a] border border-transparent hover:border-[#F9B31B]/30 rounded-2xl p-8">
                   <div className="space-y-6">
                     <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-gradient-neon rounded-lg flex items-center justify-center">
+                      <div className="w-12 h-12 bg-[#F9B31B] rounded-lg flex items-center justify-center">
                         <Code className="h-6 w-6 text-black" />
                       </div>
                       <div>
@@ -86,8 +86,8 @@ const About = () => {
                       </div>
                     </div>
                     <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-neon-purple/20 border border-neon-purple rounded-lg flex items-center justify-center">
-                        <Zap className="h-6 w-6 text-neon-purple" />
+                      <div className="w-12 h-12 bg-[#F9B31B]  rounded-lg flex items-center justify-center">
+                        <Zap className="h-6 w-6 text-black" />
                       </div>
                       <div>
                         <h3 className="font-semibold  white-text ">50k+ Downloads</h3>
@@ -95,8 +95,8 @@ const About = () => {
                       </div>
                     </div>
                     <div className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-neon-green/20 border border-neon-green rounded-lg flex items-center justify-center">
-                        <Rocket className="h-6 w-6 text-neon-green" />
+                      <div className="w-12 h-12 bg-[#F9B31B] rounded-lg flex items-center justify-center">
+                        <Rocket className="h-6 w-6 text-black" />
                       </div>
                       <div>
                         <h3 className="font-semibold  white-text ">24/7 Support</h3>
@@ -112,7 +112,7 @@ const About = () => {
 
         {/* Features Section */}
         <section className="py-20 bg-[#040404]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
             <div className="text-center mb-16">
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">
                 <span className=" white-text ">What Makes Us </span>
@@ -128,7 +128,7 @@ const About = () => {
               {features.map((feature, index) => (
                 <ThreeDElement key={feature.title} intensity={12}>
                   <div className="bg-[#080808] border border-transparent hover:border-[#F9B31B]/30 rounded-xl p-6 h-full text-center group transition-all duration-300">
-                    <div className="w-16 h-16 mx-auto mb-4 bg-gradient-neon rounded-xl flex items-center justify-center group-hover:animate-pulse">
+                    <div className="w-16 h-16 mx-auto mb-4 bg-[#F9B31B] rounded-xl flex items-center justify-center group-hover:animate-pulse">
                       <feature.icon className="h-8 w-8 text-black" />
                     </div>
                     <h3 className="text-lg font-semibold mb-3  white-text  group-hover:text-neon-cyan transition-colors duration-300">
@@ -145,28 +145,41 @@ const About = () => {
         </section>
 
         {/* Team Section */}
-        <section className="py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 className="text-3xl sm:text-4xl font-bold mb-12">
-              <span className=" white-text ">Meet the </span>
-              <span className="text-primary">Team</span>
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {[1, 2, 3].map((member) => (
-                <ThreeDElement key={member} intensity={10}>
-                  <div className="bg-[#0a0a0a] border border-transparent hover:border-[#F9B31B]/30 rounded-xl p-6">
-                    <div className="w-24 h-24 mx-auto mb-4 bg-gradient-neon rounded-full"></div>
-                    <h3 className="text-lg font-semibold  white-text  mb-2">Team Member {member}</h3>
-                    <p className="text-primary mb-2">Developer & Designer</p>
-                    <p className="text-sm  grey-text ">
-                      Passionate about creating beautiful and functional web experiences.
-                    </p>
-                  </div>
-                </ThreeDElement>
-              ))}
-            </div>
+        <section className="py-20  bg-[#040404]">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center ">
+            <div className="bg-[#080808] border border-transparent hover:border-[#F9B31B]/30 rounded-xl p-6 h-full text-center group transition-all duration-300  flex flex-col md:flex-row items-center justify-between gap-6">
+        {/* <ThreeDElement intensity={15}> */}
+
+      {/* Left Text */}
+      <div className="text-center md:text-left">
+  <h2 className="text-2xl sm:text-3xl font-bold white-text mb-2">
+    Need Custom Development for Your Website?
+  </h2>
+  <p className="grey-text">
+  We build fast, scalable websites tailored to your business.
+  </p>
+</div>
+
+      {/* Right Button */}
+      <div>
+
+       <a
+  href="https://bombayblokes.com/estimates-calculator"
+  target="_blank"
+  rel="noopener noreferrer"
+  style={{
+    backgroundImage: 'linear-gradient(135deg, #F9B31B, #EBEBEB)',
+  }}
+  className="group !text-black font-semibold rounded-full px-6 py-3 flex items-center gap-2 transition-all duration-300 cursor-pointer"
+>
+Get Your Estimate
+</a>
+      </div>
+
+    </div>
           </div>
         </section>
+         {/* </ThreeDElement> */}
       </main>
       <Footer />
     </div>

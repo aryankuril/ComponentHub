@@ -7,6 +7,11 @@ const componentSchema = new Schema({
   npmPackages: { type: [String], default: [] },
   category: { type: Schema.Types.ObjectId, ref: 'Category', default: null },
   dateCreated: { type: Date, default: Date.now },
+
+  previewImage: {
+    type: String,
+    default: '',
+  },
 });
 
 const Component = models.Component || mongoose.model('Component', componentSchema);

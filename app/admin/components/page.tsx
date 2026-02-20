@@ -11,6 +11,7 @@ interface Component {
   description: string;
   code: string;
   npmPackages: string[];
+   previewImage?: string;  
   category?: { name: string; _id: string };
   dateCreated: string;
 }

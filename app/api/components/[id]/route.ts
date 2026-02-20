@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { Buffer } from 'buffer';
+
 import { auth } from '@/lib/server-auth';
 import dbConnect from '@/lib/mongodb';
 import Component from '@/lib/schemas/Component';
@@ -7,7 +9,7 @@ import Component from '@/lib/schemas/Component';
 function getIdFromUrl(req: Request) {
   const url = new URL(req.url);
   const parts = url.pathname.split('/');
-  return parts[parts.length - 1]; // last part is the [id]
+  return parts[parts.length - 1];
 }
 
 // GET
@@ -45,18 +47,56 @@ export async function PATCH(req: Request) {
 
   try {
     await dbConnect();
-    const body = await req.json();
-    const { name, description, code, npmPackages, category } = body;
+
+    const formData = await req.formData();
+
+    const name = formData.get('name') as string;
+    const description = formData.get('description') as string;
+    const code = formData.get('code') as string;
+    const category = formData.get('category') as string;
+
+    const npmPackages = JSON.parse(
+      (formData.get('npmPackages') as string) || '[]'
+    );
+
+    const existingComponent = await Component.findById(id);
+
+    if (!existingComponent) {
+      return NextResponse.json({ message: 'Component not found' }, { status: 404 });
+    }
+
+    let previewImage = existingComponent.previewImage || '';
+
+    const file = formData.get('previewImage') as File | null;
+
+    console.log("PATCH FILE RECEIVED:", file?.name, file?.size);
+
+    if (file && file.size > 0) {
+      if (file.size > 2 * 1024 * 1024) {
+        return NextResponse.json(
+          { message: 'Image too large. Max 2MB allowed.' },
+          { status: 400 }
+        );
+      }
+
+      const bytes = await file.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+
+      previewImage = `data:${file.type};base64,${buffer.toString('base64')}`;
+    }
 
     const updatedComponent = await Component.findByIdAndUpdate(
       id,
-      { name, description, code, npmPackages, category: category || null },
+      {
+        name,
+        description,
+        code,
+        npmPackages,
+        category: category || null,
+        previewImage,
+      },
       { new: true, runValidators: true }
     ).populate('category', 'name');
-
-    if (!updatedComponent) {
-      return NextResponse.json({ message: 'Component not found' }, { status: 404 });
-    }
 
     return NextResponse.json({
       message: `Updated component ${id}`,

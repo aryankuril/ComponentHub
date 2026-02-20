@@ -14,6 +14,10 @@ interface CategoryData {
     _id: string
     name: string
   }[]
+  previewImage: {
+  type: String,
+  default: "",
+},
 }
 
 export default function ComponentsPage() {
