@@ -1,9 +1,11 @@
+
 export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 import { NextRequest, NextResponse } from "next/server";
+import mongoose from "mongoose";
 import dbConnect from "@/lib/mongodb";
 import Component from "@/lib/schemas/Component";
-import Category from "@/lib/schemas/Category"; // required for populate
 
 export async function GET(
   _req: NextRequest,
@@ -12,10 +14,19 @@ export async function GET(
   try {
     await dbConnect();
 
-    const component = await Component.findById(params.id)
+    const { id } = params;
+
+    // 🔥 Validate ObjectId FIRST
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return NextResponse.json(
+        { message: "Invalid component ID" },
+        { status: 400 }
+      );
+    }
+
+    const component = await Component.findById(id)
       .populate("category", "name")
-      .lean()
-      .exec();
+      .lean();
 
     if (!component) {
       return NextResponse.json(
@@ -27,7 +38,7 @@ export async function GET(
     return NextResponse.json(component);
 
   } catch (error) {
-    console.error("GET ERROR:", error);
+    console.error("REAL GET ERROR:", error);
     return NextResponse.json(
       { message: "Internal Server Error" },
       { status: 500 }
