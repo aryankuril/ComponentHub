@@ -45,23 +45,35 @@ export default function ComponentsPage() {
     }
   }, [pathname])
 
-  const openComponent = async (id: string) => {
-    setLoading(true)
+const openComponent = async (id: string) => {
+  setLoading(true);
 
-    router.push(`/components/${id}`, { scroll: false })
+  router.push(`/components/${id}`, { scroll: false });
 
-    const res = await fetch(`/api/components/${id}`)
-    const data = await res.json()
+  try {
+    const res = await fetch(`/api/components/${id}`);
+
+    if (!res.ok) {
+      console.error("Fetch failed:", res.status);
+      setSelectedComponent(null);
+      setLoading(false);
+      return;
+    }
+
+    const data = await res.json();
 
     setSelectedComponent({
       ...data,
       npmPackages: data.npmPackages ?? [],
-    })
+    });
 
-    setSidebarOpen(false) // 🔹 close sidebar on mobile
-
-    setLoading(false)
+    setSidebarOpen(false);
+  } catch (error) {
+    console.error("Error fetching component:", error);
   }
+
+  setLoading(false);
+};
 
   return (
     <div className="min-h-screen flex flex-col bg-black text-gray-200">
