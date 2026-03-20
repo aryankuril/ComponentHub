@@ -11,14 +11,16 @@ export default async function HomePage() {
   await dbConnect()
   Category.modelName
 
-const components = await Component.find({}, {
-  name: 1,
-  description: 1,
-  category: 1,
-  code: 0, // 🚨 CRITICAL
-})
+const components = await Component.find(
+  {},
+  {
+    name: 1,
+    description: 1,
+    category: 1,
+  }
+)
 .populate('category', 'name')
-.limit(10)
+.limit(6)
 .lean()
 
 
