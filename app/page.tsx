@@ -11,24 +11,28 @@ export default async function HomePage() {
   await dbConnect()
   Category.modelName
 
-  const components = await Component.find({})
-    .populate('category')
-    .lean()
+const components = await Component.find({}, {
+  name: 1,
+  description: 1,
+  category: 1,
+  code: 0, // 🚨 CRITICAL
+})
+.populate('category', 'name')
+.limit(10)
+.lean()
 
+
+const cleanComponents = components.map((c) => JSON.parse(JSON.stringify(c)))
   return (
     <div className="min-h-screen flex flex-col">
       <Navbar />
 
       <main className="flex-grow pt-16">
-       <HeroSection
-  components={components.map((c) => JSON.parse(JSON.stringify(c)))}
-/>
+      <HeroSection components={cleanComponents} />
 
 
         {/* ✅ CLIENT COMPONENT */}
-        <LandingPage
-          components={components.map((c) => JSON.parse(JSON.stringify(c)))}
-        />
+       <LandingPage components={cleanComponents} />
       </main>
 
       <Footer />
