@@ -31,9 +31,9 @@ export default function ComponentPreview({ code }: { code: string }) {
 
   return (
     <div className="flex flex-col items-center">
-      <p className="text-sm font-medium  grey-text  mb-2">Live Preview</p>
+      <p className="text-sm font-medium   black-text  mb-2">Live Preview</p>
       <iframe
-        className="w-80 h-48 border border-gray-700 rounded-md bg-black"
+        className="w-80 h-48 border border-gray-700 rounded-md  "
         sandbox="allow-scripts"
         srcDoc={htmlContent}
         title="Component Live Preview"

@@ -28,19 +28,19 @@ const About = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen  ">
       <Navbar />
       <main className="pt-16">
         {/* Hero Section */}
-        <section className="py-20 bg-[#040404]">
+        <section className="py-20 ">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
-              <span className=" white-text ">About </span>
+              <span className=" black-text ">About </span>
               <span className="text-primary">
                 ComponentHub
               </span>
             </h1>
-            <p className="text-xl  grey-text  max-w-3xl mx-auto">
+            <p className="text-xl   black-text  max-w-3xl mx-auto">
               We&apos;re passionate about creating beautiful, modern web components that help developers 
               build stunning applications with ease.
             </p>
@@ -53,10 +53,10 @@ const About = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
                 <h2 className="text-3xl sm:text-4xl font-bold mb-6">
-                  <span className=" white-text ">Our </span>
+                  <span className=" black-text ">Our </span>
                   <span className="text-primary">Mission</span>
                 </h2>
-                <div className="space-y-4  grey-text ">
+                <div className="space-y-4   black-text ">
                   <p>
                     At ComponentHub, we believe that beautiful design should be accessible to everyone. 
                     Our mission is to provide developers with high-quality, modern components that are both 
@@ -74,15 +74,15 @@ const About = () => {
                 </div>
               </div>
               <ThreeDElement intensity={15}>
-                <div className="bg-[#0a0a0a] border border-transparent hover:border-[#F9B31B]/30 rounded-2xl p-8">
-                  <div className="space-y-6">
+                <div className="border border-[#F9B31B] relative rounded-[20px] overflow-hidden p-8">
+                  <div className="space-y-6 ">
                     <div className="flex items-center space-x-4">
                       <div className="w-12 h-12 bg-[#F9B31B] rounded-lg flex items-center justify-center">
                         <Code className="h-6 w-6 text-black" />
                       </div>
                       <div>
-                        <h3 className="font-semibold  white-text ">150+ Components</h3>
-                        <p className="text-sm  grey-text ">Ready to use</p>
+                        <h3 className="font-semibold  black-text ">150+ Components</h3>
+                        <p className="text-sm   black-text ">Ready to use</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-4">
@@ -90,8 +90,8 @@ const About = () => {
                         <Zap className="h-6 w-6 text-black" />
                       </div>
                       <div>
-                        <h3 className="font-semibold  white-text ">50k+ Downloads</h3>
-                        <p className="text-sm  grey-text ">Trusted by developers</p>
+                        <h3 className="font-semibold  black-text ">50k+ Downloads</h3>
+                        <p className="text-sm   black-text ">Trusted by developers</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-4">
@@ -99,11 +99,13 @@ const About = () => {
                         <Rocket className="h-6 w-6 text-black" />
                       </div>
                       <div>
-                        <h3 className="font-semibold  white-text ">24/7 Support</h3>
-                        <p className="text-sm  grey-text ">Always here to help</p>
+                        <h3 className="font-semibold  black-text ">24/7 Support</h3>
+                        <p className="text-sm   black-text ">Always here to help</p>
                       </div>
                     </div>
                   </div>
+
+                   <div className="absolute -right-1 top-0 w-4 sm:w-4 md:w-6 h-full bg-[#FAB31E]"></div>
                 </div>
               </ThreeDElement>
             </div>
@@ -111,14 +113,14 @@ const About = () => {
         </section>
 
         {/* Features Section */}
-        <section className="py-20 bg-[#040404]">
+        <section className="py-20  ">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
             <div className="text-center mb-16">
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-                <span className=" white-text ">What Makes Us </span>
+                <span className=" black-text ">What Makes Us </span>
                 <span className="text-primary">Different</span>
               </h2>
-              <p className="text-xl  grey-text  max-w-3xl mx-auto">
+              <p className="text-xl   black-text  max-w-3xl mx-auto">
                 We focus on the details that matter, creating components that are not just functional, 
                 but truly exceptional.
               </p>
@@ -127,16 +129,18 @@ const About = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
               {features.map((feature, index) => (
                 <ThreeDElement key={feature.title} intensity={12}>
-                  <div className="bg-[#080808] border border-transparent hover:border-[#F9B31B]/30 rounded-xl p-6 h-full text-center group transition-all duration-300">
+                  <div className="border border-[#F9B31B] relative rounded-[20px] overflow-hidden p-6 h-full text-center group transition-all duration-300">
                     <div className="w-16 h-16 mx-auto mb-4 bg-[#F9B31B] rounded-xl flex items-center justify-center group-hover:animate-pulse">
                       <feature.icon className="h-8 w-8 text-black" />
                     </div>
-                    <h3 className="text-lg font-semibold mb-3  white-text  group-hover:text-neon-cyan transition-colors duration-300">
+                    <h3 className="text-lg font-semibold mb-3  black-text  group-hover:text-neon-cyan transition-colors duration-300">
                       {feature.title}
                     </h3>
-                    <p className=" grey-text ">
+                    <p className="  black-text ">
                       {feature.description}
                     </p>
+
+                     <div className="absolute -right-1 top-0 w-4 sm:w-4 md:w-6 h-full bg-[#FAB31E]"></div>
                   </div>
                 </ThreeDElement>
               ))}
@@ -145,17 +149,17 @@ const About = () => {
         </section>
 
         {/* Team Section */}
-        <section className="py-20  bg-[#040404]">
+        <section className="py-20   ">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center ">
-            <div className="bg-[#080808] border border-transparent hover:border-[#F9B31B]/30 rounded-xl p-6 h-full text-center group transition-all duration-300  flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className=" border border-[#F9B31B] relative rounded-[20px] overflow-hidden p-6 h-full text-center group transition-all duration-300  flex flex-col md:flex-row items-center justify-between gap-6">
         {/* <ThreeDElement intensity={15}> */}
 
       {/* Left Text */}
       <div className="text-center md:text-left">
-  <h2 className="text-2xl sm:text-3xl font-bold white-text mb-2">
+  <h2 className="text-2xl sm:text-3xl font-bold black-text mb-2">
     Need Custom Development for Your Website?
   </h2>
-  <p className="grey-text">
+  <p className=" black-text">
   We build fast, scalable websites tailored to your business.
   </p>
 </div>
@@ -170,13 +174,16 @@ const About = () => {
   style={{
     backgroundImage: 'linear-gradient(135deg, #F9B31B, #EBEBEB)',
   }}
-  className="group !text-black font-semibold rounded-full px-6 py-3 flex items-center gap-2 transition-all duration-300 cursor-pointer"
+  className="group !text-black font-semibold rounded-full px-6 py-3 lg:mr-10 mr-0 flex items-center gap-2 transition-all duration-300 cursor-pointer"
 >
 Get Your Estimate
 </a>
       </div>
 
+     <div className="absolute -right-1 top-0 w-4 sm:w-4 md:w-6 h-full bg-[#FAB31E]"></div>
     </div>
+
+
           </div>
         </section>
          {/* </ThreeDElement> */}

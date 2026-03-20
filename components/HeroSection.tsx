@@ -50,7 +50,7 @@ export default function HeroSection({ components }: { components: any[] }) {
   };
 
   return (
-    <section className="relative h-full py-10 md:py-15 lg:py-20 flex items-center justify-center overflow-hidden bg-black">
+    <section className="relative h-full py-10 md:py-15 lg:py-20 flex items-center justify-center overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0">
         {/* Floating geometric shapes */}
@@ -93,7 +93,7 @@ export default function HeroSection({ components }: { components: any[] }) {
         <div className="space-y-8 animate-slide-up">
           {/* Badge */}
           <div
-            className="inline-flex items-center space-x-2 border rounded-full px-4 py-2 text-sm font-medium"
+            className="inline-flex items-center space-x-2 border font-[var(--font-miso)] rounded-full px-4 py-2 text-sm "
             style={{
               backgroundColor: 'rgba(249,179,27,0.1)',
               borderColor: 'rgba(249,179,27,0.3)',
@@ -104,35 +104,35 @@ export default function HeroSection({ components }: { components: any[] }) {
           </div>
 
           {/* Main Heading */}
-          <div className="space-y-4">
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold">
-              <span className="block mb-2 white-text">Build with</span>
+          <div className="space-y-4 ">
+            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-[var(--font-miso)]">
+              <span className="block mb-2 black-text">Build with</span>
               <span className="text-primary"> Next Components </span>
             </h1>
 
-            <p className="text-xl sm:text-2xl white-text max-w-3xl mx-auto leading-relaxed">
+            <p className=" max-w-xl black-text body2">
               Discover stunning 3D-animated components with neon themes.
               Copy, customize, and create beautiful modern interfaces.
             </p>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-3 gap-4 sm:gap-8 mt-10 pt-10 border-t border-border white-text">
+          <div className="grid grid-cols-3 gap-4 sm:gap-8 mt-10 pt-10 border-t border-border black-text">
             <ThreeDElement intensity={8}>
               <div className="text-center space-y-1 sm:space-y-2">
-                <div className="text-2xl sm:text-3xl font-bold text-primary">
+                <div className="numbering font-bold text-primary">
                   <Counter end={150} suffix="+" />
                 </div>
-                <div className="white-text text-xs sm:text-base">Components</div>
+                <div className="black-text body2">Components</div>
               </div>
             </ThreeDElement>
 
             <ThreeDElement intensity={8}>
               <div className="text-center space-y-1 sm:space-y-2">
-                <div className="text-2xl sm:text-3xl font-bold text-primary">
+                <div className="numbering font-bold text-primary">
                   <Counter end={50} suffix="k+" />
                 </div>
-                <div className="text-muted-foreground white-text text-xs sm:text-base">
+                <div className="text-muted-foreground black-text text-xs sm:text-base">
                   Downloads
                 </div>
               </div>
@@ -140,10 +140,10 @@ export default function HeroSection({ components }: { components: any[] }) {
 
             <ThreeDElement intensity={8}>
               <div className="text-center space-y-1 sm:space-y-2">
-                <div className="text-2xl sm:text-3xl font-bold text-primary">
+                <div className="numbering font-bold text-primary">
                   <Counter end={12} />
                 </div>
-                <div className="white-text text-xs sm:text-base">Categories</div>
+                <div className="black-text text-xs sm:text-base">Categories</div>
               </div>
             </ThreeDElement>
           </div>

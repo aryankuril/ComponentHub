@@ -51,14 +51,14 @@ export default function LoginForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black  white-text  px-4">
+    <div className="min-h-screen flex items-center justify-center    black-text  px-4">
       <div className="w-full max-w-md">
         {/* Title */}
         <div className="text-center mb-8">
           <h1 className="text-4xl font-bold text-primary">
             Welcome Back
           </h1>
-          <p className=" grey-text  mt-2">
+          <p className="  black-text  mt-2">
             Login to access your component library
           </p>
         </div>
@@ -71,7 +71,7 @@ export default function LoginForm() {
               <LogIn className="w-5 h-5" />
               Login
             </h2>
-            <p className=" grey-text  text-sm mt-1">
+            <p className="  white-text  text-sm mt-1">
               Enter your credentials to access your account
             </p>
           </div>
@@ -83,14 +83,14 @@ export default function LoginForm() {
             <div>
               <label htmlFor="email" className="text-primary text-sm">Email</label>
               <div className="relative mt-1">
-                <Mail className="absolute left-3 top-3 w-4 h-4  grey-text " />
+                <Mail className="absolute left-3 top-3 w-4 h-4  text-[#F9B31B] " />
                 <input
                   id="email"
                   name="email"
                   type="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="w-full pl-10 pr-3 py-2 rounded-md bg-black border border-[#F9B31B]/30 focus:border-[#F9B31B]  white-text  placeholder-gray-500 outline-none transition"
+                  className="w-full pl-10 pr-3 py-2 rounded-md   border border-[#F9B31B]  white-text  placeholder-gray-500 outline-none transition"
                   placeholder="Enter your email"
                   required
                 />
@@ -101,21 +101,21 @@ export default function LoginForm() {
             <div>
               <label htmlFor="password" className="text-primary text-sm">Password</label>
               <div className="relative mt-1">
-                <Lock className="absolute left-3 top-3 w-4 h-4  grey-text " />
+                <Lock className="absolute left-3 top-3 w-4 h-4   text-[#F9B31B]  " />
                 <input
                   id="password"
                   name="password"
                   type={showPassword ? "text" : "password"}
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="w-full pl-10 pr-10 py-2 rounded-md bg-black border border-[#F9B31B]/30 focus:border-[#F9B31B]  white-text  placeholder-gray-500 outline-none transition"
+                  className="w-full pl-10 pr-10 py-2 rounded-md   border border-[#F9B31B]   white-text  placeholder-gray-500 outline-none transition"
                   placeholder="Enter your password"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-2 top-2 p-1  grey-text  cursor-pointer "
+                  className="absolute right-2 top-2 p-1  text-[#F9B31B]  cursor-pointer "
                 >
                   {showPassword ? (
                     <EyeOff className="w-5 h-5" />
@@ -157,7 +157,7 @@ export default function LoginForm() {
 
   {/* <div className="flex items-center gap-2">
     <div className="flex-1 h-px bg-[#F9B31B]/20" />
-    <span className="text-xs grey-text">OR</span>
+    <span className="text-xs  black-text">OR</span>
     <div className="flex-1 h-px bg-[#F9B31B]/20" />
   </div> */}
 
@@ -178,11 +178,12 @@ export default function LoginForm() {
   </button> */}
 
 {/* </div> */}
+
           </form>
 
           {/* Sign Up */}
           <div className="mt-6 text-center">
-            <p className=" grey-text ">
+            <p className="  white-text ">
               Don&apos;t have an account?{" "}
               <Link href="/signup" className="text-primary font-medium">
                 Sign up here

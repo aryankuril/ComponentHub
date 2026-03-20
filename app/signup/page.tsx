@@ -59,13 +59,13 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-black  white-text  px-4">
+    <div className="min-h-screen flex flex-col items-center justify-center    white-text  px-4">
   {/* Title */}
   <div className="text-center mb-8">
     <h1 className="text-4xl font-bold text-primary">
-      Welcome Back
+      Welcome 
     </h1>
-    <p className=" grey-text  mt-2">
+    <p className="  black-text  mt-2">
       Sign in to access your component library
     </p>
   </div>
@@ -78,7 +78,7 @@ export default function SignupPage() {
         <UserPlus className="w-8 h-8 text-primary" />
         Create Account
       </h1>
-      <p className=" grey-text  mt-2">Fill in your details to get started</p>
+      <p className="  white-text  mt-2">Fill in your details to get started</p>
     </div>
 
     {/* Form */}
@@ -89,7 +89,7 @@ export default function SignupPage() {
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-primary">Full Name</label>
         <div className="relative mt-1">
-          <User className="absolute left-3 top-3 w-4 h-4  grey-text " />
+          <User className="absolute left-3 top-3 w-4 h-4   text-[#F9B31B] " />
           <input
             id="name"
             name="name"
@@ -97,7 +97,7 @@ export default function SignupPage() {
             value={formData.name}
             onChange={handleInputChange}
             placeholder="Enter your full name"
-            className="w-full pl-10 pr-3 py-2 bg-black/30 border border-[#F9B31B]/30 focus:border-[#F9B31B]  white-text  placeholder-gray-500 rounded-md focus:outline-none"
+            className="w-full pl-10 pr-3 py-2  /30 border border-[#F9B31B]  white-text  placeholder-gray-500 rounded-md focus:outline-none"
             required
           />
         </div>
@@ -107,7 +107,7 @@ export default function SignupPage() {
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-primary">Email</label>
         <div className="relative mt-1">
-          <Mail className="absolute left-3 top-3 w-4 h-4  grey-text " />
+          <Mail className="absolute left-3 top-3 w-4 h-4   text-[#F9B31B] " />
           <input
             id="email"
             name="email"
@@ -115,7 +115,7 @@ export default function SignupPage() {
             value={formData.email}
             onChange={handleInputChange}
             placeholder="Enter your email"
-            className="w-full pl-10 pr-3 py-2 bg-black/30 border border-[#F9B31B]/30 focus:border-[#F9B31B]  white-text  placeholder-gray-500 rounded-md focus:outline-none"
+            className="w-full pl-10 pr-3 py-2  /30 border border-[#F9B31B]  white-text  placeholder-gray-500 rounded-md focus:outline-none"
             required
           />
         </div>
@@ -125,7 +125,7 @@ export default function SignupPage() {
       <div>
         <label htmlFor="password" className="block text-sm font-medium text-primary">Password</label>
         <div className="relative mt-1">
-          <Lock className="absolute left-3 top-3 w-4 h-4  grey-text " />
+          <Lock className="absolute left-3 top-3 w-4 h-4  text-[#F9B31B] " />
           <input
             id="password"
             name="password"
@@ -133,13 +133,13 @@ export default function SignupPage() {
             value={formData.password}
             onChange={handleInputChange}
             placeholder="Create a password"
-            className="w-full pl-10 pr-10 py-2 bg-black/30 border border-[#F9B31B]/30 focus:border-[#F9B31B]  white-text  placeholder-gray-500 rounded-md focus:outline-none "
+            className="w-full pl-10 pr-10 py-2  /30 border border-[#F9B31B]  white-text  placeholder-gray-500 rounded-md focus:outline-none "
             required
           />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-2.5  grey-text  hover:text-cyan-400"
+            className="absolute right-3 top-2.5  text-[#F9B31B]   "
           >
             {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
           </button>
@@ -150,7 +150,7 @@ export default function SignupPage() {
       <div>
         <label htmlFor="confirmPassword" className="block text-sm font-medium text-primary">Confirm Password</label>
         <div className="relative mt-1">
-          <Lock className="absolute left-3 top-3 w-4 h-4  grey-text " />
+          <Lock className="absolute left-3 top-3 w-4 h-4   text-[#F9B31B] " />
           <input
             id="confirmPassword"
             name="confirmPassword"
@@ -158,13 +158,13 @@ export default function SignupPage() {
             value={formData.confirmPassword}
             onChange={handleInputChange}
             placeholder="Confirm your password"
-            className="w-full pl-10 pr-10 py-2 bg-black/30 border border-[#F9B31B]/30 focus:border-[#F9B31B]  white-text  placeholder-gray-500 rounded-md focus:outline-none"
+            className="w-full pl-10 pr-10 py-2  /30 border border-[#F9B31B]  white-text  placeholder-gray-500 rounded-md focus:outline-none"
             required
           />
           <button
             type="button"
             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            className="absolute right-3 top-2.5  grey-text  hover:text-cyan-400"
+            className="absolute right-3 top-2.5   text-[#F9B31B]   "
           >
             {showConfirmPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
           </button>
@@ -172,7 +172,7 @@ export default function SignupPage() {
       </div>
 
       {/* Terms */}
-      <p className="text-xs  grey-text ">
+      <p className="text-xs   white-text ">
         By creating an account, you agree to our{' '}
         <Link href="/terms" className=" text-primary">Terms & Conditions</Link> and{' '}
         <Link href="/privacy" className="text-primary">Privacy Policy</Link>.
@@ -192,10 +192,10 @@ export default function SignupPage() {
 
     {/* Footer */}
     <div className="mt-6 text-center">
-      <p className=" grey-text ">
+      <p className="  white-text ">
         Already have an account?{' '}
         <Link href="/login" className="text-primary font-medium">
-          Sign in here
+          login in here
         </Link>
       </p>
     </div>

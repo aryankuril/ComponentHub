@@ -14,7 +14,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <div
       style={{ background: 'linear-gradient(153deg, #EBEBEB 23.63%, #FFD54F 140.11%)' }}
-      className="flex flex-col min-h-screen  white-text "
+      className="flex flex-col min-h-screen  black-text "
     >
       <div className="flex flex-1">
         <AdminSidebar />

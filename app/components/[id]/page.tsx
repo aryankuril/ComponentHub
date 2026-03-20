@@ -83,17 +83,17 @@ export default function ComponentsPage() {
   }, [pathname])
 
   return (
-    <div className="min-h-screen flex flex-col bg-black text-gray-200">
+    <div className="min-h-screen container flex flex-col   text-gray-200">
       <Navbar />
 
       <main className="flex flex-1 pt-16 relative">
 
         {/* Sidebar */}
-        <aside className="hidden md:block w-64 bg-black border-r border-gray-700 p-4">
-          <h2 className="text-xl font-bold mb-4">Components</h2>
+        <aside className="hidden md:block w-64   border-r border-gray-700 p-4 ">
+          <h2 className="text-xl font-bold mb-4 black-text mt-10">Components</h2>
 
           {categories.map((cat) => (
-            <div key={cat._id} className="mb-5">
+            <div key={cat._id} className="mb-5 ">
               <h3 className="text-primary font-semibold mb-2 capitalize">
                 {cat.name}
               </h3>
@@ -103,7 +103,7 @@ export default function ComponentsPage() {
                   <li
                     key={comp._id}
                     onClick={() => router.push(`/components/${comp._id}`)}
-                    className="cursor-pointer px-2 py-1 rounded hover:bg-[#F9B31B] capitalize"
+                    className="cursor-pointer px-2 py-1 rounded hover:bg-[#F9B31B] black-text capitalize"
                   >
                     {comp.name}
                   </li>
@@ -114,7 +114,7 @@ export default function ComponentsPage() {
         </aside>
 
         {/* Right Panel */}
-        <section className="flex-1 p-6 bg-black">
+        <section className="flex-1 p-6  ">
           {loading && <p className="text-center">Loading...</p>}
 
           {!loading && selectedComponent && (
@@ -122,7 +122,7 @@ export default function ComponentsPage() {
           )}
 
           {!loading && !selectedComponent && (
-            <p className="text-center grey-text">
+            <p className="text-center  black-text">
               Loading components...
             </p>
           )}

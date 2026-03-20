@@ -66,15 +66,15 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
       <Navbar />
       <main className="pt-16">
         {/* Hero Section */}
-        <section className="py-20 bg-[#040404]">
+        <section className="py-20 ">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
-              <span className=" white-text ">Get in </span>
+              <span className=" black-text ">Get in </span>
               <span className="text-primary">
                 Touch
               </span>
             </h1>
-            <p className="text-xl  grey-text  max-w-3xl mx-auto">
+            <p className="text-xl   black-text  max-w-3xl mx-auto">
               Have questions about our components? Need custom development? 
               We&apos;d love to hear from you.
             </p>
@@ -87,12 +87,12 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {/* Contact Form */}
               <ThreeDElement intensity={8}>
-                <div className="bg-[#080808] border border-transparent hover:border-[#F9B31B]/30 rounded-2xl lg:p-8 p-3">
-                  <h2 className="text-2xl font-bold mb-6  white-text ">Send us a message</h2>
+                <div className="border border-[#F9B31B]  rounded-[20px]  lg:p-8 p-3">
+                  <h2 className="text-2xl font-bold mb-6  black-text ">Send us a message</h2>
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label htmlFor="firstName" className="block text-sm font-medium  white-text  mb-2">
+                        <label htmlFor="firstName" className="block text-sm font-medium  black-text  mb-2">
                           First Name
                         </label>
                         <input
@@ -100,11 +100,11 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                           id="firstName"
                           name="firstName"
                           required
-                          className="w-full px-4 py-3 bg-input  white-text  border border-white rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
+                          className="w-full px-4 py-3 bg-input  black-text  border  border-black rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
                         />
                       </div>
                       <div> 
-                        <label htmlFor="lastName" className="block text-sm font-medium  white-text  mb-2">
+                        <label htmlFor="lastName" className="block text-sm font-medium  black-text  mb-2">
                           Last Name
                         </label>
                         <input
@@ -112,13 +112,13 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                           id="lastName"
                           name="lastName"
                           required
-                          className="w-full px-4 py-3 bg-input  white-text  border border-white rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
+                          className="w-full px-4 py-3 bg-input  black-text  border  border-black rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
                         />
                       </div>
                     </div>
                     
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium  white-text  mb-2">
+                      <label htmlFor="email" className="block text-sm font-medium  black-text  mb-2">
                         Email
                       </label>
                       <input
@@ -126,12 +126,12 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                         id="email"
                         name="email"
                         required
-                        className="w-full px-4 py-3 bg-input  white-text  border border-white rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
+                        className="w-full px-4 py-3 bg-input  black-text  border  border-black rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="subject" className="block text-sm font-medium  white-text  mb-2">
+                      <label htmlFor="subject" className="block text-sm font-medium  black-text  mb-2">
                         Subject
                       </label>
                       <input
@@ -139,12 +139,12 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                         id="subject"
                         name="subject"
                         required
-                        className="w-full px-4 py-3 bg-input  white-text  border border-white rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
+                        className="w-full px-4 py-3 bg-input  black-text  border  border-black rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
                       />
                     </div>
 
                     <div>
-                      <label htmlFor="message" className="block text-sm font-medium  white-text  mb-2">
+                      <label htmlFor="message" className="block text-sm font-medium  black-text  mb-2">
                         Message
                       </label>
                       <textarea
@@ -152,7 +152,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                         name="message"
                         rows={6}
                         required
-                        className="w-full px-4 py-3 bg-input border  white-text  border border-white rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300 resize-none"
+                        className="w-full px-4 py-3 bg-input border  black-text  border  border-black rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300 resize-none"
                       ></textarea>
                     </div>
 
@@ -178,8 +178,8 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
               {/* Contact Information */}
               <div className="space-y-8">
                 <div>
-                  <h2 className="text-2xl font-bold mb-4  white-text ">Contact Information</h2>
-                  <p className=" grey-text  mb-8">
+                  <h2 className="text-2xl font-bold mb-4  black-text ">Contact Information</h2>
+                  <p className="  black-text  mb-8">
                     Ready to take your project to the next level? Get in touch with our team of experts.
                   </p>
                 </div>
@@ -187,17 +187,18 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                 <div className="space-y-6">
                   {contactInfo.map((info, index) => (
                     <ThreeDElement key={info.title} intensity={6}>
-                      <div className="bg-[#080808] border border-transparent hover:border-[#F9B31B]/30 rounded-xl p-6 group  transition-all duration-300">
+                      <div className=" border border-[#F9B31B] relative rounded-[20px] overflow-hidden p-6 group  transition-all duration-300">
                         <div className="flex items-start space-x-4">
                           <div className="w-12 h-12 bg-[#F9B31B] rounded-lg flex items-center justify-center group-hover:animate-pulse">
                             <info.icon className="h-6 w-6 text-black" />
                           </div>
                           <div>
-                            <h3 className="font-semibold  white-text  mb-1">{info.title}</h3>
+                            <h3 className="font-semibold  black-text  mb-1">{info.title}</h3>
                             <p className="text-primary font-medium mb-1">{info.value}</p>
-                            <p className="text-sm  grey-text ">{info.description}</p>
+                            <p className="text-sm   black-text ">{info.description}</p>
                           </div>
                         </div>
+                         <div className="absolute -right-1 top-0 w-4 sm:w-4 md:w-6 h-full bg-[#FAB31E]"></div>
                       </div>
                     </ThreeDElement>
                   ))}
@@ -205,8 +206,8 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
                 <ThreeDElement intensity={8}>
                   <div className="bg-gradient-to-br from-[#F9B31B]/50 to-neon-purple/10  rounded-xl p-6">
-                    <h3 className="text-lg font-semibold  white-text  mb-3">Need Custom Development?</h3>
-                    <p className=" grey-text  mb-4">
+                    <h3 className="text-lg font-semibold  black-text  mb-3">Need Custom Development?</h3>
+                    <p className="  black-text  mb-4">
                       Our team specializes in creating custom components and web applications. 
                       Let&apos;s discuss your project requirements.
                     </p>
@@ -228,11 +229,11 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         </section>
 
         {/* FAQ Section */}
-        <section className="py-20 bg-[#040404]">
+        <section className="py-20 ">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
               <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-                <span className=" white-text ">Frequently Asked </span>
+                <span className=" black-text ">Frequently Asked </span>
                 <span className="text-primary">Questions</span>
               </h2>
             </div>
@@ -257,9 +258,10 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                 }
               ].map((faq, index) => (
                 <ThreeDElement key={index} intensity={6}>
-                  <div className="bg-[#080808] border border-transparent hover:border-[#F9B31B]/30 rounded-xl p-6">
-                    <h3 className="font-semibold  white-text  mb-3">{faq.question}</h3>
-                    <p className=" grey-text ">{faq.answer}</p>
+                  <div className=" border border-[#F9B31B] relative rounded-[20px] overflow-hidden p-6">
+                    <h3 className="font-semibold  black-text  mb-3">{faq.question}</h3>
+                    <p className="  black-text ">{faq.answer}</p>
+                     <div className="absolute -right-1 top-0 w-4 sm:w-4 md:w-6 h-full bg-[#FAB31E]"></div>
                   </div>
                 </ThreeDElement>
               ))}

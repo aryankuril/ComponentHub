@@ -57,24 +57,24 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-black border-t border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <footer className=" container border-t  border-black">
+      <div className=" py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
 
           {/* Brand */}
           <div className="md:col-span-2">
              <Link href="/" className="flex items-center">
   <Image
-    src="/logo.png"
+    src="/images/bblogo.webp"
     alt="Bombay Blokes Logo"
     width={230}
     height={40}
-    className="object-contain cursor-pointer -ml-4"
+    className="object-contain cursor-pointer lg:mb-10"
     priority
   />
 </Link>
 
-            <p className="text-muted-foreground mb-6 max-w-md grey-text">
+            <p className="black-text mb-6 max-w-md ">
               Modern 3D component showcase platform with neon-themed designs.
               Discover, preview, and copy beautiful components for your next project.
             </p>
@@ -86,7 +86,7 @@ const Footer = () => {
       href={social.href}
       target="_blank"
       rel="noopener noreferrer"
-      className="p-2 rounded-lg grey-text bg-secondary hover:bg-[#F9B31B]/10 hover:text-[#F9B31B] transition-all duration-300 group"
+      className="p-2 rounded-lg black-text bg-secondary hover:bg-[#F9B31B]/10 hover:text-[#F9B31B] transition-all duration-300 group"
       aria-label={social.label}
     >
       <social.icon className="h-5 w-5 group-hover:animate-pulse" />
@@ -97,21 +97,21 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 white-text">Quick Links</h3>
-            <ul className="space-y-3 grey-text">
+            <h3 className="text-lg font-semibold mb-4 black-text">Quick Links</h3>
+            <ul className="space-y-3  black-text">
               {quickLinks.map((link) => (
                 <li key={link.name}>
                   {link.name === "Components" ? (
                     <button
                       onClick={handleComponentsClick}
-                      className="text-left text-muted-foreground cursor-pointer grey-text hover:text-[#F9B31B] transition-colors duration-300"
+                      className="text-left text-muted-foreground cursor-pointer black-text hover:text-[#F9B31B] transition-colors duration-300"
                     >
                       {link.name}
                     </button>
                   ) : (
                     <Link
                       href={link.href}
-                      className="text-muted-foreground cursor-pointer grey-text hover:text-[#F9B31B] transition-colors duration-300"
+                      className="text-muted-foreground cursor-pointer black-text hover:text-[#F9B31B] transition-colors duration-300"
                     >
                       {link.name}
                     </Link>
@@ -123,8 +123,8 @@ const Footer = () => {
 
           {/* Newsletter */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 white-text">Stay Updated</h3>
-            <p className="text-muted-foreground mb-4 text-sm grey-text">
+            <h3 className="text-lg font-semibold mb-4 black-text">Stay Updated</h3>
+            <p className="text-muted-foreground mb-4 text-sm black-text">
               Get notified about new components and features.
             </p>
 
@@ -133,7 +133,7 @@ const Footer = () => {
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 bg-input border rounded-md"
+              className="w-full px-3 py-2 bg-input border border-black rounded-md text-black"
             />
 
             <button
@@ -148,22 +148,22 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-border">
+        <div className="mt-12 pt-8 border-t border-black">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-muted-foreground text-sm grey-text">
+            <p className="text-muted-foreground text-sm black-text">
               © {currentYear} ComponentHub. All rights reserved.
             </p>
 
             <div className="flex space-x-6 mt-4 md:mt-0">
               <Link
-                href="/privacy"
-                className="text-muted-foreground hover:text-[#F9B31B] text-sm transition-colors duration-300 grey-text"
+                href="https://bombayblokes.com/privacy"
+                className="text-muted-foreground hover:text-[#F9B31B] text-sm transition-colors duration-300 black-text"
               >
                 Privacy Policy
               </Link>
               <Link
-                href="/terms"
-                className="text-muted-foreground hover:text-[#F9B31B] text-sm transition-colors duration-300 grey-text"
+                href="https://bombayblokes.com/terms"
+                className="text-muted-foreground hover:text-[#F9B31B] text-sm transition-colors duration-300 black-text"
               >
                 Terms of Service
               </Link>

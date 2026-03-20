@@ -46,7 +46,7 @@ export default async function ProfilePage() {
   return (
     <div > 
             <Navbar />
-    <div className="min-h-screen py-10 md:py-15 lg:py-20 px-4 bg-black white-text">
+    <div className="min-h-screen py-10 md:py-15 lg:py-20 px-4   black-text">
       <div className="container mx-auto max-w-4xl">
         <h1 className="text-4xl font-bold mb-8 text-center">
           My Profile

@@ -3,23 +3,32 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import NextAuthSessionProvider from '@/components/providers/NextAuthSessionProvider';
 import { getSession } from '@/lib/server-auth';
+import localFont from "next/font/local";
+import { Poppins } from "next/font/google";
+import "./globals.css";
+import dynamic from "next/dynamic";
 
+const miso = localFont({
+  src: [{ path: "./../public/fonts/VAG-Regular2.otf", weight: "400" }],
+  variable: "--font-miso",
+});
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-poppins",
+});
 
-const inter = Inter({ subsets: ['latin'] });
-
-import type { Metadata } from 'next';
-
-export const metadata: Metadata = {
-  title: 'Component Library',
-  description: 'A Next.js component library with a modern dark theme.',
-};
-
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const session = await getSession();
-
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.className} bg-black  white-text `}>
+      <html lang="en" className={`${miso.variable} ${poppins.variable}`}>
+      <head>
+        <link rel="icon" href="images/favicon.png" type="image/png" />
+      </head>
+      <body>
         <NextAuthSessionProvider>
           {children}
         </NextAuthSessionProvider>

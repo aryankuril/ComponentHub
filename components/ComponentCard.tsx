@@ -47,15 +47,15 @@ export default function ComponentCard({ component, onPreview, onCopy }: Componen
 
           <div className="flex items-center justify-between text-xs text-muted-foreground mt-auto">
             <div className="flex items-center space-x-1">
-              <Tag className="h-4 w-5 grey-text" />
-              <span className="text-neon-purple capitalize">
+              <Tag className="h-4 w-5  text-primary" />
+              <span className="text-neon-purple capitalize white-text">
                 {component.category?.name || "Uncategorized"}
               </span>
             </div>
 
             {component.dateCreated && (
-              <div className="flex items-center space-x-1 grey-text">
-                <Calendar className="h-4 w-5 grey-text" />
+              <div className="flex items-center space-x-1  white-text">
+                <Calendar className="h-4 w-5  text-primary" />
                 <span>{format(new Date(component.dateCreated), "dd/MM/yyyy")}</span>
               </div>
             )}

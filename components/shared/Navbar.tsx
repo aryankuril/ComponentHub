@@ -44,19 +44,22 @@ export default function Navbar() {
   ];
 
   return (
+
+ <div className="  container py-5 px-10  inset-x-0 z-[100000]">
     <motion.nav
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, type: 'spring' }}
-      className="fixed top-0 w-full z-50 bg-black border-b border-border"
+               className="  container h-[90px] bg-[rgba(142,142,142,0.20)] rounded-[20px] backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.1)] items-center absolute inset-x-0 z-[100001]"
+
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className=" px-4 sm:px-6 lg:px-8 py-3">
         <div className="flex items-center justify-between h-16">
 
           {/* Logo */}
           <Link href="/" className="flex items-center">
             <Image
-              src="/logo.png"
+              src="/images/bblogo.webp" 
               alt="ComponentHub Logo"
               width={230}
               height={40}
@@ -66,14 +69,14 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex space-x-6 items-center">
+          <div className="hidden md:flex space-x-6 items-end">
 
             {/* Normal Links */}
             {navItems.map((item) => (
               <Link
                 key={item.name}
                 href={item.path}
-                className="white-text hover:text-[#F9B31B] transition duration-300"
+                className="black-text hover:text-[#F9B31B] transition duration-300"
               >
                 {item.name}
               </Link>
@@ -82,7 +85,7 @@ export default function Navbar() {
             {/* Components Button */}
            <Link
   href="/components"
-  className="white-text hover:text-[#F9B31B] transition duration-300"
+  className="black-text hover:text-[#F9B31B] transition duration-300"
 >
   Components
 </Link>
@@ -90,7 +93,7 @@ export default function Navbar() {
           </div>
 
           {/* Desktop Auth */}
-          <div className="hidden md:flex items-center space-x-4 white-text">
+          <div className="hidden md:flex items-center space-x-4 black-text">
             {!session ? (
               <>
                 <Link href="/login">Login</Link>
@@ -150,85 +153,98 @@ export default function Navbar() {
 
           {/* Mobile Toggle */}
           <div className="md:hidden">
-            <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              {isMenuOpen ? <X /> : <Menu />}
-            </button>
-          </div>
+  <button onClick={() => setIsMenuOpen(!isMenuOpen)}>
+    {isMenuOpen ? (
+      <X className="w-8 h-8 text-black" />
+    ) : (
+      <Menu className="w-8 h-8 text-black" />
+    )}
+  </button>
+</div>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-black border-t border-border">
-          <div className="px-4 py-5 space-y-3">
+     {isMenuOpen && (
+  <div className="md:hidden fixed inset-0 min-h-screen bg-white z-[9999] lg:mt-0 -mt-5">
 
-            <Link
-              href="/"
-              onClick={() => setIsMenuOpen(false)}
-              className="block text-white"
-            >
-              Home
-            </Link>
+    {/* Close Button */}
+    <button
+      onClick={() => setIsMenuOpen(false)}
+      className="absolute top-6 right-6"
+    >
+      <X className="w-8 h-8 text-black" />
+    </button>
 
-           <Link
-  href="/components"
-  onClick={() => setIsMenuOpen(false)}
-  className="block text-white"
->
-  Components
-</Link>
+    <div className="px-6 py-20 space-y-6 text-black text-lg">
 
-            <Link
-              href="/about"
-              onClick={() => setIsMenuOpen(false)}
-              className="block text-white"
-            >
-              About
-            </Link>
+      <Link
+        href="/"
+        onClick={() => setIsMenuOpen(false)}
+        className="block"
+      >
+        Home
+      </Link>
 
-            <Link
-              href="/contact"
-              onClick={() => setIsMenuOpen(false)}
-              className="block text-white"
-            >
-              Contact
-            </Link>
+      <Link
+        href="/components"
+        onClick={() => setIsMenuOpen(false)}
+        className="block"
+      >
+        Components
+      </Link>
 
-            <hr className="border-gray-700" />
+      <Link
+        href="/about"
+        onClick={() => setIsMenuOpen(false)}
+        className="block"
+      >
+        About
+      </Link>
 
-            {!session ? (
-              <>
-                <Link
-                  href="/login"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="block text-white"
-                >
-                  Login
-                </Link>
+      <Link
+        href="/contact"
+        onClick={() => setIsMenuOpen(false)}
+        className="block"
+      >
+        Contact
+      </Link>
 
-                <Link
-                  href="/signup"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="block text-white"
-                >
-                  Sign Up
-                </Link>
-              </>
-            ) : (
-              <button
-                onClick={() => {
-                  signOut();
-                  setIsMenuOpen(false);
-                }}
-                className="block text-white"
-              >
-                Logout
-              </button>
-            )}
+      <hr className="border-gray-300" />
 
-          </div>
-        </div>
+      {!session ? (
+        <>
+          <Link
+            href="/login"
+            onClick={() => setIsMenuOpen(false)}
+            className="block"
+          >
+            Login
+          </Link>
+
+          <Link
+            href="/signup"
+            onClick={() => setIsMenuOpen(false)}
+            className="block font-semibold"
+          >
+            Sign Up
+          </Link>
+        </>
+      ) : (
+        <button
+          onClick={() => {
+            signOut();
+            setIsMenuOpen(false);
+          }}
+          className="block"
+        >
+          Logout
+        </button>
       )}
+    </div>
+  </div>
+)}
     </motion.nav>
+    </div>
   );
 }

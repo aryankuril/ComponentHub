@@ -17,12 +17,12 @@ export default function LandingPage({ components }: { components: any[] }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
-            <span className=" white-text ">Latest </span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3">
+            <span className=" black-text ">Latest </span>
             <span className=" text-primary ">Components</span>
           </h2>
 
-          <p className="text-xl  white-text  max-w-3xl mx-auto">
+          <p className="text-xl  black-text  max-w-3xl mx-auto">
             Handpicked components showcasing the best of modern design with 3D animations.
           </p>
         </div>
@@ -33,7 +33,7 @@ export default function LandingPage({ components }: { components: any[] }) {
 
         <button
           onClick={handleViewMore}
-          className="group border-2 border-[#F9B31B]  text-primary  font-semibold rounded-full px-6 py-3 flex items-center gap-2 transition-all mx-auto duration-300 hover:shadow-[0_0_20px_#F9B31B,0_0_40px_#F9B31B] hover:-translate-y-0.5"
+          className="group border-2 border-[#F9B31B]  text-primary  font-semibold rounded-full px-6 py-3 flex items-center gap-2 transition-all mx-auto duration-300 hover:bg-[ #F9B31B]"
         >
           <span>View Documentation</span>
         </button>

@@ -127,7 +127,7 @@ export default function ProfileCard({ user }: { user: UserType }) {
             <h1 className="text-4xl font-bold capitalize text-primary">
               {profileData.name}
             </h1>
-            {/* <p className=" grey-text  mt-2">Member since {profileData.joinDate}</p> */}
+            {/* <p className="  black-text  mt-2">Member since {profileData.joinDate}</p> */}
           </div>
         </div>
 
@@ -155,7 +155,7 @@ export default function ProfileCard({ user }: { user: UserType }) {
                 onChange={(e) =>
                   setProfileData({ ...profileData, name: e.target.value })
                 }
-                className="w-full pl-10 py-2 bg-black border border-[#fab31e]/30 rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
+                className="w-full pl-10 py-2   border border-[#fab31e]/30 rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
               />
             </div>
           </div>
@@ -170,7 +170,7 @@ export default function ProfileCard({ user }: { user: UserType }) {
                 onChange={(e) =>
                   setProfileData({ ...profileData, email: e.target.value })
                 }
-                className="w-full pl-10 py-2 bg-black border border-[#fab31e]/30 rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
+                className="w-full pl-10 py-2   border border-[#fab31e]/30 rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
               />
             </div>
           </div>
@@ -210,7 +210,7 @@ export default function ProfileCard({ user }: { user: UserType }) {
               onChange={(e) =>
                 setPasswordData({ ...passwordData, currentPassword: e.target.value })
               }
-              className="w-full px-3 py-2 bg-black border border-[#fab31e]/30 rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
+              className="w-full px-3 py-2   border border-[#fab31e]/30 rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
             />
             <input
               type="password"
@@ -219,7 +219,7 @@ export default function ProfileCard({ user }: { user: UserType }) {
               onChange={(e) =>
                 setPasswordData({ ...passwordData, newPassword: e.target.value })
               }
-              className="w-full px-3 py-2 bg-black border border-[#fab31e]/30 rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
+              className="w-full px-3 py-2   border border-[#fab31e]/30 rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
             />
             <input
               type="password"
@@ -228,7 +228,7 @@ export default function ProfileCard({ user }: { user: UserType }) {
               onChange={(e) =>
                 setPasswordData({ ...passwordData, confirmPassword: e.target.value })
               }
-              className="w-full px-3 py-2 bg-black border border-[#fab31e]/30 rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
+              className="w-full px-3 py-2   border border-[#fab31e]/30 rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
             />
 
             <div className="flex justify-end">

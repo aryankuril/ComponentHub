@@ -73,7 +73,7 @@ const Privacy = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black  white-text ">
+    <div className="min-h-screen    black-text ">
       <Navbar />
       
       <main className="container mx-auto px-4 pt-24 pb-16">

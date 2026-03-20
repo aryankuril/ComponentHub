@@ -2,14 +2,18 @@
 
 /* Base theme variables */
 :root {
+  --font-miso: "Miso", sans-serif;
+  --font-poppins: "Poppins", sans-serif;
+  --font-bold-miso: "Miso", sans-serif;
+  --font-regular-miso: "Miso", sans-serif;
+
+
   --background: #ffffff;
   --foreground: #171717;
-
   --color-primary:#fab31e;
-  /* --color-black: #1d1d1d; */
   --color-white: #fdfdfd;
   --color-grey: #898989;
-  
+  --color-black: #1d1d1d;
 
   /* Neon colors */
   --neon-cyan: hsl(180, 100%, 50%);
@@ -22,6 +26,19 @@
   --glow-cyan: 0 0 20px hsl(180, 100%, 50%, 0.5);
   --glow-purple: 0 0 20px hsl(262, 83%, 70%, 0.5);
   --glow-green: 0 0 20px hsl(120, 100%, 50%, 0.5);
+
+
+  --body1-size: 36px; /* ✅ Testimonials, our work stack cards */
+  --body2-size: 18px; /* ✅ Paragraph description text */
+  --body3-size: 16px; /* ✅ Form placeholders, testimonial names, filter tags, buttons */
+  --body4-size: 14px; /* ✅ Footer menu links */
+    /* =========================
+     Specials - Numbers
+     ========================= */
+  --stats-size: 250px;       /* ✅ Stats numbers (highlighting data) */
+  --numbering-size: 60px; 
+  --casenumbering-size: 120px;   /* ✅ Card number sequence (case study, service card, work) */
+  --single-title-size: 100px; 
 }
 
 @theme inline {
@@ -49,9 +66,12 @@
 
 /* Global body style */
 body {
-  background: black;
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-poppins);
+ @apply relative w-full min-h-screen overflow-x-hidden;
+background-image: url("/images/bg.svg");
+background-size: cover;
+background-attachment: fixed;
+  color: var(--color-primary);
 }
 
 /* =========================================
@@ -69,9 +89,6 @@ body {
   color: var(--color-white);
 }
 
-.grey-text {
-  color: var(--color-grey);
-}
 .border-radious{
   border-radius: 20px;
 }
@@ -86,6 +103,89 @@ body {
 .glow-green {
   box-shadow: var(--glow-green);
 }
+
+.body1 {
+  font-family: var(--font-poppins);
+  font-size: var(--body1-size); /* ✅ Form labels, testimonials, our work cards */
+  font-weight: 400;
+  line-height: 1.5em;
+}
+
+.body2 {
+  font-family: var(--font-poppins);
+  font-size: var(--body2-size); /* ✅ Paragraph description text */
+  font-weight: 400;
+  line-height: 1.5em;
+}
+
+.body3 {
+  font-family: var(--font-poppins);
+  font-size: var(--body3-size); /* ✅ Form placeholder, testimonial name, filter tag, button */
+  font-weight: 500;
+  line-height: 1.2em;
+}
+
+.body4 {
+  font-family: var(--font-poppins);
+  font-size: var(--body4-size); /* ✅ Footer menu */
+  font-weight: 400;
+  line-height: 1.5em;
+}
+/* =========================================
+   SPECIAL NUMBERS (Desktop Defaults)
+   ========================================= */
+.stats-number {
+  font-family: var(--font-regular-miso);
+  font-size: var(--stats-size); /* ✅ Stats numbers */
+  font-weight: 400;
+  line-height: 1em;
+}
+
+.numbering {
+  font-family: var(--font-regular-miso);
+  font-size: var(--numbering-size); /* ✅ Card number sequence */
+  font-weight: 400;
+  line-height: 1em;
+}
+
+
+.casenumbering {
+  font-family: var(--font-regular-miso);
+  font-size: var(--numbering-size); /* ✅ Card number sequence */
+  font-weight: 400;
+  line-height: 0.9em;
+}
+/* / */
+
+.single-title {
+  font-family: var(--font-bold-miso);
+  font-size: var(--single-title-size); /* ✅ Single large title (e.g., 404 page) */
+  font-weight: 400;
+  line-height: 0.8em;
+}
+
+::placeholder{
+  font-size: var(--body3-size);
+  font-family: var(--font-poppins);
+  font-weight: 400;
+  line-height: 1em;
+}
+
+@media screen and (max-width: 768px) {
+
+  /* ---------- Body ---------- */
+  .body1 { font-size: 20px !important; }
+  .body2 { font-size: 15px !important; }
+  .body3 { font-size: 16px !important; }
+  .body4 { font-size: 14px !important; }
+
+  /* ---------- Numbers ---------- */
+  .stats-number { font-size: 50px; }
+  .numbering { font-size: 50px; }
+  .casenumbering { font-size: 60px; }
+  .single-title { font-size: 60px; }
+}
+
 
 /* Floating animation */
 @keyframes float {
@@ -192,10 +292,105 @@ video {
 /* ============================
    Utility Helpers (optional)
 ============================ */
-.container {
+/* .container {
   max-width: 1280px;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1rem;
   padding-right: 1rem;
+} */
+
+
+
+
+.container,
+.container-fluid,
+.container-xxl,
+.container-xl,
+.container-lg,
+.container-md,
+.container-sm {
+    width: 100%;
+    padding-right: 0px !important;
+    padding-left: 0px !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
+}
+
+@media screen and (min-width: 0px) and (max-width: 750px) {
+
+    .container-sm,
+    .container {
+        width: 100%;
+        padding-right: 20px !important;
+        padding-left: 20px !important;
+        margin-right: auto !important;
+        margin-left: auto !important;
+    }
+
+}
+
+@media (min-width: 576px) {
+
+    .container-sm,
+    .container {
+        max-width: 540px;
+    }
+}
+
+@media (min-width: 768px) {
+
+    .container-md,
+    .container-sm,
+    .container {
+        max-width: 960px;
+
+    }
+}
+
+@media (min-width: 992px) {
+
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container {
+        max-width: 1000px;
+
+    }
+}
+
+@media (min-width: 1200px) {
+
+    .container-xl,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container {
+        max-width: 1200px;
+
+    }
+}
+
+@media (min-width: 1400px) {
+
+    .container-xxl,
+    .container-xl,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container {
+        max-width: 1400px;
+    }
+}
+
+@media (min-width: 1600px) {
+
+    .container-xxl,
+    .container-xl,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container {
+        max-width: 1600px;
+    }
 }

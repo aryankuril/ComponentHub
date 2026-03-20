@@ -43,14 +43,14 @@ export default function ComponentDetails({
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-black text-gray-200">
-      <main className="flex-grow px-4 bg-black">
+    <div className="min-h-screen container flex flex-col  text-gray-200 mt-10">
+      <main className="flex-grow px-4 ">
         <div className="container mx-auto max-w-5xl">
           <h1 className="text-4xl font-bold mb-2 text-[#F9B31B] capitalize">
             {component.name}
           </h1>
 
-          <p className="grey-text text-sm capitalize">
+          <p className=" black-text text-sm capitalize">
             Category: {component.category?.name || 'Uncategorized'}
           </p>
 
@@ -61,7 +61,7 @@ export default function ComponentDetails({
                 className={`py-2 px-4 font-semibold text-sm transition-colors duration-200 cursor-pointer ${
                   activeTab === 'preview'
                     ? 'border-b-2 border-[#F9B31B] text-[#F9B31B]'
-                    : 'grey-text hover:text-gray-300 cursor-pointer '
+                    : ' black-text hover:text-gray-300 cursor-pointer '
                 }`}
               >
                 Live Preview
@@ -71,7 +71,7 @@ export default function ComponentDetails({
                 className={`py-2 px-4 font-semibold text-sm transition-colors duration-200 cursor-pointer ${
                   activeTab === 'code'
                     ? 'border-b-2 border-[#F9B31B] text-[#F9B31B]'
-                    : 'grey-text hover:text-gray-300 cursor-pointer '
+                    : ' black-text hover:text-gray-300 cursor-pointer '
                 }`}
               >
                 Component Code
@@ -93,9 +93,15 @@ export default function ComponentDetails({
             </div>
           </div>
 
-          <p className="mt-4 text-gray-300 capitalize">
-            {component.description}
-          </p>
+       <div className="mt-6 bg-gray-900 border border-gray-700 rounded-xl p-5">
+  <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2">
+    Description
+  </h4>
+
+  <p className="text-gray-300 text-sm leading-relaxed max-w-3xl">
+    {component.description}
+  </p>
+</div>
 
           {/* 🔥 REQUIRED PACKAGES (WITH COPY ICON LIKE CODEVIEWER) */}
           {component.npmPackages && component.npmPackages.length > 0 && (
@@ -125,7 +131,7 @@ export default function ComponentDetails({
               </div>
 
               {/* Command box */}
-              <div className="relative mt-3 mx-4 mb-4 bg-black rounded-lg px-4 py-3 font-mono text-sm text-gray-100">
+              <div className="relative mt-3 mx-4 mb-4 bg-gray-800 rounded-lg px-4 py-3 font-mono text-sm text-gray-100">
                 {commands[pkgManager]}
 
                 {/* Copy Button (SAME UX AS CODEVIEWER) */}
