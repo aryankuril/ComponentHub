@@ -49,12 +49,25 @@ export async function POST(req: Request) {
       (formData.get("npmPackages") as string) || "[]"
     );
 
+    const file = formData.get("previewImage") as File;
+
+    let previewImage = "";
+
+    // 🔥 CONVERT IMAGE TO BASE64
+    if (file && file.size > 0) {
+      const bytes = await file.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+
+      previewImage = `data:${file.type};base64,${buffer.toString("base64")}`;
+    }
+
     const component = await Component.create({
       name,
       description,
       code,
       npmPackages,
       category: category || null,
+      previewImage, // ✅ NOW SAVED
     });
 
     return NextResponse.json(component, { status: 201 });

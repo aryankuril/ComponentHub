@@ -6,9 +6,8 @@ import dbConnect from '@/lib/mongodb'
 import Component from '@/lib/schemas/Component'
 import Category from '@/lib/schemas/Category'
 import LandingPage from '@/components/LandingPage'
+
 export const dynamic = "force-dynamic";
-
-
 export default async function HomePage() {
   await dbConnect()
   Category.modelName
@@ -19,11 +18,15 @@ const components = await Component.find({})
   .limit(6)
   .lean()
 
+
+
+
+  
+//   
 const cleanComponents = components.map((c: any) => ({
   _id: c._id.toString(),
   name: c.name || "",
   description: c.description || "",
-
   // 🔥 HANDLE ALL CASES
   image:
     c.previewImage?.startsWith("http")
@@ -47,11 +50,15 @@ const cleanComponents = components.map((c: any) => ({
       <Navbar />
 
       <main className="flex-grow pt-16">
-      <HeroSection components={cleanComponents} />
+       <HeroSection
+  components={components.map((c) => JSON.parse(JSON.stringify(c)))}
+/>
 
 
         {/* ✅ CLIENT COMPONENT */}
-       <LandingPage components={cleanComponents} />
+        <LandingPage
+          components={components.map((c) => JSON.parse(JSON.stringify(c)))}
+        />
       </main>
 
       <Footer />
