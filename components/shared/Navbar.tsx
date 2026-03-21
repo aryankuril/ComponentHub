@@ -124,7 +124,7 @@ export default function Navbar() {
                     >
                       <Link
                         href="/profile"
-                        className="block px-4 py-2 text-sm hover:bg-gray-700"
+                        className="block px-4 py-2 text-sm hover:bg-gray-700 white-text"
                       >
                         My Profile
                       </Link>
@@ -132,7 +132,7 @@ export default function Navbar() {
                       {session.user?.role === 'admin' && (
                         <Link
                           href="/admin"
-                          className="block px-4 py-2 text-sm hover:bg-gray-700"
+                          className="block px-4 py-2 text-sm hover:bg-gray-700 white-text"
                         >
                           Admin Panel
                         </Link>
@@ -140,7 +140,7 @@ export default function Navbar() {
 
                       <button
                         onClick={() => signOut()}
-                        className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-700"
+                        className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-700 white-text"
                       >
                         Logout
                       </button>

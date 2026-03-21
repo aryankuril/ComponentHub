@@ -73,7 +73,7 @@ export default function ManageComponentsPage() {
   };
 
   return (
-    <div className="p-8">
+    <div className="p-8 lg:mt-10 mt-0 ">
       <h1 className="text-4xl font-bold mb-8 text-black">Manage Components</h1>
 
       <div className="bg-white/50 p-6 rounded-lg mb-8">

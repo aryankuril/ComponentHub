@@ -36,11 +36,11 @@ export default function EditComponentPage() {
     router.push('/admin/components');
   };
 
-  if (loading) return <div className="p-8 text-center text-black">Loading component data...</div>;
+  if (loading) return <div className="p-8 text-center text-black lg:mt-10 mt-0">Loading component data...</div>;
   if (error) return <div className="p-8 text-center text-red-500">{error}</div>;
 
   return (
-    <div className="p-8">
+    <div className="p-8 lg:mt-10 mt-0 ">
       <h1 className="text-4xl font-bold  black-text  mb-8">Edit Component</h1>
       <div className="bg-white p-6 rounded-lg shadow-lg">
         <ComponentForm onSuccess={handleSuccess} initialData={initialData} />

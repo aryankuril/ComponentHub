@@ -23,8 +23,8 @@ const [activeTab, setActiveTab] = useState<"dashboard" | "admin" | "categories" 
 
   return (
 
-    <div className="w-full md:w-64    black-text  p-6 flex flex-col justify-between rounded-r-2xl shadow-xl"> 
-      <button
+    <div className="w-full md:w-64  z-9999  black-text  p-6 flex flex-col justify-between rounded-r-2xl shadow-xl lg:mt-20 mt-0"> 
+      {/* <button
   onClick={handleLogout}
   className="absolute top-4 right-6 rounded-[5px] bg-[#262626] shadow-[2px_2px_0px_0px_#F9B31B] 
              flex justify-center items-center gap-[10px] px-[30px] py-[10px] 
@@ -32,10 +32,10 @@ const [activeTab, setActiveTab] = useState<"dashboard" | "admin" | "categories" 
 >
   <LogOut size={18} />
   Logout
-</button>
+</button> */}
    <aside >
       <div>
-        <h2 className="text-3xl font-extrabold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-[#FFD54F] to-[#EBEBEB]">
+        <h2 className="text-3xl font-extrabold mb-8 text-[#F9B31B]">
             Admin Panel
           </h2>
 

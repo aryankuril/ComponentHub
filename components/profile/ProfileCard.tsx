@@ -119,7 +119,7 @@ export default function ProfileCard({ user }: { user: UserType }) {
       )}
       <div className="text-center space-y-6">
           <div className="inline-block relative">
-            <div className="w-24 h-24 rounded-full uppercase bg-gradient-to-br from-neon-cyan to-neon-purple flex items-center justify-center text-black text-2xl font-bold shadow-lg shadow-neon-cyan/30 border-2 border-neon-cyan">
+            <div className="w-24 h-24 rounded-full uppercase bg-[#F9B31B] flex items-center justify-center text-white text-2xl font-bold shadow-lg ">
               {profileData.name.split(" ").map((n) => n[0]).join("")}
             </div>
           </div>
@@ -134,7 +134,7 @@ export default function ProfileCard({ user }: { user: UserType }) {
       {/* PROFILE */}
       <div className="bg-gray-900 p-6 border border-transparent hover:border-[#F9B31B]/30 rounded-xl">
         <div className="flex justify-between mb-6">
-          <h2 className="text-xl font-semibold">Personal Information</h2>
+          <h2 className="text-xl font-semibold white-text ">Personal Information</h2>
           <button
             onClick={() => setIsEditingProfile(!isEditingProfile)}
             className="px-3 py-1 rounded-md cursor-pointer border  hover:border-[#F9B31B] text-white hover:text-[#f2c053]"
@@ -146,7 +146,7 @@ export default function ProfileCard({ user }: { user: UserType }) {
 
         <div className="grid md:grid-cols-2 gap-6">
           <div>
-            <label className="text-sm">Name</label>
+            <label className="text-sm white-text">Name</label>
             <div className="relative mt-1">
               <User className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
               <input
@@ -155,7 +155,7 @@ export default function ProfileCard({ user }: { user: UserType }) {
                 onChange={(e) =>
                   setProfileData({ ...profileData, name: e.target.value })
                 }
-                className="w-full pl-10 py-2   border border-[#fab31e]/30 rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
+                className="w-full pl-10 py-2 white-text capitalize border border-[#fab31e]/30 rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
               />
             </div>
           </div>
@@ -170,7 +170,7 @@ export default function ProfileCard({ user }: { user: UserType }) {
                 onChange={(e) =>
                   setProfileData({ ...profileData, email: e.target.value })
                 }
-                className="w-full pl-10 py-2   border border-[#fab31e]/30 rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
+                className="w-full pl-10 py-2 white-text border border-[#fab31e]/30 rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
               />
             </div>
           </div>
@@ -180,7 +180,7 @@ export default function ProfileCard({ user }: { user: UserType }) {
           <div className="flex justify-end mt-4">
             <button
               onClick={handleProfileSave}
-              className="px-4 py-2 bg-yellow-400 text-black rounded-md"
+              className="px-4 py-2 bg-yellow-400 text-white rounded-md"
             >
               Save Changes
             </button>
@@ -191,11 +191,11 @@ export default function ProfileCard({ user }: { user: UserType }) {
       {/* PASSWORD */}
       <div className="bg-gray-900 p-6 border border-transparent hover:border-[#F9B31B]/30 rounded-xl">
         <div className="flex justify-between mb-6">
-          <h2 className="text-xl font-semibold">Security</h2>
+          <h2 className="text-xl font-semibold white-text">Security</h2>
           <button
             onClick={() => setIsEditingPassword(!isEditingPassword)}
             className="px-3 py-1 rounded-md cursor-pointer border  hover:border-[#F9B31B] text-white hover:text-[#f2c053]"
-          >
+           >
             <Lock className="w-4 h-4 inline mr-2" />
             {isEditingPassword ? 'Cancel' : 'Change Password'}
           </button>
@@ -210,7 +210,7 @@ export default function ProfileCard({ user }: { user: UserType }) {
               onChange={(e) =>
                 setPasswordData({ ...passwordData, currentPassword: e.target.value })
               }
-              className="w-full px-3 py-2   border border-[#fab31e]/30 rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
+              className="w-full px-3 py-2   border border-[#fab31e]/30 rounded-lg white-text focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
             />
             <input
               type="password"
@@ -219,7 +219,7 @@ export default function ProfileCard({ user }: { user: UserType }) {
               onChange={(e) =>
                 setPasswordData({ ...passwordData, newPassword: e.target.value })
               }
-              className="w-full px-3 py-2   border border-[#fab31e]/30 rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
+              className="w-full px-3 py-2   border border-[#fab31e]/30 rounded-lg white-text focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
             />
             <input
               type="password"
@@ -228,13 +228,13 @@ export default function ProfileCard({ user }: { user: UserType }) {
               onChange={(e) =>
                 setPasswordData({ ...passwordData, confirmPassword: e.target.value })
               }
-              className="w-full px-3 py-2   border border-[#fab31e]/30 rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
+              className="w-full px-3 py-2   border border-[#fab31e]/30 rounded-lg  white-text focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300"
             />
 
             <div className="flex justify-end">
               <button
                 onClick={handlePasswordSave}
-                className="px-4 py-2 bg-yellow-400 text-black rounded-md"
+                className="px-4 py-2 bg-yellow-400 text-white rounded-md"
               >
                 Update Password
               </button>

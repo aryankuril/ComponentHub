@@ -70,11 +70,11 @@ export default function ManageUsersPage() {
     }
   };
 
-  if (loading) return <div className="p-8 text-center text-black">Loading users...</div>;
+  if (loading) return <div className="p-8 text-center text-black lg:mt-10 mt-0">Loading users...</div>;
   if (error) return <div className="p-8 text-center text-red-500">{error}</div>;
 
   return (
-    <div className="p-8 " >
+    <div className="p-8 lg:mt-10 mt-0" >
       <h1 className="text-4xl font-bold mb-8 text-black">Manage Users</h1>
       <div className=" rounded-lg shadow-lg overflow-hidden ">
         <table className="min-w-full table-auto">

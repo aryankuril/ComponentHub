@@ -8,6 +8,7 @@ import {
   AreaChart, Area
 } from 'recharts';
 
+
 interface User {
   _id: string;
   name: string;
@@ -65,7 +66,7 @@ const [components, setComponents] = useState<Component[]>([]);
     fetchData();
   }, []);
 
-  if (loading) return <div className="p-8 text-center text-black">Loading dashboard...</div>;
+  if (loading) return <div className="p-8 text-center text-black lg:mt-10 mt-0">Loading dashboard...</div>;
 
   // ----------- Users Chart Data -----------
   const usersData = users.map((u) => ({ name: u.name, signups: 1 }));
@@ -110,7 +111,9 @@ const parsedDate = new Date(comp.dateCreated);
   ];
 
   return (
-    <div className="p-10 ">
+    <div className="lg:mt-20 mt-0 ">
+
+
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
@@ -178,6 +181,7 @@ const parsedDate = new Date(comp.dateCreated);
           </ResponsiveContainer>
         </div>
       </motion.div>
+
     </div>
   );
 }

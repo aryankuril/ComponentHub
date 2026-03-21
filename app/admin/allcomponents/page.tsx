@@ -64,11 +64,11 @@ export default function ManageComponentsPage() {
     }
   };
 
-  if (loading) return <div className="p-8 text-center text-black">Loading components...</div>;
+  if (loading) return <div className="p-8 text-center text-black lg:mt-10 mt-0 ">Loading components...</div>;
   if (error) return <div className="p-8 text-center text-red-500">{error}</div>;
 
   return (
-    <div className="p-8">
+    <div className="p-8 lg:mt-10 mt-0">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-4xl font-bold text-black">All Components</h1>
       
