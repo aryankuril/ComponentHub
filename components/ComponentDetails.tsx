@@ -42,18 +42,6 @@ export default function ComponentDetails({
     setTimeout(() => setCopied(false), 2000)
   }
 
-
-
-  const [code, setCode] = useState("")
-
-useEffect(() => {
-  if (activeTab === "preview" || activeTab === "code") {
-    fetch(`/api/code/${component._id}`)
-      .then(res => res.text())
-      .then(setCode)
-  }
-}, [activeTab, component._id])
-
   return (
     <div className="min-h-screen container flex flex-col  text-gray-200 mt-10">
       <main className="flex-grow px-4 ">
@@ -91,17 +79,18 @@ useEffect(() => {
             </div>
 
             <div className="mt-4">
+              {activeTab === 'preview' && (
+                <div className="rounded-lg">
+                  <ComponentPreview code={component.code} />
+                </div>
+              )}
+              
 
-              {activeTab === 'preview' && code && (
-  <ComponentPreview code={code} />
-)}
-
-          
-              {activeTab === 'code' && code && (
-                 <div className="p-4 bg-gray-800 border border-gray-700 rounded-lg">
-  <CodeViewer code={code} />
-  </div>
-)}
+              {activeTab === 'code' && (
+                <div className="p-4 bg-gray-800 border border-gray-700 rounded-lg">
+                  <CodeViewer code={component.code} />
+                </div>
+              )}
             </div>
           </div>
 
