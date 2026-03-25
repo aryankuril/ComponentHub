@@ -3,10 +3,16 @@ import { redirect } from 'next/navigation';
 export const dynamic = 'force-dynamic';
 
 async function getFirstComponent() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SITE_URL}/api/components`,
-    { cache: 'no-store' }
-  );
+
+
+  const baseUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}` ||
+  'http://localhost:3000';
+  
+const res = await fetch(`${baseUrl}/api/components`, {
+  cache: 'no-store',
+});
 
   if (!res.ok) {
     throw new Error('Failed to fetch components');
