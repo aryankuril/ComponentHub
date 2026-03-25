@@ -2,7 +2,7 @@ import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 import ThreeDElement from "../ThreeDElement";
 import { Code, Zap, Palette, Rocket } from "lucide-react";
-
+import Button from "@/components/shared/Button";
 const About = () => {
   const features = [
     {
@@ -17,9 +17,9 @@ const About = () => {
     },
     {
       icon: Palette,
-      title: "Neon Aesthetics",
-      description: "Beautiful next color schemes and gradients for modern, eye-catching designs."
-    },
+    title: "Actually Usable",
+    description: "Built for real projects not just demos that break when you scale."
+  },
     {
       icon: Rocket,
       title: "Production Ready",
@@ -37,7 +37,7 @@ const About = () => {
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
               <span className=" black-text ">About </span>
               <span className="text-primary">
-                ComponentHub
+                Ready Components
               </span>
             </h1>
             <p className="text-xl   black-text  max-w-3xl mx-auto">
@@ -58,7 +58,7 @@ const About = () => {
                 </h2>
                 <div className="space-y-4   black-text ">
                   <p>
-                    At ComponentHub, we believe that beautiful design should be accessible to everyone. 
+                    At Ready Components, we believe that beautiful design should be accessible to everyone. 
                     Our mission is to provide developers with high-quality, modern components that are both 
                     visually stunning and easy to implement.
                   </p>
@@ -68,7 +68,7 @@ const About = () => {
                     pushing the boundaries of what&apos;s possible in modern web development.
                   </p>
                   <p>
-                    Join thousands of developers who trust ComponentHub to bring their applications 
+                    Join thousands of developers who trust Ready Components to bring their applications 
                     to life with cutting-edge design and seamless functionality.
                   </p>
                 </div>
@@ -165,20 +165,14 @@ const About = () => {
 </div>
 
       {/* Right Button */}
-      <div>
 
-       <a
+ <Button
   href="https://bombayblokes.com/estimates-calculator"
-  target="_blank"
-  rel="noopener noreferrer"
-  style={{
-    backgroundImage: 'linear-gradient(135deg, #F9B31B, #EBEBEB)',
-  }}
-  className="group !text-black font-semibold rounded-full px-6 py-3 lg:mr-10 mr-0 flex items-center gap-2 transition-all duration-300 cursor-pointer"
->
-Get Your Estimate
-</a>
-      </div>
+    className="black-text flex items-center"
+    text="Get Your Estimate"
+  />
+
+ 
 
      <div className="absolute -right-1 top-0 w-4 sm:w-4 md:w-6 h-full bg-[#FAB31E]"></div>
     </div>

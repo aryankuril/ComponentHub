@@ -9,7 +9,13 @@ import "./globals.css";
 import dynamic from "next/dynamic";
 
 const miso = localFont({
-  src: [{ path: "./../public/fonts/VAG-Regular2.otf", weight: "400" }],
+  src: [
+    {
+      path: "../public/fonts/VAG-Regular2.otf",
+      weight: "400",
+      style: "normal",
+    },
+  ],
   variable: "--font-miso",
 });
 const poppins = Poppins({

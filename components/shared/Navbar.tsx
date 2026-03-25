@@ -99,7 +99,7 @@ export default function Navbar() {
                 <Link href="/login">Login</Link>
                 <Link
                   href="/signup"
-                  className="bg-[#F9B31B] text-black font-semibold rounded-md px-6 py-2"
+                  className="bg-[#F9B31B] text-black font-semibold rounded-[20px] px-6 py-2"
                 >
                   Sign Up
                 </Link>

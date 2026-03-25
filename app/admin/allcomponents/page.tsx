@@ -46,23 +46,30 @@ export default function ManageComponentsPage() {
     fetchComponents();
   }, []);
 
-  const handleDelete = async (componentId: string) => {
-    if (window.confirm('Are you sure you want to delete this component?')) {
-      try {
-        const res = await fetch(`/api/components/${componentId}`, {
-          method: 'DELETE',
-        });
-        if (res.ok) {
-          fetchComponents(); // Re-fetch to update the list
-        } else {
-          throw new Error('Failed to delete component.');
-        }
-      } catch (err) {
-        console.error('Failed to delete component:', err);
-        alert((err as Error).message);
+const handleDelete = async (componentId: string) => {
+  if (window.confirm('Are you sure you want to delete this component?')) {
+
+    // 🔥 1. Instantly remove from UI
+    const prev = components
+    setComponents(prev.filter(c => c._id !== componentId))
+
+    try {
+      const res = await fetch(`/api/components/${componentId}`, {
+        method: 'DELETE',
+      })
+
+      if (!res.ok) {
+        throw new Error('Failed to delete component.')
       }
+
+    } catch (err) {
+      // ❌ rollback if failed
+      setComponents(prev)
+      console.error('Failed to delete component:', err)
+      alert((err as Error).message)
     }
-  };
+  }
+}
 
   if (loading) return <div className="p-8 text-center text-black lg:mt-10 mt-0 ">Loading components...</div>;
   if (error) return <div className="p-8 text-center text-red-500">{error}</div>;

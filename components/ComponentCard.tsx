@@ -3,7 +3,7 @@
 import { Calendar, Tag } from "lucide-react";
 import Link from "next/link";
 import { format } from "date-fns";
-
+import Button from "@/components/shared/Button";
 interface ComponentCardProps {
   component: {
     _id: string;
@@ -63,13 +63,18 @@ export default function ComponentCard({ component, onPreview, onCopy }: Componen
         </div>
 
         <div className="p-6 pt-0">
-          <Link
+           <Button
+  href={`/components/${component._id}`}
+    className="white-text flex items-center "
+    text=" View Component"
+  />
+          {/* <Link
             href={`/components/${component._id}`}
             className="block text-center mt-4 border-2 border-[#F9B31B] text-primary rounded-full px-4 py-2 font-semibold 
                      hover:bg-[#F9B31B] hover:!text-black transition-all duration-300"
           >
             View Component
-          </Link>
+          </Link> */}
         </div>
       </div>
 

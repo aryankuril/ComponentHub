@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 import { Eye, EyeOff, User, Mail, UserPlus, Lock } from 'lucide-react';
+import Button from "@/components/shared/Button";
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -48,7 +49,7 @@ export default function SignupPage() {
           password: formData.password,
           redirect: false,
         });
-        router.push('/profile');
+        router.push('/');
       } else {
         const data = await res.json();
         setError(data.message || 'Signup failed');
@@ -71,7 +72,7 @@ export default function SignupPage() {
   </div>
 
   {/* Card */}
-  <div className="w-full max-w-md bg-[#080808] border border-transparent hover:border-[#F9B31B]/30 rounded-2xl p-6">
+  <div className="w-full max-w-md bg-[#080808] relative rounded-[20px] overflow-hidden border border-transparent hover:border-[#F9B31B]/30 p-8">
     {/* Header */}
     <div className="text-center mb-6">
       <h1 className="flex text-4xl items-center justify-center gap-2 text-primary">
@@ -179,7 +180,13 @@ export default function SignupPage() {
       </p>
 
       {/* Button */}
-      <button
+
+       <Button
+type="submit"
+    className="white-text"
+    text="  Create Account"
+  />
+      {/* <button
         style={{
     backgroundImage: 'linear-gradient(135deg, #F9B31B, #EBEBEB)',
   }} 
@@ -187,8 +194,11 @@ export default function SignupPage() {
         className="w-full black-text cursor-pointer  font-semibold py-2 rounded-md transition flex justify-center items-center"
       >
         Create Account
-      </button>
+      </button> */}
     </form>
+
+
+         <div className="absolute -right-1 top-0 w-4 sm:w-4 md:w-6 h-full bg-[#FAB31E]"></div>
 
     {/* Footer */}
     <div className="mt-6 text-center">

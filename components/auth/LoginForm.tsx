@@ -5,8 +5,8 @@ import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, LogIn, Mail, Lock } from "lucide-react";
 import Link from "next/link";
-
-export default function LoginForm() {
+import Button from "@/components/shared/Button";
+export default function  LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
@@ -40,7 +40,7 @@ export default function LoginForm() {
       if (res?.error) {
         setError('Invalid credentials');
       } else {
-        router.push('/profile');
+        router.push('/');
       }
     } catch (err) {
       console.error(err);
@@ -65,7 +65,7 @@ export default function LoginForm() {
 
         {/* Card */}
         
-        <div className="bg-[#0a0a0a] border border-transparent hover:border-[#F9B31B]/30 rounded-2xl p-6">
+        <div className="bg-[#0a0a0a] border border-transparent hover:border-[#F9B31B]/30 relative rounded-[20px] overflow-hidden p-8">
           <div className="text-center mb-6">
             <h2 className="flex items-center justify-center gap-2 text-primary text-xl font-semibold">
               <LogIn className="w-5 h-5" />
@@ -134,7 +134,15 @@ export default function LoginForm() {
             </div> */}
 
             {/* Submit */}
-            <button
+
+
+              <Button
+type="submit"
+              disabled={isLoading}
+    className="white-text flex items-center"
+    text="Login"
+  /> 
+            {/* <button
               style={{
     backgroundImage: 'linear-gradient(135deg, #F9B31B, #EBEBEB)',
   }} 
@@ -150,7 +158,7 @@ export default function LoginForm() {
               ) : (
                 "Login"
               )}
-            </button>
+            </button> */}
 
 
             {/* <div className="mt-6 space-y-3"> */}
@@ -180,6 +188,8 @@ export default function LoginForm() {
 {/* </div> */}
 
           </form>
+
+               <div className="absolute -right-1 top-0 w-4 sm:w-4 md:w-6 h-full bg-[#FAB31E]"></div>
 
           {/* Sign Up */}
           <div className="mt-6 text-center">

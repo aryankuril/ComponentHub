@@ -6,7 +6,7 @@ import Footer from "@/components/shared/Footer";
 import ThreeDElement from "../ThreeDElement";
 import Link from "next/link";
 import { Mail, Phone, MapPin, Send } from "lucide-react";
-
+import Button from "@/components/shared/Button";
 
 const Contact = () => {
 
@@ -86,7 +86,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {/* Contact Form */}
-              <ThreeDElement intensity={8}>
+              {/* <ThreeDElement intensity={8}> */}
                 <div className="border border-[#F9B31B]  rounded-[20px]  lg:p-8 p-3">
                   <h2 className="text-2xl font-bold mb-6  black-text ">Send us a message</h2>
                   <form onSubmit={handleSubmit} className="space-y-6">
@@ -155,8 +155,13 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                         className="w-full px-4 py-3 bg-input border  black-text  border  border-black rounded-lg focus:outline-none focus:border-[#fab31e] focus:ring-0.50 focus:ring-[#fab31e] transition-all duration-300 resize-none"
                       ></textarea>
                     </div>
-
-                    <button
+ <Button
+  type="submit"
+  disabled={loading}
+    className="black-text flex items-center"
+    text= {loading ? "Sending..." : "Send Message"}
+  />
+                    {/* <button
                     style={{
     backgroundImage: 'linear-gradient(135deg, #F9B31B, #EBEBEB)',
   }} 
@@ -169,11 +174,11 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 >
   <Send className={`h-5 w-5 mr-2 ${loading ? "animate-spin" : ""}`} />
   {loading ? "Sending..." : "Send Message"}
-</button>
+</button> */}
 
                   </form>
                 </div>
-              </ThreeDElement>
+              {/* </ThreeDElement> */}
 
               {/* Contact Information */}
               <div className="space-y-8">
@@ -194,7 +199,19 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                           </div>
                           <div>
                             <h3 className="font-semibold  black-text  mb-1">{info.title}</h3>
-                            <p className="text-primary font-medium mb-1">{info.value}</p>
+                            <p className="text-primary font-medium mb-1">
+  {info.title === "Email" ? (
+    <a href={`mailto:${info.value}`} className="hover:underline">
+      {info.value}
+    </a>
+  ) : info.title === "Phone" ? (
+    <a href={`tel:${info.value}`} className="hover:underline">
+      {info.value}
+    </a>
+  ) : (
+    info.value
+  )}
+</p>
                             <p className="text-sm   black-text ">{info.description}</p>
                           </div>
                         </div>
@@ -204,14 +221,22 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                   ))}
                 </div>
 
-                <ThreeDElement intensity={8}>
-                  <div className="bg-gradient-to-br from-[#F9B31B]/50 to-neon-purple/10  rounded-xl p-6">
-                    <h3 className="text-lg font-semibold  black-text  mb-3">Need Custom Development?</h3>
-                    <p className="  black-text  mb-4">
+                {/* <ThreeDElement intensity={8}> */}
+     <div className="bg-black relative rounded-[20px] overflow-hidden p-6 group  transition-all duration-300">
+                    <h3 className="text-lg font-semibold  white-text  mb-3">Need Custom Development?</h3>
+                    <p className="  white-text  mb-4">
                       Our team specializes in creating custom components and web applications. 
                       Let&apos;s discuss your project requirements.
                     </p>
-                  <a
+
+                     <Button
+  href="https://wa.me/919920207985"
+  target="_blank"
+  rel="noopener noreferrer"
+    className="white-text flex items-center"
+    text="Schedule a Call"
+  />
+                  {/* <a
   href="https://wa.me/919920207985"
   target="_blank"
   rel="noopener noreferrer"
@@ -220,9 +245,11 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                    hover:bg-[#F9B31B] hover:!text-black cursor-pointer transition duration-300">
     Schedule a Call
   </span>
-</a>
+</a> */}
+
+ <div className="absolute -right-1 top-0 w-4 sm:w-4 md:w-6 h-full bg-[#FAB31E]"></div>
                   </div>
-                </ThreeDElement>
+                {/* </ThreeDElement> */}
               </div>
             </div>
           </div>
@@ -238,7 +265,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
               </h2>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto items-stretch">
               {[
                 {
                   question: "How do I use your components?",
@@ -258,7 +285,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                 }
               ].map((faq, index) => (
                 <ThreeDElement key={index} intensity={6}>
-                  <div className=" border border-[#F9B31B] relative rounded-[20px] overflow-hidden p-6">
+                 <div className="border border-[#F9B31B] relative rounded-[20px] overflow-hidden p-6 h-full flex flex-col">
                     <h3 className="font-semibold  black-text  mb-3">{faq.question}</h3>
                     <p className="  black-text ">{faq.answer}</p>
                      <div className="absolute -right-1 top-0 w-4 sm:w-4 md:w-6 h-full bg-[#FAB31E]"></div>

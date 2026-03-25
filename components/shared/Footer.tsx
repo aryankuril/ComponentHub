@@ -5,7 +5,7 @@ import { Github, Twitter, Linkedin, Mail, Code, Zap, Instagram } from "lucide-re
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-
+import Button from "@/components/shared/Button";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const router = useRouter();
@@ -75,7 +75,7 @@ const Footer = () => {
 </Link>
 
             <p className="black-text mb-6 max-w-md ">
-              Modern 3D component showcase platform with neon-themed designs.
+              Modern Ready Components showcase platform with Bombay Blokes.
               Discover, preview, and copy beautiful components for your next project.
             </p>
 
@@ -136,12 +136,20 @@ const Footer = () => {
               className="w-full px-3 py-2 bg-input border border-black rounded-md text-black"
             />
 
-            <button
+
+
+             <Button
+ onClick={handleSubscribe}
+    className="black-text flex items-center mt-2"
+    text=" Subscribe"
+  />
+
+            {/* <button
               onClick={handleSubscribe}
               className="w-full px-3 py-2 bg-[#F9B31B] text-black rounded-md mt-2"
             >
               Subscribe
-            </button>
+            </button> */}
 
             {msg && <p className="text-sm mt-2">{msg}</p>}
           </div>
@@ -151,7 +159,7 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-black">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-muted-foreground text-sm black-text">
-              © {currentYear} ComponentHub. All rights reserved.
+              © {currentYear} Ready Components. All rights reserved.
             </p>
 
             <div className="flex space-x-6 mt-4 md:mt-0">

@@ -97,7 +97,7 @@ export default function ComponentForm({
     e.preventDefault();
     setMessageElement('');
 
-    const method = initialData ? 'PATCH' : 'POST';
+const method = initialData ? 'PUT' : 'POST'
     const url = initialData
       ? `/api/components/${initialData._id}`
       : '/api/components';

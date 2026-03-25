@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 import ComponentCardList from '@/components/ComponentCardList'
+import Button from "@/components/shared/Button";
 
 export default function LandingPage({ components }: { components: any[] }) {
   const router = useRouter()
@@ -30,13 +31,14 @@ export default function LandingPage({ components }: { components: any[] }) {
         <ComponentCardList components={[...components].reverse().slice(0, 6)} />
 
 
-
-        <button
-          onClick={handleViewMore}
-          className="group border-2 border-[#F9B31B]  text-primary  font-semibold rounded-full px-6 py-3 flex items-center gap-2 transition-all mx-auto duration-300 hover:bg-[ #F9B31B]"
-        >
-          <span>View Documentation</span>
-        </button>
+<div className="flex items-center justify-center ">
+  <Button
+    onClick={handleViewMore}
+    className="black-text flex items-center"
+    text="View Documentation"
+  />
+</div>
+    
 
       </div>
     </section>

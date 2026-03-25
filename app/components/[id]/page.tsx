@@ -83,10 +83,25 @@ export default function ComponentsPage() {
   }, [pathname])
 
   return (
-    <div className="min-h-screen container flex flex-col   text-gray-200">
-      <Navbar />
+    <div className="">
 
-      <main className="flex flex-1 pt-16 relative">
+     <Navbar /> 
+      <div className="flex md:hidden min-h-screen items-center justify-center text-center px-6">
+  <div>
+    <h2 className="text-2xl font-bold mb-4 black-text">
+      Best view on desktop
+    </h2>
+    <p className="black-text">
+      This page isn’t optimized for mobile yet.  
+      Please switch to a desktop for the full experience.
+    </p>
+  </div>
+</div>
+
+    <div className="  hidden md:flex min-h-screen container flex flex-col   text-gray-200">
+ 
+
+      <main className=" flex flex-1 pt-16 relative">
 
         {/* Sidebar */}
         <aside className="hidden md:block w-64   border-r border-gray-700 p-4 ">
@@ -102,7 +117,19 @@ export default function ComponentsPage() {
                 {cat.components.map((comp) => (
                   <li
                     key={comp._id}
-                    onClick={() => router.push(`/components/${comp._id}`)}
+                    onClick={() => {
+  setSelectedComponent(null) // optional loader reset
+  fetch(`/api/components/${comp._id}`)
+    .then(res => res.json())
+    .then(data => {
+      setSelectedComponent({
+        ...data,
+        npmPackages: data.npmPackages ?? [],
+      })
+    })
+
+  window.history.pushState({}, '', `/components/${comp._id}`)
+}}
                     className="cursor-pointer px-2 py-1 rounded hover:bg-[#F9B31B] black-text capitalize"
                   >
                     {comp.name}
@@ -115,7 +142,7 @@ export default function ComponentsPage() {
 
         {/* Right Panel */}
         <section className="flex-1 p-6  ">
-          {loading && <p className="text-center">Loading...</p>}
+          {loading && <p className="text-center text-black">Loading...</p>}
 
           {!loading && selectedComponent && (
             <ComponentDetails component={selectedComponent} />
@@ -130,7 +157,10 @@ export default function ComponentsPage() {
 
       </main>
 
+    </div>
+
       <Footer />
+
     </div>
   )
 }

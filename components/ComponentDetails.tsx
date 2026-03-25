@@ -95,9 +95,9 @@ export default function ComponentDetails({
           </div>
 
        <div className="mt-6 bg-gray-900 border border-gray-700 rounded-xl p-5">
-  <h4 className="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2">
-    Description
-  </h4>
+        <h3 className="text-xl font-bold  pb-2">
+                Description
+              </h3>
 
   <p className="text-gray-300 text-sm leading-relaxed max-w-3xl">
     {component.description}
