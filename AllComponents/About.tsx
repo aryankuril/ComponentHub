@@ -34,13 +34,13 @@ const About = () => {
         {/* Hero Section */}
         <section className="py-20 ">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 font-miso">
               <span className=" black-text ">About </span>
               <span className="text-primary">
                 Ready Components
               </span>
             </h1>
-            <p className="text-xl   black-text  max-w-3xl mx-auto">
+            <p className="text-xl   black-text  max-w-3xl mx-auto font-poppins">
               We&apos;re passionate about creating beautiful, modern web components that help developers 
               build stunning applications with ease.
             </p>
@@ -52,7 +52,7 @@ const About = () => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 className="text-3xl sm:text-4xl font-bold mb-6">
+                <h2 className="text-3xl sm:text-4xl font-bold mb-6 font-miso">
                   <span className=" black-text ">Our </span>
                   <span className="text-primary">Mission</span>
                 </h2>
@@ -81,8 +81,8 @@ const About = () => {
                         <Code className="h-6 w-6 text-black" />
                       </div>
                       <div>
-                        <h3 className="font-semibold  black-text ">150+ Components</h3>
-                        <p className="text-sm   black-text ">Ready to use</p>
+                        <h3 className="font-semibold  black-text font-miso ">150+ Components</h3>
+                        <p className="text-sm   black-text font-poppins">Ready to use</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-4">
@@ -90,8 +90,8 @@ const About = () => {
                         <Zap className="h-6 w-6 text-black" />
                       </div>
                       <div>
-                        <h3 className="font-semibold  black-text ">50k+ Downloads</h3>
-                        <p className="text-sm   black-text ">Trusted by developers</p>
+                        <h3 className="font-semibold  black-text font-miso ">50k+ Downloads</h3>
+                        <p className="text-sm   black-text font-poppins ">Trusted by developers</p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-4">
@@ -99,8 +99,8 @@ const About = () => {
                         <Rocket className="h-6 w-6 text-black" />
                       </div>
                       <div>
-                        <h3 className="font-semibold  black-text ">24/7 Support</h3>
-                        <p className="text-sm   black-text ">Always here to help</p>
+                        <h3 className="font-semibold  black-text font-miso">24/7 Support</h3>
+                        <p className="text-sm   black-text font-poppins">Always here to help</p>
                       </div>
                     </div>
                   </div>
@@ -116,11 +116,11 @@ const About = () => {
         <section className="py-20  ">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
             <div className="text-center mb-16">
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4 font-miso">
                 <span className=" black-text ">What Makes Us </span>
                 <span className="text-primary">Different</span>
               </h2>
-              <p className="text-xl   black-text  max-w-3xl mx-auto">
+              <p className="text-xl   black-text  max-w-3xl mx-auto font-poppins">
                 We focus on the details that matter, creating components that are not just functional, 
                 but truly exceptional.
               </p>
@@ -133,10 +133,10 @@ const About = () => {
                     <div className="w-16 h-16 mx-auto mb-4 bg-[#F9B31B] rounded-xl flex items-center justify-center group-hover:animate-pulse">
                       <feature.icon className="h-8 w-8 text-black" />
                     </div>
-                    <h3 className="text-lg font-semibold mb-3  black-text  group-hover:text-neon-cyan transition-colors duration-300">
+                    <h3 className="text-lg font-semibold mb-3  black-text font-miso group-hover:text-neon-cyan transition-colors duration-300">
                       {feature.title}
                     </h3>
-                    <p className="  black-text ">
+                    <p className="  black-text font-poppins">
                       {feature.description}
                     </p>
 
@@ -156,10 +156,10 @@ const About = () => {
 
       {/* Left Text */}
       <div className="text-center md:text-left">
-  <h2 className="text-2xl sm:text-3xl font-bold black-text mb-2">
+  <h2 className="text-2xl sm:text-3xl font-bold black-text mb-2 font-miso">
     Need Custom Development for Your Website?
   </h2>
-  <p className=" black-text">
+  <p className=" black-text font-poppins">
   We build fast, scalable websites tailored to your business.
   </p>
 </div>

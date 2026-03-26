@@ -93,7 +93,7 @@ export default function HeroSection({ components }: { components: any[] }) {
         <div className="space-y-8 animate-slide-up">
           {/* Badge */}
           <div
-            className="inline-flex items-center space-x-2 border miso rounded-full px-4 py-2 text-sm "
+            className="inline-flex items-center space-x-2 border font-miso rounded-full px-4 py-2 text-sm "
             style={{
               backgroundColor: 'rgba(249,179,27,0.1)',
               borderColor: 'rgba(249,179,27,0.3)',
@@ -105,12 +105,12 @@ export default function HeroSection({ components }: { components: any[] }) {
 
           {/* Main Heading */}
           <div className="space-y-4 text-center mx-auto">
-  <h1 className="text-4xl sm:text-5xl lg:text-7xl miso">
+  <h1 className="text-4xl sm:text-5xl lg:text-7xl font-miso">
     <span className="block mb-2 black-text">Build with</span>
     <span className="text-primary"> Ready Components </span>
   </h1>
 
-  <p className="max-w-xl mx-auto black-text body2">
+  <p className="max-w-xl mx-auto black-text body2 font-poppins">
     Discover stunning Ready Components with Bombay Blokes.
     Copy, customize, and create beautiful modern interfaces.
   </p>
@@ -120,19 +120,19 @@ export default function HeroSection({ components }: { components: any[] }) {
           <div className="grid grid-cols-3 gap-4 sm:gap-8 mt-10 pt-10 border-t border-border black-text">
             <ThreeDElement intensity={8}>
               <div className="text-center space-y-1 sm:space-y-2">
-                <div className="numbering font-bold text-primary">
+                <div className="numbering font-bold text-primary font-poppins">
                   <Counter end={150} suffix="+" />
                 </div>
-                <div className="black-text body2">Components</div>
+                <div className="black-text body2 font-miso ">Components</div>
               </div>
             </ThreeDElement>
 
             <ThreeDElement intensity={8}>
               <div className="text-center space-y-1 sm:space-y-2">
-                <div className="numbering font-bold text-primary">
+                <div className="numbering font-bold text-primary font-poppins">
                   <Counter end={50} suffix="k+" />
                 </div>
-                <div className="text-muted-foreground black-text text-xs sm:text-base">
+                <div className="text-muted-foreground black-text font-miso text-xs sm:text-base">
                   Downloads
                 </div>
               </div>
@@ -140,10 +140,10 @@ export default function HeroSection({ components }: { components: any[] }) {
 
             <ThreeDElement intensity={8}>
               <div className="text-center space-y-1 sm:space-y-2">
-                <div className="numbering font-bold text-primary">
+                <div className="numbering font-bold text-primary font-poppins">
                   <Counter end={12} />
                 </div>
-                <div className="black-text text-xs sm:text-base">Categories</div>
+                <div className="black-text text-xs sm:text-base font-miso">Categories</div>
               </div>
             </ThreeDElement>
           </div>

@@ -41,20 +41,20 @@ export default function ComponentCard({ component, onPreview, onCopy }: Componen
       {/* Content Section */}
       <div className="bg-[#0b0b0b] flex flex-col flex-1">
         <div className="p-6 flex-1 flex flex-col">
-          <h3 className="text-lg font-semibold white-text capitalize mb-4 line-clamp-2">
+          <h3 className="text-lg font-semibold white-text capitalize mb-4 line-clamp-2 font-miso">
             {component.name}
           </h3>
 
           <div className="flex items-center justify-between text-xs text-muted-foreground mt-auto">
             <div className="flex items-center space-x-1">
               <Tag className="h-4 w-5  text-primary" />
-              <span className="text-neon-purple capitalize white-text">
+              <span className="text-neon-purple capitalize white-text font-miso">
                 {component.category?.name || "Uncategorized"}
               </span>
             </div>
 
             {component.dateCreated && (
-              <div className="flex items-center space-x-1  white-text">
+              <div className="flex items-center space-x-1  white-text font-poppins">
                 <Calendar className="h-4 w-5  text-primary" />
                 <span>{format(new Date(component.dateCreated), "dd/MM/yyyy")}</span>
               </div>

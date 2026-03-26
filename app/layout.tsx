@@ -9,13 +9,7 @@ import "./globals.css";
 import dynamic from "next/dynamic";
 
 const miso = localFont({
-  src: [
-    {
-      path: "../public/fonts/VAG-Regular2.otf",
-      weight: "400",
-      style: "normal",
-    },
-  ],
+  src: "/fonts/VAG-Regular2.otf",
   variable: "--font-miso",
 });
 const poppins = Poppins({
@@ -32,7 +26,7 @@ export default function RootLayout({
   return (
       <html lang="en" className={`${miso.variable} ${poppins.variable}`}>
       <head>
-        <link rel="icon" href="images/favicon.png" type="image/png" />
+        <link rel="icon" href="/images/favicon.png" type="image/png" />
       </head>
       <body>
         <NextAuthSessionProvider>

@@ -2,11 +2,6 @@
 
 /* Base theme variables */
 :root {
-  --font-miso: "Miso", sans-serif;
-  --font-poppins: "Poppins", sans-serif;
-  --font-bold-miso: "Miso", sans-serif;
-  --font-regular-miso: "Miso", sans-serif;
-
 
   --background: #ffffff;
   --foreground: #171717;
@@ -77,6 +72,42 @@ background-attachment: fixed;
 /* =========================================
    UTILITY TEXT COLORS
    ========================================= */
+h1 {
+  font-family: var(--font-miso);
+
+}
+
+h2 {
+  font-family: var(--font-miso);
+
+}
+
+h3 {
+  font-family: var(--font-miso);
+
+}
+
+h4 {
+  font-family: var(--font-miso);
+
+}
+
+h5 {
+  font-family: var(--font-miso);
+
+}
+
+h6 {
+  font-family: var(--font-miso);
+}
+
+.font-miso {
+  font-family: var(--font-miso);
+}
+
+.font-poppins {
+  font-family: var(--font-poppins);
+}
 .text-primary {
   color: var(--color-primary);
 }

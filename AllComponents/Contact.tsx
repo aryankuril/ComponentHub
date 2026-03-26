@@ -74,7 +74,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
                 Touch
               </span>
             </h1>
-            <p className="text-xl   black-text  max-w-3xl mx-auto">
+            <p className="text-xl  black-text  max-w-3xl mx-auto font-poppins">
               Have questions about our components? Need custom development? 
               We&apos;d love to hear from you.
             </p>
@@ -87,7 +87,7 @@ const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               {/* Contact Form */}
               {/* <ThreeDElement intensity={8}> */}
-                <div className="border border-[#F9B31B]  rounded-[20px]  lg:p-8 p-3">
+                <div className="border border-[#F9B31B]  rounded-[20px]  lg:p-8 p-6">
                   <h2 className="text-2xl font-bold mb-6  black-text ">Send us a message</h2>
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

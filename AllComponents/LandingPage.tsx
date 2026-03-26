@@ -18,12 +18,12 @@ export default function LandingPage({ components }: { components: any[] }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-3 font-miso">
             <span className=" black-text ">Latest </span>
             <span className=" text-primary ">Components</span>
           </h2>
 
-          <p className="text-xl  black-text  max-w-3xl mx-auto">
+          <p className="text-xl  black-text  max-w-3xl mx-auto font-poppins">
             Handpicked components showcasing the best of modern design with 3D animations.
           </p>
         </div>

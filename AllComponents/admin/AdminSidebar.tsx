@@ -23,7 +23,7 @@ const [activeTab, setActiveTab] = useState<"dashboard" | "admin" | "categories" 
 
   return (
 
-    <div className="w-full md:w-64  z-9999  black-text  p-6 flex flex-col justify-between rounded-r-2xl shadow-xl lg:mt-20 mt-0"> 
+    <div className="w-full md:w-64  z-9999  black-text  p-4 flex flex-col justify-between rounded-r-2xl shadow-xl lg:mt-20 mt-0"> 
       {/* <button
   onClick={handleLogout}
   className="absolute top-4 right-6 rounded-[5px] bg-[#262626] shadow-[2px_2px_0px_0px_#F9B31B] 

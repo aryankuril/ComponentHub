@@ -69,12 +69,12 @@ const Footer = () => {
     alt="Bombay Blokes Logo"
     width={230}
     height={40}
-    className="object-contain cursor-pointer lg:mb-10"
+    className="object-contain cursor-pointer lg:mb-10 mb-5"
     priority
   />
 </Link>
 
-            <p className="black-text mb-6 max-w-md ">
+            <p className="black-text mb-6 max-w-md font-poppins ">
               Modern Ready Components showcase platform with Bombay Blokes.
               Discover, preview, and copy beautiful components for your next project.
             </p>
@@ -97,21 +97,21 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 black-text">Quick Links</h3>
+            <h3 className="text-lg font-semibold mb-4 black-text font-miso">Quick Links</h3>
             <ul className="space-y-3  black-text">
               {quickLinks.map((link) => (
                 <li key={link.name}>
                   {link.name === "Components" ? (
                     <button
                       onClick={handleComponentsClick}
-                      className="text-left text-muted-foreground cursor-pointer black-text hover:text-[#F9B31B] transition-colors duration-300"
+                      className="text-left text-muted-foreground font-poppins cursor-pointer black-text hover:text-[#F9B31B] transition-colors duration-300"
                     >
                       {link.name}
                     </button>
                   ) : (
                     <Link
                       href={link.href}
-                      className="text-muted-foreground cursor-pointer black-text hover:text-[#F9B31B] transition-colors duration-300"
+                      className="text-muted-foreground cursor-pointer font-poppins black-text hover:text-[#F9B31B] transition-colors duration-300"
                     >
                       {link.name}
                     </Link>
@@ -123,8 +123,8 @@ const Footer = () => {
 
           {/* Newsletter */}
           <div>
-            <h3 className="text-lg font-semibold mb-4 black-text">Stay Updated</h3>
-            <p className="text-muted-foreground mb-4 text-sm black-text">
+            <h3 className="text-lg font-semibold mb-2 black-text font-miso ">Stay Updated</h3>
+            <p className="text-muted-foreground mb-2 text-sm black-text font-poppins">
               Get notified about new components and features.
             </p>
 
@@ -158,11 +158,11 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-black">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-muted-foreground text-sm black-text">
+            <p className="text-muted-foreground text-sm black-text font-miso">
               © {currentYear} Ready Components. All rights reserved.
             </p>
 
-            <div className="flex space-x-6 mt-4 md:mt-0">
+            <div className="flex space-x-6 mt-4 md:mt-0 font-miso" >
               <Link
                 href="https://bombayblokes.com/privacy"
                 className="text-muted-foreground hover:text-[#F9B31B] text-sm transition-colors duration-300 black-text"
