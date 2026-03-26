@@ -1,8 +1,8 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import ComponentCardList from '@/components/ComponentCardList'
-import Button from "@/components/shared/Button";
+import ComponentCardList from '@/AllComponents/ComponentCardList'
+import Button from "@/AllComponents/shared/Button";
 
 export default function LandingPage({ components }: { components: any[] }) {
   const router = useRouter()

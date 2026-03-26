@@ -5,7 +5,7 @@ import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Eye, EyeOff, LogIn, Mail, Lock } from "lucide-react";
 import Link from "next/link";
-import Button from "@/components/shared/Button";
+import Button from "@/AllComponents/shared/Button";
 export default function  LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);

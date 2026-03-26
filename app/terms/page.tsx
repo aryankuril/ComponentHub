@@ -1,5 +1,5 @@
-import Navbar from "@/components/shared/Navbar";
-import Footer from "@/components/shared/Footer";
+import Navbar from "@/AllComponents/shared/Navbar";
+import Footer from "@/AllComponents/shared/Footer";
 import { FileText, Scale, AlertTriangle, Users, Code, Shield } from "lucide-react";
 import ThreeDElement from "../ThreeDElement";
 

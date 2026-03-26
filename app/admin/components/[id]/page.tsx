@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import ComponentForm from '@/components/admin/ComponentForm';
+import ComponentForm from '@/AllComponents/admin/ComponentForm';
 
 export default function EditComponentPage() {
   const [initialData, setInitialData] = useState(null);

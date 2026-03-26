@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, ReactNode, useRef } from 'react';
-import ComponentPreview from '@/components/admin/ComponentPreview';
+import ComponentPreview from '@/AllComponents/admin/ComponentPreview';
 
 interface Category {
   _id: string;

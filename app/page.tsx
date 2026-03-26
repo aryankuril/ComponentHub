@@ -1,13 +1,21 @@
 // app/page.tsx
-import Navbar from '@/components/shared/Navbar'
-import Footer from '@/components/shared/Footer'
-import HeroSection from '@/components/HeroSection'
+import Navbar from '@/AllComponents/shared/Navbar'
+import Footer from '@/AllComponents/shared/Footer'
+import HeroSection from '@/AllComponents/HeroSection'
 import dbConnect from '@/lib/mongodb'
 import Component from '@/lib/schemas/Component'
 import Category from '@/lib/schemas/Category'
-import LandingPage from '@/components/LandingPage'
-
+import LandingPage from '@/AllComponents/LandingPage'
 export const dynamic = "force-dynamic";
+
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: "Bombay Blokes Ready Components | Next.js, React & Tailwind UI Library",
+  description:
+    "Explore production-ready Next.js, React, and Tailwind CSS components by Bombay Blokes. Build faster with copy-paste UI blocks designed for modern web apps.",
+};
+
 export default async function HomePage() {
   await dbConnect()
   Category.modelName

@@ -3,7 +3,7 @@
 import { Calendar, Tag } from "lucide-react";
 import Link from "next/link";
 import { format } from "date-fns";
-import Button from "@/components/shared/Button";
+import Button from "@/AllComponents/shared/Button";
 interface ComponentCardProps {
   component: {
     _id: string;

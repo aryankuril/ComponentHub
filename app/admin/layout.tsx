@@ -1,9 +1,19 @@
 // app/admin/layout.tsx
 import { auth } from '@/lib/server-auth';
 import { redirect } from 'next/navigation';
-import AdminSidebar from '@/components/admin/AdminSidebar';
-import Navbar from '@/components/shared/Navbar'
-import Footer from '@/components/shared/Footer'
+import AdminSidebar from '@/AllComponents/admin/AdminSidebar';
+import Navbar from '@/AllComponents/shared/Navbar'
+import Footer from '@/AllComponents/shared/Footer'
+
+
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: "Admin Dashboard | Bombay Blokes",
+  description:
+    "Manage components, users, and platform settings through the Bombay Blokes admin dashboard with full control and insights.",
+};
+
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
   const session = await auth();
 

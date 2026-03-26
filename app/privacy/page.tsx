@@ -1,5 +1,5 @@
-import Navbar from "@/components/shared/Navbar";
-import Footer from "@/components/shared/Footer";
+import Navbar from "@/AllComponents/shared/Navbar";
+import Footer from "@/AllComponents/shared/Footer";
 import { Shield, Eye, Lock, Database, Mail, Calendar } from "lucide-react";
 import ThreeDElement from "../ThreeDElement";
 
@@ -20,7 +20,7 @@ const Privacy = () => {
       title: "How We Use Your Information",
       content: [
         "To provide and maintain our component showcase service",
-        "To personalize your experience and recommend relevant components",
+        "To personalize your experience and recommend relevant AllComponents",
         "To communicate with you about updates, new features, and important notices",
         "To improve our platform and develop new features",
         "To ensure security and prevent unauthorized access"

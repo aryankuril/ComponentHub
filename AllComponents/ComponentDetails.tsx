@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import { ComponentData } from '@/lib/types/component'
-import ComponentPreview from '@/components/ComponentPreview'
-import CodeViewer from '@/components/CodeViewer'
+import ComponentPreview from '@/AllComponents/ComponentPreview'
+import CodeViewer from '@/AllComponents/CodeViewer'
 import { ClipboardIcon, CheckCircleIcon } from '@heroicons/react/24/solid'
 
 export default function ComponentDetails({

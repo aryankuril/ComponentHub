@@ -5,7 +5,7 @@ import { Github, Twitter, Linkedin, Mail, Code, Zap, Instagram } from "lucide-re
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Button from "@/components/shared/Button";
+import Button from "@/AllComponents/shared/Button";
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   const router = useRouter();

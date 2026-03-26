@@ -1,7 +1,7 @@
 // app/layout.tsx
 import './globals.css';
 import { Inter } from 'next/font/google';
-import NextAuthSessionProvider from '@/components/providers/NextAuthSessionProvider';
+import NextAuthSessionProvider from '@/AllComponents/providers/NextAuthSessionProvider';
 import { getSession } from '@/lib/server-auth';
 import localFont from "next/font/local";
 import { Poppins } from "next/font/google";

@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import ComponentForm from '@/components/admin/ComponentForm';
+import ComponentForm from '@/AllComponents/admin/ComponentForm';
 
 export default function AddComponentPage() {
   const router = useRouter();

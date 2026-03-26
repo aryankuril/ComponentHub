@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import ComponentForm from '@/components/admin/ComponentForm';
+import ComponentForm from '@/AllComponents/admin/ComponentForm';
 import { Edit, Trash } from 'lucide-react';
 
 interface Component {
