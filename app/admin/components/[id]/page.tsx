@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import ComponentForm from '@/AllComponents/admin/ComponentForm';
+import PageLoader from "@/AllComponents/PageLoader"; 
 
 export default function EditComponentPage() {
   const [initialData, setInitialData] = useState(null);

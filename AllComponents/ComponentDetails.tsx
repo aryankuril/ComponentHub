@@ -99,7 +99,7 @@ export default function ComponentDetails({
                 Description
               </h3>
 
-  <p className="text-gray-300 text-sm leading-relaxed max-w-3xl">
+  <p className="text-gray-300 text-sm leading-relaxed ">
     {component.description}
   </p>
 </div>
