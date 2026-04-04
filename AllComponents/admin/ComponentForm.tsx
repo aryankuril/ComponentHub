@@ -2,7 +2,7 @@
 
 import { useState, useEffect, ReactNode, useRef } from 'react';
 import ComponentPreview from '@/AllComponents/admin/ComponentPreview';
-
+import DOMPurify from "dompurify"
 interface Category {
   _id: string;
   name: string;
@@ -153,13 +153,21 @@ const method = initialData ? 'PUT' : 'POST'
 
           <div>
             <label className="block text-sm font-medium mb-1">Description</label>
-            <textarea
+            {/* <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={4}
               className="w-full px-4 py-2 bg-white rounded-md border"
               required
-            />
+            /> */}
+
+           <textarea
+  value={description}
+  onChange={(e) => setDescription(e.target.value)}
+  rows={4}
+  className="w-full px-4 py-2 bg-white rounded-md border"
+  required
+/>
           </div>
 
           {/* 🔹 MULTI npm INPUT */}

@@ -5,7 +5,7 @@ import { ComponentData } from '@/lib/types/component'
 import ComponentPreview from '@/AllComponents/ComponentPreview'
 import CodeViewer from '@/AllComponents/CodeViewer'
 import { ClipboardIcon, CheckCircleIcon } from '@heroicons/react/24/solid'
-
+import DOMPurify from "dompurify"
 export default function ComponentDetails({
   component,
 }: {
@@ -99,9 +99,18 @@ export default function ComponentDetails({
                 Description
               </h3>
 
-  <p className="text-gray-300 text-sm leading-relaxed ">
-    {component.description}
-  </p>
+<div
+  className="prose prose-lg prose-invert max-w-none
+             prose-h1:text-3xl prose-h1:font-bold
+             prose-h2:text-2xl prose-h2:font-semibold
+             prose-p:text-gray-300
+             prose-li:marker:text-[#F9B31B]
+             prose-strong:text-white
+             prose-a:text-[#F9B31B]"
+  dangerouslySetInnerHTML={{
+    __html: DOMPurify.sanitize(component.description),
+  }}
+/>
 </div>
 
           {/* 🔥 REQUIRED PACKAGES (WITH COPY ICON LIKE CODEVIEWER) */}

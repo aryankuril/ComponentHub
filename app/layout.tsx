@@ -5,7 +5,6 @@ import NextAuthSessionProvider from '@/AllComponents/providers/NextAuthSessionPr
 import { getSession } from '@/lib/server-auth';
 import localFont from "next/font/local";
 import { Poppins } from "next/font/google";
-import "./globals.css";
 import dynamic from "next/dynamic";
 
 const miso = localFont({
