@@ -1,147 +1,256 @@
-'use client';
+"use client";
 
-import { useState, useEffect, ReactNode, useRef } from 'react';
-import ComponentPreview from '@/AllComponents/admin/ComponentPreview';
+import { useState, useEffect, FormEvent, ChangeEvent } from "react";
+
+type ComponentType = "frontend" | "backend";
+
+type CodesType = {
+  [key: string]: string;
+};
 
 interface Category {
   _id: string;
   name: string;
 }
 
-interface ComponentFormData {
+interface InitialData {
   _id?: string;
   name: string;
   description: string;
-  code: string;
+  type: ComponentType;
+  code: string | CodesType;
+  frameworks?: string[];
+  extraFields?: {
+    [key: string]: string[];
+  };
   npmPackages?: string[];
   category?: { _id: string };
   previewImage?: string;
 }
+
+interface Props {
+  onSuccess: () => void;
+  initialData?: InitialData | null;
+}
+
+const frameworksList = [
+  { label: "Next Js", value: "nextjs" },
+  { label: "Node Js", value: "nodejs" },
+  { label: "Laravel", value: "laravel" },
+];
 
 export default function ComponentForm({
   onSuccess,
   initialData = null,
 }: {
   onSuccess: () => void;
-  initialData?: ComponentFormData | null;
+  initialData?: InitialData | null;
 }) {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [code, setCode] = useState('');
+  // ================= STATE =================
+  const [type, setType] = useState<ComponentType>("frontend");
+
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+
+  const [code, setCode] = useState("");
+  const [codes, setCodes] = useState<CodesType>({});
+
+  const [selectedFrameworks, setSelectedFrameworks] = useState<string[]>([]);
+
+  const [extraFields, setExtraFields] = useState<{
+    [key: string]: string[];
+  }>({});
+
+  const [extraInput, setExtraInput] = useState<{
+    [key: string]: string;
+  }>({});
+
+  const [npmPackages, setNpmPackages] = useState<string[]>([]);
+  const [npmInput, setNpmInput] = useState("");
+
   const [previewImage, setPreviewImage] = useState<File | null>(null);
 
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  // 🔹 npm packages (MULTI)
-  const [npmPackages, setNpmPackages] = useState<string[]>([]);
-  const [npmInput, setNpmInput] = useState('');
-
-  const [categoryId, setCategoryId] = useState('');
+  const [category, setCategory] = useState("");
   const [categories, setCategories] = useState<Category[]>([]);
-  const [messageElement, setMessageElement] = useState<ReactNode>('');
 
-  const setMessage = (msg: string, isSuccess = false) => {
-    const color = isSuccess ? 'text-green-500' : 'text-red-500';
-    setMessageElement(<p className={`text-sm text-center ${color}`}>{msg}</p>);
-  };
+  const [loading, setLoading] = useState(false);
 
-  // 🔹 RESET FORM
-  const resetForm = () => {
-    setName('');
-    setDescription('');
-    setCode('');
-    setNpmPackages([]);
-    setNpmInput('');
-    setCategoryId('');
-    setPreviewImage(null);
+  // ================= FETCH CATEGORY =================
+  useEffect(() => {
+    fetch("/api/categories")
+      .then((res) => res.json())
+      .then((data: Category[]) => setCategories(data));
+  }, []);
 
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
+  // ================= PREFILL (EDIT MODE) =================
+  useEffect(() => {
+    if (!initialData) return;
+
+    setName(initialData.name);
+    setDescription(initialData.description);
+    setType(initialData.type);
+    setExtraFields(initialData.extraFields || {});
+
+    setNpmPackages(initialData.npmPackages || []);
+    setSelectedFrameworks(initialData.frameworks || []);
+
+    setCategory(initialData.category?._id || "");
+
+    // 🔥 HANDLE CODE
+    if (initialData.type === "frontend") {
+      setCode(initialData.code as string);
+    } else {
+      setCodes(initialData.code as CodesType);
     }
+  }, [initialData]);
+
+  // ================= HELPERS =================
+  const toggleFramework = (fw: string) => {
+    setSelectedFrameworks((prev) =>
+      prev.includes(fw) ? prev.filter((f) => f !== fw) : [...prev, fw]
+    );
   };
 
-  // 🔹 ADD / REMOVE npm PACKAGES
-  const addNpmPackage = () => {
+  // ADD EXTRA FIELD
+  const addExtraField = (fw: string) => {
+    const value = (extraInput[fw] || "").trim();
+    if (!value) return;
+
+    setExtraFields((prev) => ({
+      ...prev,
+      [fw]: [...(prev[fw] || []), value],
+    }));
+
+    setExtraInput((prev) => ({
+      ...prev,
+      [fw]: "",
+    }));
+  };
+
+  // REMOVE EXTRA FIELD
+  const removeExtraField = (fw: string, val: string) => {
+    setExtraFields((prev) => ({
+      ...prev,
+      [fw]: prev[fw].filter((v) => v !== val),
+    }));
+  };
+
+  const addNpm = () => {
     const value = npmInput.trim();
     if (!value || npmPackages.includes(value)) return;
 
     setNpmPackages([...npmPackages, value]);
-    setNpmInput('');
+    setNpmInput("");
   };
 
-  const removeNpmPackage = (pkg: string) => {
+  const removeNpm = (pkg: string) => {
     setNpmPackages(npmPackages.filter((p) => p !== pkg));
   };
 
-  useEffect(() => {
-    fetch('/api/categories')
-      .then((res) => res.json())
-      .then(setCategories);
-  }, []);
+  const handleCodeChange = (fw: string, value: string) => {
+    setCodes((prev) => ({
+      ...prev,
+      [fw]: value,
+    }));
+  };
 
-  useEffect(() => {
-    if (initialData) {
-      setName(initialData.name || '');
-      setDescription(initialData.description || '');
-      setCode(initialData.code || '');
-      setNpmPackages(initialData.npmPackages || []);
-      setCategoryId(initialData.category?._id || '');
-    } else {
-      resetForm();
-    }
+  const handleTypeChange = (newType: ComponentType) => {
+    setType(newType);
+    if (initialData) return; // don't reset if in edit mode
 
-    setMessageElement('');
-  }, [initialData]);
+    // Reset all type-specific fields when switching types
+    setCode("");
+    setCodes({});
+    setName("");
+    setDescription("");
+    setCategory("");
+    setSelectedFrameworks([]);
+    setExtraFields({});
+    setExtraInput({});
+    setNpmInput("");
+    setNpmPackages([]);
+    setPreviewImage(null);
+  };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  // ================= SUBMIT =================
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setMessageElement('');
-
-const method = initialData ? 'PUT' : 'POST'
-    const url = initialData
-      ? `/api/components/${initialData._id}`
-      : '/api/components';
+    setLoading(true);
 
     try {
       const formData = new FormData();
 
-      formData.append('name', name);
-      formData.append('description', description);
-      formData.append('code', code);
-      formData.append('category', categoryId);
-      formData.append('npmPackages', JSON.stringify(npmPackages));
+      formData.append("name", name);
+      formData.append("description", description);
+      formData.append("type", type);
+      formData.append("category", category);
+      formData.append("extraFields", JSON.stringify(extraFields));
+      formData.append("npmPackages", JSON.stringify(npmPackages));
+      formData.append("frameworks", JSON.stringify(selectedFrameworks));
 
-      if (previewImage) {
-        formData.append('previewImage', previewImage);
+      if (type === "frontend") {
+        formData.append("code", code);
+      } else {
+        formData.append("codes", JSON.stringify(codes));
       }
+
+      if (type === "frontend" && previewImage) {
+        formData.append("previewImage", previewImage);
+      }
+
+      const method = initialData ? "PUT" : "POST";
+      const url = initialData
+        ? `/api/components/${initialData._id}`
+        : "/api/components";
 
       const res = await fetch(url, {
         method,
         body: formData,
       });
 
-      if (res.ok) {
-        setMessage('Component saved successfully!', true);
-        resetForm();
-        onSuccess();
-      } else {
-        const errorData = await res.json();
-        setMessage(`Failed to save component: ${errorData.message || 'Unknown error'}`);
-      }
+      if (!res.ok) throw new Error("Failed");
+
+      onSuccess();
     } catch (error) {
       console.error(error);
-      setMessage('An unexpected error occurred.');
+      alert("Error saving component");
+    } finally {
+      setLoading(false);
     }
   };
 
+  // ================= UI =================
   return (
     <form onSubmit={handleSubmit} className="space-y-6 text-black">
-      {messageElement}
+      {/** ================= TYPE TOGGLE ================= */}
+      <div className="flex gap-6 mb-2">
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="radio"
+            checked={type === "frontend"}
+            onChange={() => handleTypeChange("frontend")}
+          />
+          Frontend
+        </label>
+
+        <label className="flex items-center gap-2 cursor-pointer">
+          <input
+            type="radio"
+            checked={type === "backend"}
+            onChange={() => handleTypeChange("backend")}
+          />
+          Backend
+        </label>
+      </div>
 
       <div className="flex space-x-4">
+        {/* ================= LEFT SIDE ================= */}
         <div className="flex-1 space-y-4">
+          {/* NAME */}
           <div>
-            <label className="block text-sm font-medium mb-1">Component Name</label>
+            <label className="block text-sm font-medium mb-1">
+              Component Name
+            </label>
             <input
               type="text"
               value={name}
@@ -151,8 +260,11 @@ const method = initialData ? 'PUT' : 'POST'
             />
           </div>
 
+          {/* DESCRIPTION */}
           <div>
-            <label className="block text-sm font-medium mb-1">Description</label>
+            <label className="block text-sm font-medium mb-1">
+              Description
+            </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -162,37 +274,28 @@ const method = initialData ? 'PUT' : 'POST'
             />
           </div>
 
-          {/* 🔹 MULTI npm INPUT */}
-          <div>
-            <label className="block text-sm font-medium mb-1">
-              Required npm Packages
-            </label>
+          {/* NPM PACKAGES */}
+          {type === "frontend" && (
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Required npm Packages
+              </label>
 
-            <div className="flex gap-2">
-              <input
-                type="text"
-                value={npmInput}
-                onChange={(e) => setNpmInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault();
-                    addNpmPackage();
-                  }
-                }}
-                placeholder="e.g. framer-motion"
-                className="flex-1 px-4 py-2 bg-white rounded-md border border-gray-700"
-              />
+              <div className="flex gap-2">
+                <input
+                  value={npmInput}
+                  onChange={(e) => setNpmInput(e.target.value)}
+                  className="flex-1 px-4 py-2 bg-white rounded-md border"
+                />
+                <button
+                  type="button"
+                  onClick={addNpm}
+                  className="px-4 py-2 bg-[#F9B31B] rounded-md font-semibold"
+                >
+                  Add
+                </button>
+              </div>
 
-              <button
-                type="button"
-                onClick={addNpmPackage}
-                className="px-4 py-2 bg-[#F9B31B] text-black rounded-md font-semibold"
-              >
-                Add
-              </button>
-            </div>
-
-            {npmPackages.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-2">
                 {npmPackages.map((pkg) => (
                   <span
@@ -202,93 +305,172 @@ const method = initialData ? 'PUT' : 'POST'
                     {pkg}
                     <button
                       type="button"
-                      onClick={() => removeNpmPackage(pkg)}
-                      className="text-red-500 font-bold"
+                      onClick={() => removeNpm(pkg)}
+                      className="text-red-500"
                     >
                       ×
                     </button>
                   </span>
                 ))}
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
-          {/* PREVIEW IMAGE */}
-         <div>
-  <label className="block text-sm font-medium mb-1">
-    Preview Image <span className="text-gray-500">(optional)</span>
-  </label>
+          {/* BACKEND EXTRA FIELDS */}
+          {type === "backend" &&
+            selectedFrameworks.map((fw) => (
+              <div key={fw} className="mt-4">
+                <label className="block text-sm font-medium mb-1">
+                  {fw.toUpperCase()} Extra Fields (optional)
+                </label>
 
-  <input
-    ref={fileInputRef}
-    type="file"
-    accept="image/*"
-    onChange={(e) => setPreviewImage(e.target.files?.[0] || null)}
-    className="w-full px-4 py-2 bg-white rounded-md border"
-  />
+                <div className="flex gap-2">
+                  <input
+                    value={extraInput[fw] || ""}
+                    onChange={(e) =>
+                      setExtraInput({
+                        ...extraInput,
+                        [fw]: e.target.value,
+                      })
+                    }
+                    placeholder={`Add ${fw} extra field`}
+                    className="flex-1 px-4 py-2 bg-white rounded-md border"
+                  />
 
-  {initialData?.previewImage && (
-    <div className="mt-2">
-      <p className="text-sm text-gray-600 mb-1">Current Image:</p>
-      <img
-        src={initialData.previewImage}
-        alt="Current Preview"
-        className="w-full max-w-[250px] h-[140px] object-cover rounded-md border"
-      />
-    </div>
-  )}
-</div>
+                  <button
+                    type="button"
+                    onClick={() => addExtraField(fw)}
+                    className="px-4 py-2 bg-[#F9B31B] rounded-md font-semibold"
+                  >
+                    Add
+                  </button>
+                </div>
 
+                {/* TAG LIST */}
+                <div className="flex flex-wrap gap-2 mt-2">
+                  {(extraFields[fw] || []).map((field) => (
+                    <span
+                      key={field}
+                      className="px-3 py-1 bg-blue-100 text-sm rounded-full flex items-center gap-2"
+                    >
+                      {field}
+                      <button
+                        type="button"
+                        onClick={() => removeExtraField(fw, field)}
+                        className="text-red-500"
+                      >
+                        ×
+                      </button>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+
+          {/* PREVIEW IMAGE (ONLY FRONTEND) */}
+          {type === "frontend" && (
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Preview Image (optional)
+              </label>
+
+              <input
+                type="file"
+                onChange={(e) => setPreviewImage(e.target.files?.[0] || null)}
+                className="w-full px-4 py-2 bg-white rounded-md border"
+              />
+            </div>
+          )}
+
+          {/* BACKEND FRAMEWORKS */}
+          {type === "backend" && (
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Select Framework(s)
+              </label>
+
+              <div className="flex gap-4">
+                {frameworksList.map((fw: any, index: number) => (
+                  <label key={index} className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={selectedFrameworks.includes(fw.value)}
+                      onChange={() => toggleFramework(fw.value)}
+                    />
+                    {fw.label}
+                  </label>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* CATEGORY */}
           <div>
-            <label className="block text-sm font-medium mb-1">
-              Category <span className="text-red-500">*</span>
-            </label>
+            <label className="block text-sm font-medium mb-1">Category</label>
             <select
-              value={categoryId}
-              onChange={(e) => setCategoryId(e.target.value)}
-              className="w-full px-4 py-2 bg-white rounded-md border border-gray-700"
-              required
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full px-4 py-2 bg-white rounded-md border"
             >
               <option value="">-- Select Category --</option>
-              {categories.map((cat) => (
-                <option key={cat._id} value={cat._id}>
-                  {cat.name}
+              {categories.map((c) => (
+                <option key={c._id} value={c._id}>
+                  {c.name}
                 </option>
               ))}
             </select>
           </div>
         </div>
 
-        <div className="flex-1">
-          <label className="block text-sm font-medium mb-1">
-            Component Code (Next.js + TailwindCSS)
-          </label>
-          <textarea
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            rows={15}
-            className="font-mono w-full px-4 py-2 bg-white rounded-md border border-gray-700"
-            required
-          />
+        {/* ================= RIGHT SIDE ================= */}
+        <div className="flex-1 space-y-4">
+          {/* FRONTEND CODE */}
+          {type === "frontend" && (
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Component Code (Next.js + TailwindCSS)
+              </label>
+              <textarea
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                rows={15}
+                className="font-mono w-full px-4 py-2 bg-white rounded-md border"
+                required
+              />
+            </div>
+          )}
+
+          {/* BACKEND MULTI CODE */}
+          {type === "backend" &&
+            selectedFrameworks.map((fw) => (
+              <div key={fw}>
+                <label className="block text-sm font-medium mb-1">
+                  {fw.toUpperCase()} Component Code
+                </label>
+                <textarea
+                  value={codes ? codes[fw] || "" : ""}
+                  onChange={(e) => handleCodeChange(fw, e.target.value)}
+                  rows={8}
+                  className="font-mono w-full px-4 py-2 bg-white rounded-md border"
+                />
+              </div>
+            ))}
         </div>
       </div>
 
+      {/* SUBMIT */}
       <div className="flex justify-between items-center mt-6">
         <button
           type="submit"
-          className={`rounded-[5px] flex justify-center items-center gap-[10px] px-[30px] py-[10px] font-semibold transition-colors w-full sm:w-auto
-            ${
-              initialData
-                ? 'bg-[#F9B31B] shadow-[2px_2px_0px_0px_#262626] text-[#262626]'
-                : 'bg-[#262626] shadow-[2px_2px_0px_0px_#F9B31B] text-[#F9B31B]'
-            }`}
+          disabled={loading}
+          className="bg-[#262626] text-[#F9B31B] px-6 py-2 rounded shadow"
         >
-          {initialData ? 'Update Component' : 'Publish Component'}
+          {loading
+            ? "Loading..."
+            : initialData
+            ? "Update Component"
+            : "Publish Component"}
         </button>
-
-        <ComponentPreview code={code} />
       </div>
     </form>
   );

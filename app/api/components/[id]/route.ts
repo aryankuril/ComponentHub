@@ -27,29 +27,87 @@ export async function PUT(
 
     const name = formData.get("name") as string;
     const description = formData.get("description") as string;
-    const code = formData.get("code") as string;
+    const type = formData.get("type") as string;
     const category = formData.get("category") as string;
 
     const npmPackages = JSON.parse(
       (formData.get("npmPackages") as string) || "[]"
     );
 
+    const frameworks = JSON.parse(
+      (formData.get("frameworks") as string) || "[]"
+    );
+
+    const extraFields = JSON.parse(
+      (formData.get("extraFields") as string) || "{}"
+    );
+
     const file = formData.get("previewImage") as File;
+
+    let code: any;
+
+    // =========================
+    // FRONTEND
+    // =========================
+    if (type === "frontend") {
+      code = formData.get("code") as string;
+
+      if (!code) {
+        return NextResponse.json(
+          { message: "Frontend code required" },
+          { status: 400 }
+        );
+      }
+    }
+
+    // =========================
+    // BACKEND
+    // =========================
+    if (type === "backend") {
+      try {
+        code = JSON.parse(formData.get("codes") as string);
+
+        if (typeof code !== "object") throw new Error();
+      } catch {
+        return NextResponse.json(
+          { message: "Invalid backend code format" },
+          { status: 400 }
+        );
+      }
+    }
 
     let updateData: any = {
       name,
       description,
+      type,
       code,
       npmPackages,
       category: category || null,
     };
 
+    // 🔥 FRONTEND ONLY
+    if (type === "frontend") {
+      updateData.npmPackages = npmPackages;
+      updateData.frameworks = [];
+      updateData.extraFields = {};
+    }
+
+    // 🔥 BACKEND ONLY
+    if (type === "backend") {
+      updateData.frameworks = frameworks;
+      updateData.extraFields = extraFields;
+      updateData.npmPackages = []; 
+      updateData.previewImage = ""; // no image for backend
+    }
+
     // 🔥 Only update image if new file uploaded
-    if (file && file.size > 0) {
+    if (type === "frontend" && file && file.size > 0) {
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
 
-      updateData.previewImage = `data:${file.type};base64,${buffer.toString("base64")}`;
+      updateData.previewImage = `data:${file.type};base64,${buffer.toString(
+        "base64"
+      )}`;
     }
 
     const updated = await Component.findByIdAndUpdate(id, updateData, {
@@ -64,7 +122,6 @@ export async function PUT(
     }
 
     return NextResponse.json(updated, { status: 200 });
-
   } catch (error) {
     console.error("PUT ERROR:", error);
     return NextResponse.json(
@@ -114,7 +171,6 @@ export async function GET(
       ...typedComponent,
       category: categoryData,
     });
-
   } catch (error) {
     console.error("REAL GET ERROR:", error);
     return NextResponse.json(
@@ -153,7 +209,6 @@ export async function DELETE(
       { message: "Component deleted successfully" },
       { status: 200 }
     );
-
   } catch (error) {
     console.error("DELETE ERROR:", error);
     return NextResponse.json(

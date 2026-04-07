@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import Navbar from "@/AllComponents/shared/Navbar";
 import Footer from "@/AllComponents/shared/Footer";
-import ComponentDetails from "@/AllComponents/ComponentDetails";
-import { FrontendComponentData } from "@/lib/types/component";
+import { BackendComponentData } from "@/lib/types/component";
 import { useRouter, usePathname } from "next/navigation";
+import BackendComponentDetails from "./BackendComponentDetails";
 
 interface CategoryData {
   _id: string;
@@ -16,12 +16,12 @@ interface CategoryData {
   }[];
 }
 
-export default function ComponentsPage() {
+export default function BackendComponentsPage() {
   const [categories, setCategories] = useState<CategoryData[]>([]);
   const [
     selectedComponent,
     setSelectedComponent,
-  ] = useState<FrontendComponentData | null>(null);
+  ] = useState<BackendComponentData | null>(null);
   const [loading, setLoading] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -34,15 +34,15 @@ export default function ComponentsPage() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch("/api/categories-with-components?type=frontend");
+        const res = await fetch("/api/categories-with-components?type=backend");
         const data = await res.json();
         setCategories(data);
 
         // 🔥 If user is on /components only
-        if (pathname === "/components") {
+        if (pathname === "/backend-components") {
           if (data.length > 0 && data[0].components.length > 0) {
             const firstId = data[0].components[0]._id;
-            router.replace(`/components/${firstId}`);
+            router.replace(`/backend-components/${firstId}`);
           }
         }
       } catch (err) {
@@ -57,8 +57,8 @@ export default function ComponentsPage() {
      LOAD COMPONENT BY URL ID
   ============================ */
   useEffect(() => {
-    const id = pathname.startsWith("/components/")
-      ? pathname.replace("/components/", "")
+    const id = pathname.startsWith("/backend-components/")
+      ? pathname.replace("/backend-components/", "")
       : null;
 
     if (!id) return;
@@ -69,7 +69,7 @@ export default function ComponentsPage() {
 
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-        const res = await fetch(`${baseUrl}/api/frontend-components/${id}`);
+        const res = await fetch(`${baseUrl}/api/backend-components/${id}`);
         if (res.status === 200) {
           const data = await res.json();
 
@@ -111,7 +111,7 @@ export default function ComponentsPage() {
           {/* Sidebar */}
           <aside className="hidden md:block w-64   border-r border-gray-700 p-4 ">
             <h2 className="text-xl font-bold mb-4 black-text mt-10">
-              Components
+              Backend Components
             </h2>
 
             {categories.map((cat) => (
@@ -126,7 +126,7 @@ export default function ComponentsPage() {
                       key={comp._id}
                       onClick={() => {
                         setSelectedComponent(null); // optional loader reset
-                        fetch(`/api/components/${comp._id}`)
+                        fetch(`/api/backend-components/${comp._id}`)
                           .then((res) => res.json())
                           .then((data) => {
                             setSelectedComponent({
@@ -135,9 +135,9 @@ export default function ComponentsPage() {
                             });
                           });
 
-                        router.push(`/components/${comp._id}`);
+                        router.push(`/backend-components/${comp._id}`);
                       }}
-                      className={`cursor-pointer px-2 py-1 rounded hover:bg-[#F9B31B] capitalize ${selectedComponent?._id === comp._id ? "bg-[#F9B31B] text-white" : "black-text"}`}
+                      className={`cursor-pointer px-2 py-1 rounded hover:bg-[#F9B31B] capitalize ${selectedComponent?._id === comp._id ? "bg-[#F9B31B] white-text" : "black-text"}`}
                     >
                       {comp.name}
                     </li>
@@ -152,7 +152,7 @@ export default function ComponentsPage() {
             {loading && <p className="text-center text-black">Loading...</p>}
 
             {!loading && selectedComponent && (
-              <ComponentDetails component={selectedComponent} />
+              <BackendComponentDetails component={selectedComponent} />
             )}
             {!selectedComponent && !loading && (
               <p className="text-center  black-text">No component found</p>

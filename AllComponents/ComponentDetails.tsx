@@ -1,46 +1,47 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { ComponentData } from '@/lib/types/component'
-import ComponentPreview from '@/AllComponents/ComponentPreview'
-import CodeViewer from '@/AllComponents/CodeViewer'
-import { ClipboardIcon, CheckCircleIcon } from '@heroicons/react/24/solid'
+import { useState, useEffect } from "react";
+import { FrontendComponentData } from "@/lib/types/component";
+import ComponentPreview from "@/AllComponents/ComponentPreview";
+import CodeViewer from "@/AllComponents/CodeViewer";
+import { ClipboardIcon, CheckCircleIcon } from "@heroicons/react/24/solid";
 
 export default function ComponentDetails({
   component,
 }: {
-  component: ComponentData
+  component: FrontendComponentData;
 }) {
-  const [activeTab, setActiveTab] = useState('preview')
-  const [isMounted, setIsMounted] = useState(false)
+  const [activeTab, setActiveTab] = useState("preview");
+  const [isMounted, setIsMounted] = useState(false);
 
   // 🔹 package manager tab
-  const [pkgManager, setPkgManager] =
-    useState<'pnpm' | 'npm' | 'yarn' | 'bun'>('npm')
+  const [pkgManager, setPkgManager] = useState<"pnpm" | "npm" | "yarn" | "bun">(
+    "npm"
+  );
 
   // 🔹 copy state (SAME AS CodeViewer)
-  const [copied, setCopied] = useState(false)
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true)
-  }, [])
+    setIsMounted(true);
+  }, []);
 
-  if (!isMounted) return null
+  if (!isMounted) return null;
 
-  const packages = component.npmPackages?.join(' ') || ''
+  const packages = component.npmPackages?.join(" ") || "";
 
   const commands = {
     pnpm: `pnpm add ${packages}`,
     npm: `npm install ${packages}`,
     yarn: `yarn add ${packages}`,
     bun: `bun add ${packages}`,
-  }
+  };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(commands[pkgManager])
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
+    navigator.clipboard.writeText(commands[pkgManager]);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <div className="min-h-screen container flex flex-col  text-gray-200 mt-10">
@@ -51,27 +52,27 @@ export default function ComponentDetails({
           </h1>
 
           <p className=" black-text text-sm capitalize">
-            Category: {component.category?.name || 'Uncategorized'}
+            Category: {component.category?.name || "Uncategorized"}
           </p>
 
           <div className="mt-8">
             <div className="flex border-b border-gray-700 ">
               <button
-                onClick={() => setActiveTab('preview')}
+                onClick={() => setActiveTab("preview")}
                 className={`py-2 px-4 font-semibold text-sm transition-colors duration-200 cursor-pointer ${
-                  activeTab === 'preview'
-                    ? 'border-b-2 border-[#F9B31B] text-[#F9B31B]'
-                    : ' black-text hover:text-gray-300 cursor-pointer '
+                  activeTab === "preview"
+                    ? "border-b-2 border-[#F9B31B] text-[#F9B31B]"
+                    : " black-text hover:text-gray-300 cursor-pointer "
                 }`}
               >
                 Live Preview
               </button>
               <button
-                onClick={() => setActiveTab('code')}
+                onClick={() => setActiveTab("code")}
                 className={`py-2 px-4 font-semibold text-sm transition-colors duration-200 cursor-pointer ${
-                  activeTab === 'code'
-                    ? 'border-b-2 border-[#F9B31B] text-[#F9B31B]'
-                    : ' black-text hover:text-gray-300 cursor-pointer '
+                  activeTab === "code"
+                    ? "border-b-2 border-[#F9B31B] text-[#F9B31B]"
+                    : " black-text hover:text-gray-300 cursor-pointer "
                 }`}
               >
                 Component Code
@@ -79,14 +80,13 @@ export default function ComponentDetails({
             </div>
 
             <div className="mt-4">
-              {activeTab === 'preview' && (
+              {activeTab === "preview" && (
                 <div className="rounded-lg">
                   <ComponentPreview code={component.code} />
                 </div>
               )}
-              
 
-              {activeTab === 'code' && (
+              {activeTab === "code" && (
                 <div className="p-4 bg-gray-800 border border-gray-700 rounded-lg">
                   <CodeViewer code={component.code} />
                 </div>
@@ -94,15 +94,13 @@ export default function ComponentDetails({
             </div>
           </div>
 
-       <div className="mt-6 bg-gray-900 border border-gray-700 rounded-xl p-5">
-        <h3 className="text-xl font-bold  pb-2">
-                Description
-              </h3>
+          <div className="mt-6 bg-gray-900 border border-gray-700 rounded-xl p-5">
+            <h3 className="text-xl font-bold  pb-2">Description</h3>
 
-  <p className="text-gray-300 text-sm leading-relaxed max-w-3xl">
-    {component.description}
-  </p>
-</div>
+            <p className="text-gray-300 text-sm leading-relaxed max-w-3xl">
+              {component.description}
+            </p>
+          </div>
 
           {/* 🔥 REQUIRED PACKAGES (WITH COPY ICON LIKE CODEVIEWER) */}
           {component.npmPackages && component.npmPackages.length > 0 && (
@@ -113,17 +111,17 @@ export default function ComponentDetails({
 
               {/* Tabs */}
               <div className="flex gap-2 px-4 pt-2">
-                {(['pnpm', 'npm', 'yarn', 'bun'] as const).map((tool) => (
+                {(["pnpm", "npm", "yarn", "bun"] as const).map((tool) => (
                   <button
                     key={tool}
                     onClick={() => {
-                      setPkgManager(tool)
-                      setCopied(false)
+                      setPkgManager(tool);
+                      setCopied(false);
                     }}
                     className={`px-3 py-1 text-sm rounded-full border transition cursor-pointer ${
                       pkgManager === tool
-                        ? 'bg-gray-800 border-gray-600 text-white'
-                        : 'border-transparent text-gray-400 hover:text-white cursor-pointer'
+                        ? "bg-gray-800 border-gray-600 text-white"
+                        : "border-transparent text-gray-400 hover:text-white cursor-pointer"
                     }`}
                   >
                     {tool}
@@ -152,5 +150,5 @@ export default function ComponentDetails({
         </div>
       </main>
     </div>
-  )
+  );
 }

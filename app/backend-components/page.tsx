@@ -10,7 +10,7 @@ async function getFirstComponent() {
   process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}` ||
   'http://localhost:3000';
   
-const res = await fetch(`${baseUrl}/api/frontend-components`, {
+const res = await fetch(`${baseUrl}/api/backend-components`, {
   cache: 'no-store',
 });
 
@@ -26,7 +26,7 @@ export default async function ComponentsRedirectPage() {
   const firstId = await getFirstComponent();
 
   if (firstId) {
-    redirect(`/components/${firstId}`);
+    redirect(`/backend-components/${firstId}`);
   }
 
   return (

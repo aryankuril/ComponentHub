@@ -42,19 +42,62 @@ export async function POST(req: Request) {
 
     const name = formData.get("name") as string;
     const description = formData.get("description") as string;
-    const code = formData.get("code") as string;
+    const type = formData.get("type") as string;
     const category = formData.get("category") as string;
 
     const npmPackages = JSON.parse(
       (formData.get("npmPackages") as string) || "[]"
     );
 
-    const file = formData.get("previewImage") as File;
+    const frameworks = JSON.parse(
+      (formData.get("frameworks") as string) || "[]"
+    );
 
+    const extraFields = JSON.parse(
+      (formData.get("extraFields") as string) || "{}"
+    );
+
+    let code: any;
+
+    // =========================
+    // FRONTEND
+    // =========================
+    if (type === "frontend") {
+      code = formData.get("code") as string;
+
+      if (!code) {
+        return NextResponse.json(
+          { message: "Frontend code required" },
+          { status: 400 }
+        );
+      }
+    }
+
+    // =========================
+    // BACKEND
+    // =========================
+    if (type === "backend") {
+      try {
+        code = JSON.parse(formData.get("codes") as string);
+
+        if (typeof code !== "object") throw new Error();
+      } catch {
+        return NextResponse.json(
+          { message: "Invalid backend code format" },
+          { status: 400 }
+        );
+      }
+    }
+
+    // =========================
+    // IMAGE (ONLY FRONTEND)
+    // =========================
     let previewImage = "";
 
+    const file = formData.get("previewImage") as File;
+
     // 🔥 CONVERT IMAGE TO BASE64
-    if (file && file.size > 0) {
+    if (type === "frontend" && file && file.size > 0) {
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
 
@@ -64,9 +107,12 @@ export async function POST(req: Request) {
     const component = await Component.create({
       name,
       description,
+      type,
       code,
+      frameworks,
       npmPackages,
       category: category || null,
+      extraFields,
       previewImage, // ✅ NOW SAVED
     });
 

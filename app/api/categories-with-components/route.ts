@@ -1,19 +1,38 @@
 export const runtime = "nodejs";
 
-import { NextResponse } from 'next/server'
-import dbConnect from '@/lib/mongodb'
-import Category from '@/lib/schemas/Category'
+import { NextResponse } from "next/server";
+import dbConnect from "@/lib/mongodb";
+import Category from "@/lib/schemas/Category";
 
-export async function GET() {
-  await dbConnect()
+export async function GET(request: Request) {
+  await dbConnect();
+
+  const { searchParams } = new URL(request.url);
+  const type = searchParams.get("type"); // e.g. "frontend"
 
   const categories = await Category.aggregate([
     {
       $lookup: {
-        from: 'components',
-        localField: '_id',
-        foreignField: 'category',
-        as: 'components',
+        from: "components",
+        let: { categoryId: "$_id" },
+        pipeline: [
+          {
+            $match: {
+              $expr: {
+                $and: [
+                  { $eq: ["$category", "$$categoryId"] },
+                  ...(type ? [{ $eq: ["$type", type] }] : []),
+                ],
+              },
+            },
+          },
+        ],
+        as: "components",
+      },
+    },
+    {
+      $match: {
+        components: { $ne: [] },
       },
     },
     {
@@ -25,7 +44,7 @@ export async function GET() {
         },
       },
     },
-  ])
+  ]);
 
-  return NextResponse.json(categories)
+  return NextResponse.json(categories);
 }
