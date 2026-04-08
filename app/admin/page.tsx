@@ -159,7 +159,7 @@ const parsedDate = new Date(comp.dateCreated);
         <div className="col-span-1 md:col-span-2 bg-white p-4 rounded-2xl shadow-lg text-black">
           <h2 className="text-xl font-semibold mb-4 ml-5">Components Growth</h2>
           <ResponsiveContainer width="100%" height={300}>
-            <AreaChart data={componentsData.length ? componentsData : [{ name: 'No Data', submissions: 0 }]}>
+            <AreaChart data={componentsData.length ? componentsData : [{ name: 'No Data', submissions: 0, timestamp: 0 }]}>
               <defs>
                 <linearGradient id="colorGrowth" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.8} />
