@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { ComponentData } from "@/lib/types/component";
-import ComponentPreview from "@/AllComponents/ComponentPreview";
-import CodeViewer from "@/AllComponents/CodeViewer";
-import { ClipboardIcon, CheckCircleIcon } from "@heroicons/react/24/solid";
-
+import { useState, useEffect } from 'react'
+import { ComponentData } from '@/lib/types/component'
+import ComponentPreview from '@/AllComponents/ComponentPreview'
+import CodeViewer from '@/AllComponents/CodeViewer'
+import { ClipboardIcon, CheckCircleIcon } from '@heroicons/react/24/solid'
+import DOMPurify from "dompurify"
 export default function ComponentDetails({
   component,
 }: {
@@ -97,10 +97,19 @@ export default function ComponentDetails({
           <div className="mt-6 bg-gray-900 border border-gray-700 rounded-xl p-5">
             <h3 className="text-xl font-bold  pb-2">Description</h3>
 
-            <p className="text-gray-300 text-sm leading-relaxed max-w-3xl">
-              {component.description}
-            </p>
-          </div>
+<div
+  className="prose prose-lg prose-invert max-w-none
+             prose-h1:text-3xl prose-h1:font-bold
+             prose-h2:text-2xl prose-h2:font-semibold
+             prose-p:text-gray-300
+             prose-li:marker:text-[#F9B31B]
+             prose-strong:text-white
+             prose-a:text-[#F9B31B]"
+  dangerouslySetInnerHTML={{
+    __html: DOMPurify.sanitize(component.description),
+  }}
+/>
+</div>
 
           {/* 🔥 REQUIRED PACKAGES (WITH COPY ICON LIKE CODEVIEWER) */}
           {component.npmPackages && component.npmPackages.length > 0 && (

@@ -72,20 +72,19 @@ export default function HeroSection({ components }: { components: any[] }) {
         />
 
         <div
-          className="absolute top-40 right-20 w-16 h-16 bg-neon-purple/20 rounded-full animate-float"
+          className="absolute top-40 right-20 w-16 h-16 bg-[#fab31e] rounded-full animate-float"
           style={{ animationDelay: '2s' }}
         />
         <div
-          className="absolute bottom-32 left-1/4 w-12 h-12 border-2 border-neon-green/40 rotate-45 animate-float"
+          className="absolute bottom-32 left-1/4 w-12 h-12 border-2 border-[#fab31e] rotate-45 animate-float"
           style={{ animationDelay: '1s' }}
         />
         <div
-          className="absolute top-1/3 right-1/4 w-24 h-24 border border-neon-pink/20 rounded-full animate-float"
+          className="absolute top-1/3 right-1/4 w-24 h-24 border border-[#fab31e] rounded-full animate-float"
           style={{ animationDelay: '3s' }}
         />
 
-        {/* Grid pattern */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(0,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(0,255,255,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
+
       </div>
 
       {/* Main Content */}
@@ -151,11 +150,7 @@ export default function HeroSection({ components }: { components: any[] }) {
       </div>
 
       {/* Glow Effects */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-neon-cyan/10 rounded-full blur-3xl animate-pulse-glow" />
-      <div
-        className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-neon-purple/10 rounded-full blur-3xl animate-pulse-glow"
-        style={{ animationDelay: '1s' }}
-      />
+    
     </section>
   );
 }

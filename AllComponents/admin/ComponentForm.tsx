@@ -1,6 +1,15 @@
 "use client";
 
-import { useState, useEffect, FormEvent, ChangeEvent } from "react";
+import {
+  useState,
+  useEffect,
+  FormEvent,
+  ChangeEvent,
+  ReactNode,
+  useRef,
+} from "react";
+import ComponentPreview from "@/AllComponents/admin/ComponentPreview";
+import DOMPurify from "dompurify";
 
 type ComponentType = "frontend" | "backend";
 
@@ -265,6 +274,14 @@ export default function ComponentForm({
             <label className="block text-sm font-medium mb-1">
               Description
             </label>
+            {/* <textarea
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              rows={4}
+              className="w-full px-4 py-2 bg-white rounded-md border"
+              required
+            /> */}
+
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}

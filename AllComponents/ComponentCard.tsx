@@ -21,9 +21,9 @@ interface ComponentCardProps {
 
 
 
-export default function ComponentCard({ component, onPreview, onCopy }: ComponentCardProps) {
+export default function  ComponentCard({ component, onPreview, onCopy }: ComponentCardProps) {
   return (
-    <div className="relative bg-gradient-card rounded-xl overflow-hidden flex flex-col transition-all duration-300 h-full">
+    <div className="relative bg-gradient-card rounded-[20px] overflow-hidden flex flex-col transition-all duration-300 h-full">
 
       {/* Image Section */}
     <div
