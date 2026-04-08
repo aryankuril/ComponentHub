@@ -10,7 +10,7 @@ async function getFirstComponent() {
   process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}` ||
   'http://localhost:3000';
   
-const res = await fetch(`${baseUrl}/api/frontend-components`, {
+const res = await fetch(`${baseUrl}/api/components`, {
   cache: 'no-store',
 });
 

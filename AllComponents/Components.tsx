@@ -4,8 +4,9 @@ import { useEffect, useState } from "react";
 import Navbar from "@/AllComponents/shared/Navbar";
 import Footer from "@/AllComponents/shared/Footer";
 import ComponentDetails from "@/AllComponents/ComponentDetails";
-import { FrontendComponentData } from "@/lib/types/component";
+import { ComponentData } from "@/lib/types/component";
 import { useRouter, usePathname } from "next/navigation";
+import BackendComponentDetails from "./BackendComponentDetails";
 
 interface CategoryData {
   _id: string;
@@ -21,7 +22,7 @@ export default function ComponentsPage() {
   const [
     selectedComponent,
     setSelectedComponent,
-  ] = useState<FrontendComponentData | null>(null);
+  ] = useState<ComponentData | null>(null);
   const [loading, setLoading] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
@@ -34,7 +35,7 @@ export default function ComponentsPage() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch("/api/categories-with-components?type=frontend");
+        const res = await fetch("/api/categories-with-components");
         const data = await res.json();
         setCategories(data);
 
@@ -69,7 +70,7 @@ export default function ComponentsPage() {
 
         const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-        const res = await fetch(`${baseUrl}/api/frontend-components/${id}`);
+        const res = await fetch(`${baseUrl}/api/components/${id}`);
         if (res.status === 200) {
           const data = await res.json();
 
@@ -90,6 +91,8 @@ export default function ComponentsPage() {
 
     fetchComponent();
   }, [pathname]);
+
+  console.log("Selected Component:", selectedComponent);
 
   return (
     <div className="">
@@ -151,9 +154,14 @@ export default function ComponentsPage() {
           <section className="flex-1 p-6  ">
             {loading && <p className="text-center text-black">Loading...</p>}
 
-            {!loading && selectedComponent && (
+            {!loading && selectedComponent && selectedComponent?.type === "frontend" && (
               <ComponentDetails component={selectedComponent} />
             )}
+
+            {!loading && selectedComponent && selectedComponent?.type === "backend" && (
+              <BackendComponentDetails component={selectedComponent} />
+            )}
+
             {!selectedComponent && !loading && (
               <p className="text-center  black-text">No component found</p>
             )}

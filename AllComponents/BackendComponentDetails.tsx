@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { BackendComponentData } from "@/lib/types/component";
+import { ComponentData } from "@/lib/types/component";
 import ComponentPreview from "@/AllComponents/ComponentPreview";
 import CodeViewer from "@/AllComponents/CodeViewer";
 import { ClipboardIcon, CheckCircleIcon } from "@heroicons/react/24/solid";
@@ -9,7 +9,7 @@ import { ClipboardIcon, CheckCircleIcon } from "@heroicons/react/24/solid";
 export default function BackendComponentDetails({
   component,
 }: {
-  component: BackendComponentData;
+  component: ComponentData;
 }) {
   // const [activeTab, setActiveTab] = useState('preview')
   const [activeFramework, setActiveFramework] = useState<string>("");

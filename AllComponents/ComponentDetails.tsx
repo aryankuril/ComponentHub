@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { FrontendComponentData } from "@/lib/types/component";
+import { ComponentData } from "@/lib/types/component";
 import ComponentPreview from "@/AllComponents/ComponentPreview";
 import CodeViewer from "@/AllComponents/CodeViewer";
 import { ClipboardIcon, CheckCircleIcon } from "@heroicons/react/24/solid";
@@ -9,7 +9,7 @@ import { ClipboardIcon, CheckCircleIcon } from "@heroicons/react/24/solid";
 export default function ComponentDetails({
   component,
 }: {
-  component: FrontendComponentData;
+  component: ComponentData;
 }) {
   const [activeTab, setActiveTab] = useState("preview");
   const [isMounted, setIsMounted] = useState(false);
@@ -82,13 +82,13 @@ export default function ComponentDetails({
             <div className="mt-4">
               {activeTab === "preview" && (
                 <div className="rounded-lg">
-                  <ComponentPreview code={component.code} />
+                  <ComponentPreview code={component?.code || ""} />
                 </div>
               )}
 
               {activeTab === "code" && (
                 <div className="p-4 bg-gray-800 border border-gray-700 rounded-lg">
-                  <CodeViewer code={component.code} />
+                  <CodeViewer code={component?.code || ""} />
                 </div>
               )}
             </div>
