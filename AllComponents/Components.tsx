@@ -92,8 +92,6 @@ export default function ComponentsPage() {
     fetchComponent();
   }, [pathname]);
 
-  console.log("Selected Component:", selectedComponent);
-
   return (
     <div className="">
       <Navbar />
